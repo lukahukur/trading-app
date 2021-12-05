@@ -7,7 +7,7 @@ const CreateChart = ({currency,time}) =>{
  const [lastCandle,setLastCandle] = useState({});
  const [initCandles, setInitCandles] = useState([]);
   const chartRef = useRef();
-
+ 
 const [sizes,setSizes] = useState({
   width:1200,
   height:500
@@ -28,9 +28,10 @@ const [sizes,setSizes] = useState({
         });
         setInitCandles(cData)
         document.getElementsByClassName('tv-lightweight-charts')[0].remove();
+       
     }
      getCandleData();
-     // 
+    
   },[time]);
   
 
@@ -151,9 +152,12 @@ const [sizes,setSizes] = useState({
 
            return(
              <React.Fragment className='React_fragment'>
-     <div ref={chartRef}></div>
-        
-         </React.Fragment>
+               
+                <div ref={chartRef}></div> 
+              
+               
+   
+             </React.Fragment>
     
            );
 

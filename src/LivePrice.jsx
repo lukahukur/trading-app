@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react/cjs/react.development";
-
+import ScaleLoader from "react-spinners/ScaleLoader";
 
 function LivePrice({currency}){
     const [trades,setTrades] = useState([]);
     const [tHistory,setTHistory] = useState([]);
-
+  const [fetChed,setFetched] = useState(false);
 
 
 
@@ -14,7 +14,7 @@ function LivePrice({currency}){
         ws.onmessage = (e)=>{
                 const parsedData = JSON.parse(e.data);
                 setTrades(parsedData);
-               
+               setFetched(true);
                 
         }
         
@@ -33,6 +33,7 @@ function LivePrice({currency}){
      
     }
     // setTHistory([...tHistory,trades]);
+    
     },[trades])
  
    
@@ -47,15 +48,12 @@ function LivePrice({currency}){
  
 return(
     
-    <div className='price-live'>
+    <div className='price-live' style={fetChed ? {width:'auto'}:{ width: '18.9vw'}}>
         <div className='c-w'><span>price</span>  <span>Aomunt</span>  <span>Time</span>   </div>
-        <ul className='flex-column' >
-        {
-         list
-        }
-        
-        </ul>
        
+        { fetChed ? <ul className='flex-column' > {list} </ul> :  <div style={{width:'100%',height:'100%',display:'flex',justifyContent:'center',alignItems:'center'}}>  <ScaleLoader color={'#00B7FF'}/> </div> }
+  
+      
      </div>
 
 );
