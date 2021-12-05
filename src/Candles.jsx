@@ -99,9 +99,6 @@ const [sizes,setSizes] = useState({
     },
 });
    
-
-       //here was fetch
-    
       
         candles.setData(initCandles);
      
@@ -153,10 +150,10 @@ const [sizes,setSizes] = useState({
   
 
            return(
-             
-     <div ref={chartRef}>
+             <React.Fragment className='React_fragment'>
+     <div ref={chartRef}></div>
         
-         </div>
+         </React.Fragment>
     
            );
 

@@ -20,6 +20,7 @@ function App() {
       <BuySellForm></BuySellForm>
       </div>
       </div>
+    
       </div>
   );
 }

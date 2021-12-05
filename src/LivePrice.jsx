@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react/cjs/react.development";
 
+
 function LivePrice({currency}){
     const [trades,setTrades] = useState([]);
     const [tHistory,setTHistory] = useState([]);
@@ -19,17 +20,15 @@ function LivePrice({currency}){
         
     },[]);
     useEffect(()=>{
-      if(tHistory.length <=15){
+      if(tHistory.length <=16){
      setTHistory(()=>{
       let temp = tHistory;
       temp.push(trades);
-
        return[...temp]
-
      });
     }else{
      let shorter = tHistory;
-     shorter = shorter.slice(1,16);
+     shorter = shorter.slice(1,17);
       setTHistory([...shorter,trades]);
      
     }
@@ -54,8 +53,9 @@ return(
         {
          list
         }
-        </ul>
         
+        </ul>
+       
      </div>
 
 );
