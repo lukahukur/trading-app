@@ -42,7 +42,9 @@
   flex-direction: column;
   border: 1px solid white;
  
-  
+  font-size: 14px;
+  margin: 0;
+
   
 
 }
@@ -90,9 +92,7 @@ width: min-content;
 }
 @media only screen and (min-width: 1336px) {
   .price-live{
-    font-size: 14px;
-    margin: 0;
-
+  
   }
   
 }
