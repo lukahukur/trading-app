@@ -1,6 +1,6 @@
 import CreateChart from './Candles';
 import React,{useState,useEffect,useRef} from "react";
-
+import searchIcon from './../src/search.png';
 
 const styles = {
     c_w:'wrapper_candles',
@@ -43,7 +43,17 @@ useEffect(()=>{
     
     return(
         <div className={styles.c_w}>
+                <div className ='search_w'>
+                
+                    <div className='searchBox'>
+                        <img src={searchIcon} className='miniicon'/>
+                        <input type="text" id='Inp'/>
+                        
+                    </div>
+                    <div className='currencyIndicator'>{currency.toUpperCase()}</div>
+                </div>
             <div  className={styles.b_w}  >
+            
                 <div style={{display:'flex',width:'300px',justifyContent:'space-around'}}>
                     <button className={styles.noHover}>
                         Time

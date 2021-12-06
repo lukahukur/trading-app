@@ -1,8 +1,14 @@
+@font-face {
+  font-family: openSans;
+  src: url('./OpenSans/OpenSans-Medium.ttf');
+}
+
 .App {
   text-align: center;
 }
 *{
   box-sizing: border-box;
+ 
 }
 
 .App-logo {
@@ -34,18 +40,15 @@
   
   
   width: 100vw;
-  border: white 1px solid;
+  border: #272D35 0.5px solid;
 }
 .price-live{
   color: #59626E;
   display: flex;
   flex-direction: column;
-  border: 1px solid white;
- 
+  border: 0.5px solid #272D35;
   font-size: 14px;
   margin: 0;
-
-  
 
 }
 .temp{
@@ -63,10 +66,10 @@ border: 1px solid #59626E;
     
 }
 .red{
-  color :red;
+  color :#F6465D;
 }
 .green{
-  color: green;
+  color: #0ECB81
 }
 .JohnJoLi{
   display: flex;
@@ -88,7 +91,48 @@ width: min-content;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  margin-top: 0.1vw
+  margin-top: 0.1vw;
+  color: #AFB5BE;
+  font-size: 17px;
+  
+}
+.search_w{
+padding: 0.5vw 1vw;
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+}
+.searchBox{
+    background-color: #2B3139;
+    display: flex;
+    flex-direction: row;
+    width: 20vw;
+    align-items: center;
+    
+}
+#Inp{
+  outline-width:0;
+outline:none;
+  background-color: #2B3139;
+  border: none;
+  font-size: 15px;
+  caret-color:#59626E;
+  color: white;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  width: 20vw;
+}
+.miniicon{
+  width: 25px;
+
+
+}
+.currencyIndicator{
+color: #2FF9F6;
+font-size: 20px;
+}
+
+.Router_1{
+  border: 1px solid white;
 }
 @media only screen and (min-width: 1336px) {
   .price-live{

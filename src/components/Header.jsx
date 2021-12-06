@@ -6,9 +6,10 @@ return(
         <div>
         <div>Trading Simulator</div>
         </div>
-        <div>
-            User
-            </div>
+        
+        <div> User</div>
+            
+           
 
     </div>
     );

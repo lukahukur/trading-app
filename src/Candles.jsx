@@ -130,7 +130,7 @@ const [sizes,setSizes] = useState({
      useEffect(()=>{
       const handler = () => {
        
-          setSizes({width:window.innerWidth/1.78,height:335})
+          setSizes({width:window.innerWidth/1.62,height:400})
           document.getElementsByClassName('tv-lightweight-charts')[0].remove();
         
     
@@ -144,7 +144,7 @@ const [sizes,setSizes] = useState({
        
      },[])
    useEffect(()=>{
-      setSizes({width:window.innerWidth/1.78,height:335});
+      setSizes({width:window.innerWidth/1.62,height:400});
       document.getElementsByClassName('tv-lightweight-charts')[0].remove();
    },[]);
    

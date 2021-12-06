@@ -20,7 +20,7 @@ function LivePrice({currency}){
         
     },[]);
     useEffect(()=>{
-      if(tHistory.length <=16){
+      if(tHistory.length <=20){
      setTHistory(()=>{
       let temp = tHistory;
       temp.push(trades);
@@ -28,7 +28,7 @@ function LivePrice({currency}){
      });
     }else{
      let shorter = tHistory;
-     shorter = shorter.slice(1,17);
+     shorter = shorter.slice(1,21);
       setTHistory([...shorter,trades]);
      
     }
@@ -42,14 +42,15 @@ function LivePrice({currency}){
 
   const list = tHistory.map((e,i)=>{
     let date = new Date(e.T);
-  if(e.m === false){return <li key={i}  className='JohnJoLi' ><div className='row'>   <div style={{color:'green'}}>{parseFloat(e.p).toFixed(2)}</div> <div>{e.q} </div>  <div>{date.toString().slice(16,25)} </div>  </div></li>;}
-  if(e.m === true){return <li key={i}  className='JohnJoLi'><div className = 'row'>   <div style={{color:'red'}}>{parseFloat(e.p).toFixed(2)}</div>  <div>{e.q}</div>  <div>{date.toString().slice(16,25)}</div> </div></li>;}
+  if(e.m === false){return <li key={i}  className='JohnJoLi' ><div className='row'>   <div style={{color:'green'}}>{parseFloat(e.p).toFixed(3)}</div> <div>{e.q} </div>  <div>{date.toString().slice(16,25)} </div>  </div></li>;}
+  if(e.m === true){return <li key={i}  className='JohnJoLi'><div className = 'row'>   <div style={{color:'red'}}>{parseFloat(e.p).toFixed(3)}</div>  <div>{e.q}</div>  <div>{date.toString().slice(16,25)}</div> </div></li>;}
   });
  
 return(
     
     <div className='price-live' style={fetChed ? {width:'auto'}:{ width: '18.9vw'}}>
-        <div className='c-w'><span>price</span>  <span>Aomunt</span>  <span>Time</span>   </div>
+     
+        <div className='c-w'><span>Price</span>  <span>Amount</span>  <span>Time</span>   </div>
        
         { fetChed ? <ul className='flex-column' > {list} </ul> :  <div style={{width:'100%',height:'100%',display:'flex',justifyContent:'center',alignItems:'center'}}>  <ScaleLoader color={'#00B7FF'}/> </div> }
   

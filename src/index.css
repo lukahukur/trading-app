@@ -15,7 +15,6 @@ code {
     monospace;
 }
 .wrapper_candles{
-  border: 1px solid #272D35;
   width: min-content;
  
   
@@ -23,8 +22,9 @@ code {
 .b_w{
   display: flex;
   border: 1px solid #272D35;
- 
- 
+  border-left: none;
+  border-right: none;
+ height: 35px;
 }
 .btnT{
   background-color:#111316;
