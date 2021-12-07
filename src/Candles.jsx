@@ -151,13 +151,13 @@ const [sizes,setSizes] = useState({
   
 
            return(
-             <React.Fragment className='React_fragment'>
+             <div className='React_fragment'>
                
                 <div ref={chartRef}></div> 
               
                
    
-             </React.Fragment>
+             </div>
     
            );
 
