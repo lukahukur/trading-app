@@ -130,12 +130,20 @@
      width: 260px; 
   }
   .btn-wp input{
-   width: 100px;
-   height:30px;
+   width: 130px;
+   height:40px;
    border: none;
- 
+   background-color: #2B3139;
+   color: #757679;
+   cursor:pointer;
+    
   }
-
+  .btn-wp input[value='BUY']{
+    border-radius: 4px 0px 0px 4px;
+  }
+  .btn-wp input[value='SELL']{
+    border-radius: 0px 4px 4px 0px;
+  }
   
   .inp_wp{
     display: flex;
@@ -152,9 +160,31 @@
     margin-bottom: 30px;
     border-radius: none;
     
+    
   }
-
-
+.inp_wp_div{
+  display: flex;
+  flex-direction:row;
+  align-items: center;
+  background-color:#1E2026;
+  color: #5E6673;
+  border-radius: 4px;
+  margin-bottom: 30px;
+  height: 44px;
+  padding-left:1vw;
+  padding-right: 1vw;
+  
+}
+.inp_wp_div input{
+  background-color: #1E2026;
+margin: 0;
+  color: white;
+   font-size: 14px;
+   margin-left: 0.4vw;
+  border: none;
+  width: min-content;
+ padding-top: 4px;
+}
 
 
 
