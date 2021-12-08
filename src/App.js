@@ -10,6 +10,7 @@ import BuySellForm from './components/buySellForm';
 
 function App() {
   const [currency,getCurrency] = useState('btcusdt');
+  const [sell,isSelling] = useState(false);
   return (
     <div>
     <Header/>
@@ -17,7 +18,7 @@ function App() {
       <ReturnChart currency={currency}/>
       <LivePrice currency={currency}/>
       <div className='formJs'>
-      <BuySellForm></BuySellForm>
+      <BuySellForm sell={sell} isSelling={isSelling}></BuySellForm>
       </div>
       </div>
     
