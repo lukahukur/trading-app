@@ -37,7 +37,16 @@ useEffect(()=>{
         setTime('1M');
        
      }
- 
+ const arr_of_btns = [m1,m5,w1,M1];
+ arr_of_btns.forEach((e,i,arr)=>{
+   if(e.current.innerHTML === getTime){
+       e.current.classList.add('addBlue');
+   }
+   else{
+       e.current.classList.remove('addBlue');
+   }
+
+ });
 
 },[getTime]);
     
@@ -58,16 +67,16 @@ useEffect(()=>{
                     <button className={styles.noHover}>
                         Time
                     </button>
-                    <button className={styles.btnT} ref={m1}>
+                    <button className={styles.btnT} ref={m1} arg='m1'>
                         1m
                     </button>
-                    <button className={styles.btnT} ref={m5}>
+                    <button className={styles.btnT} ref={m5} arg='5m'>
                         5m
                     </button>
-                    <button className={styles.btnT} ref={w1}>
+                    <button className={styles.btnT} ref={w1} arg='1w'>
                         1w
                     </button>
-                    <button className={styles.btnT} ref={M1}>
+                    <button className={styles.btnT} ref={M1} arg='1M'>
                         1M
                     </button>
                     </div>

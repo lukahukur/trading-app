@@ -18,7 +18,7 @@ function App() {
       <ReturnChart currency={currency}/>
       <LivePrice currency={currency}/>
       <div className='formJs'>
-      <BuySellForm sell={sell} isSelling={isSelling}></BuySellForm>
+      <BuySellForm sell={sell} isSelling={isSelling} currency={currency}></BuySellForm>
       </div>
       </div>
     

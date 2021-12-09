@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react/cjs/react.development";
 import ScaleLoader from "react-spinners/ScaleLoader";
+import { useMemo } from "react";
 
 function LivePrice({currency}){
     const [trades,setTrades] = useState([]);
@@ -9,7 +10,7 @@ function LivePrice({currency}){
 
 
 
-    useEffect(()=>{
+    useMemo(()=>{
         const ws = new WebSocket(`wss://stream.binance.com:9443/ws/${currency}@trade`);
         ws.onmessage = (e)=>{
                 const parsedData = JSON.parse(e.data);
@@ -19,7 +20,7 @@ function LivePrice({currency}){
         }
         
     },[]);
-    useEffect(()=>{
+    useMemo(()=>{
       if(tHistory.length <=19){
      setTHistory(()=>{
       let temp = tHistory;

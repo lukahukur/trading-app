@@ -7,7 +7,7 @@ const CreateChart = ({currency,time}) =>{
  const [lastCandle,setLastCandle] = useState({});
  const [initCandles, setInitCandles] = useState([]);
   const chartRef = useRef();
- 
+ const[precision,setPrecision] = useState(2);
 const [sizes,setSizes] = useState({
   width:1200,
   height:500
@@ -20,7 +20,7 @@ const [sizes,setSizes] = useState({
     async function getCandleData(){
       let crrUpper = currency.toUpperCase();
       
-        let response = await fetch(`https://api.binance.com/api/v3/klines?symbol=${crrUpper}&interval=${time}&limit=1000`)
+        let response = await fetch(`https://api.binance.com/api/v3/klines?symbol=${crrUpper}&interval=${time}&limit=1000`);
         let data = await response.json();
        
         let cData = await data.map((d)=>{
@@ -39,27 +39,35 @@ const [sizes,setSizes] = useState({
   
         const chart = createChart(chartRef.current, { width: sizes.width, height: sizes.height });
         const candles =  chart.addCandlestickSeries();
-        candles.applyOptions({
-          upColor: '#0ECB81',
-          downColor: '#F6465D',
-          borderVisible: false,
       
-      });
-        const candlestickSeries = chart.addCandlestickSeries({
+        candles.applyOptions({
           upColor: '#6495ED',
           downColor: '#FF6347',
           wickVisible: true,
-      } );
-      chart.applyOptions({
-        priceScale: {
+          priceScale: {
             position: 'right',
-            autoScale: true,
             invertScale: false,
+            autoScale:true,
             borderVisible: true,
             borderColor: '#272D35',
+            
         },
-        //////
-    });
+        
+     
+          upColor: '#0ECB81',
+          downColor: '#F6465D',
+          borderVisible: false,
+          priceFormat: {
+            type: 'normal',
+            minMove: 5,
+            precision:precision,
+        }
+         
+      
+      });
+     
+      
+     
     chart.applyOptions({
       timeScale: {
           rightOffset: 12,
@@ -81,7 +89,7 @@ const [sizes,setSizes] = useState({
             
           },
           textColor: '#5E6673',
-          fontSize: 10,
+          fontSize: 11,
           fontFamily: 'Calibri',
       },
   });

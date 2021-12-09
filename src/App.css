@@ -172,7 +172,7 @@
   margin-bottom: 30px;
   height: 44px;
   padding-left:1vw;
-  padding-right: 1vw;
+  padding-right: 0.8vw;
   
 }
 .inp_wp_div input{
@@ -184,13 +184,30 @@ margin: 0;
   border: none;
   width: min-content;
  padding-top: 4px;
+ padding-right:0.2vw;
+ text-align: right;
+ width: 20vw;
+}
+.addBlue{
+  color: #2FF9E8;
+}
+.inp_wp input[type='range']{
+  -webkit-appearance: none;
+  height: 2px;
+  background: #474D57;
+
 }
 
-
-
-
-
-
+.inp_wp input[type='range']::-webkit-slider-thumb{
+  -webkit-appearance: none;
+  border-radius: 100%;
+  width: 16px;
+  height: 16px;
+  background:#767a83;
+  cursor: pointer;
+   
+ 
+}
 
 
 
@@ -237,7 +254,7 @@ margin: 0;
     border: 1px solid white;
   }
   
-
+  
 
   @media only screen and (max-width: 1475px){
         .price-live{
