@@ -7,7 +7,7 @@ const CreateChart = ({currency,time}) =>{
  const [lastCandle,setLastCandle] = useState({});
  const [initCandles, setInitCandles] = useState([]);
   const chartRef = useRef();
- const[precision,setPrecision] = useState(2);
+ const[precision,setPrecision] = useState(3);
 const [sizes,setSizes] = useState({
   width:1200,
   height:500
@@ -52,16 +52,17 @@ const [sizes,setSizes] = useState({
             borderColor: '#272D35',
             
         },
-        
+        ////////////////////////////////////
+        priceFormat: {
+          type: 'custom',
+          minMove: 0.00001,
+          formatter: price => '$' + parseFloat(price).toFixed(4),
+      },
      
           upColor: '#0ECB81',
           downColor: '#F6465D',
           borderVisible: false,
-          priceFormat: {
-            type: 'normal',
-            minMove: 5,
-            precision:precision,
-        }
+         
          
       
       });
