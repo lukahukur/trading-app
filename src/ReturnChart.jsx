@@ -53,14 +53,19 @@ useEffect(()=>{
     return(
         <div className={styles.c_w}>
                 <div className ='search_w'>
-                
-                    <div className='searchBox'>
-                        <img src={searchIcon} className='miniicon'/>
+                        <div className='s_w_II'>
+                    <div className='searchBox'><img src={searchIcon} className='miniicon'/>
+                        
                         <input type="text" id='Inp'/>
                         
                     </div>
+                    
                     <div className='currencyIndicator'>{currency.toUpperCase()}</div>
+                        </div>
+                        <div className='dropDown'>test</div>
                 </div>
+
+                
             <div  className={styles.b_w}  >
             
                 <div style={{display:'flex',width:'300px',justifyContent:'space-around'}}>

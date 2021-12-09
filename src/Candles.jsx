@@ -55,8 +55,8 @@ const [sizes,setSizes] = useState({
         ////////////////////////////////////
         priceFormat: {
           type: 'custom',
-          minMove: 0.00001,
-          formatter: price => '$' + parseFloat(price).toFixed(4),
+          minMove: 1000,
+          formatter: price => '$' + parseFloat(price).toFixed(2),
       },
      
           upColor: '#0ECB81',

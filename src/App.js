@@ -9,7 +9,7 @@ import BuySellForm from './components/buySellForm';
 
 
 function App() {
-  const [currency,getCurrency] = useState('bnbbtc');
+  const [currency,getCurrency] = useState('btcusdt');
   const [sell,isSelling] = useState(false);
   return (
     <div>

@@ -217,13 +217,14 @@ margin: 0;
 
 
 
-
-  .search_w{
-    padding: 10px 1vw;
+.s_w_II{
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  
+}
+  .search_w{
+    padding: 10px 1vw;
+
   }
   .searchBox{
       background-color: #2B3139;
@@ -258,6 +259,17 @@ margin: 0;
     border: 1px solid white;
   }
   
+.dropDown{
+  border: 1px solid white;
+  position: absolute;
+  color: white;
+  width: 350px;
+  top:76px;
+  display: none;
+
+
+}
+
   
 
   @media only screen and (max-width: 1475px){
