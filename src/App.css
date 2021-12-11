@@ -226,30 +226,36 @@ margin: 0;
     padding: 10px 1vw;
 
   }
+ 
   .searchBox{
-      background-color: #2B3139;
+      background-color: #1E2329;
       display: flex;
       flex-direction: row;
       width: 350px;
       align-items: center;
       height: 27px;
+      padding-right: 3px
+      
   }
   #Inp{
+    
     outline-width:0;
-  outline:none;
-    background-color: #2B3139;
+    outline:none;
+    background-color: #1E2329;
     border: none;
     font-size: 15px;
     caret-color:#59626E;
     color: white;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     width: 100%
+    
   }
   .miniicon{
     width: 25px;
   
   
   }
+ 
   .currencyIndicator{
   color: #2FF9F6;
   font-size: 20px;
@@ -260,18 +266,63 @@ margin: 0;
   }
   
 .dropDown{
-  border: 1px solid white;
+
+  background-color: #1E2329;
   position: absolute;
-  color: white;
+  color: rgb(212, 212, 212);
   width: 350px;
   top:76px;
-  display: none;
-
+margin-top: 2px;
+padding-top: 2px;
+  overflow-y: scroll;
+  height: 200px;
+z-index: 3;
+box-shadow: 4px 4px 6px black;
+display: none;
 
 }
+.searchBox:hover .dropDown{
+  display: flex;
+}
+.dropDown::-webkit-scrollbar {
+  width: 5px;
+}
 
-  
+/* Track */
+.dropDown::-webkit-scrollbar-track {
+  background: #1E2329; 
+}
+ 
+/* Handle */
+.dropDown::-webkit-scrollbar-thumb {
+  background: #5E6673; 
+}
 
+/* Handle on hover */
+.dropDown::-webkit-scrollbar-thumb:hover {
+  background: #45484e; 
+}
+  .ul_search{
+    list-style-type: none;
+    height: 105%;
+    margin-top:10px;
+    margin-bottom: 1px;
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    font-family: openSans;
+    padding-left: 25px;
+    
+  }
+  .li_search{
+    margin-bottom:8px ;
+    display: inline-block;
+    cursor: pointer;
+  }
+  .pp{
+    display: flex;
+    flex-direction: row;
+  }
   @media only screen and (max-width: 1475px){
         .price-live{
           font-size: 13px;

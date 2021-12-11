@@ -10,15 +10,44 @@ const styles = {
   }
   
 
-const ReturnChart = ({currency})=>{
+const ReturnChart = ({currency,coinsOBJ})=>{
+    const fnc = ()=>{console.log('please do it')};
     const m1 = useRef();
     const m5 = useRef();
     const w1= useRef();
     const M1 = useRef();
-    
+    const d_ref = useRef();
+    const input_ref = useRef();
+    const li = useRef();
+  
+    const [arr_of_coins,setC] = useState([...coinsOBJ]) ;
 
+
+    useEffect(()=>{
+      
+ 
+       input_ref.current.addEventListener('input',(event)=>{
+            let temp = [];
+            coinsOBJ.filter((e)=>{
+            
+                    if(e.market.includes(event.target.value.toLowerCase()) === true){
+                        temp.unshift(e);
+                        setC([...temp])
+                        
+                    }
+                
+                   
+            })
+            
+          
+       });
+   
+
+    },[]);
+   
+    const mappedCoinList = arr_of_coins.map((e,i)=>{return <li className='li_search' key={i} onClick={fnc} ><span>{e.coin}<span style={{color:'gray'}}> /USDT</span></span></li>});
     const [getTime,setTime] = useState('1m');
-
+    
 useEffect(()=>{
    m1.current.onclick = ()=>{
        setTime('1m');
@@ -56,13 +85,25 @@ useEffect(()=>{
                         <div className='s_w_II'>
                     <div className='searchBox'><img src={searchIcon} className='miniicon'/>
                         
-                        <input type="text" id='Inp'/>
+                        <input type="text" id='Inp' ref={input_ref} autoComplete="off"/>
+
+
+                        <div className='dropDown' ref={d_ref} >
+                            
+                            <ul className={'ul_search'} ref={li} >
+    
+                                {
+                                mappedCoinList
+                                }
+                                
+                            </ul>
+                         </div>  
                         
                     </div>
                     
                     <div className='currencyIndicator'>{currency.toUpperCase()}</div>
                         </div>
-                        <div className='dropDown'>test</div>
+                                                                         
                 </div>
 
                 
