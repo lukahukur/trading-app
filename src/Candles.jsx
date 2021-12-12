@@ -32,7 +32,7 @@ const [sizes,setSizes] = useState({
     }
      getCandleData();
     
-  },[time]);
+  },[time,currency]);
   
 
     useEffect(()=>{
@@ -130,10 +130,11 @@ const [sizes,setSizes] = useState({
     });
   
   };
+
      return () => ws.close()
      
 
-    },[initCandles,sizes]);
+    },[initCandles,sizes,currency]);
 
   
      useEffect(()=>{

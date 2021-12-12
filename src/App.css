@@ -259,6 +259,7 @@ margin: 0;
   .currencyIndicator{
   color: #2FF9F6;
   font-size: 20px;
+  text-transform: uppercase;
   }
   
   .Router_1{

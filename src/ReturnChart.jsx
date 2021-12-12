@@ -10,7 +10,7 @@ const styles = {
   }
   
 
-const ReturnChart = ({currency,coinsOBJ})=>{
+const ReturnChart = ({currency,coinsOBJ,setCurrency})=>{
     const fnc = ()=>{console.log('please do it')};
     const m1 = useRef();
     const m5 = useRef();
@@ -44,8 +44,9 @@ const ReturnChart = ({currency,coinsOBJ})=>{
    
 
     },[]);
+   //luka mere gadaakete attributshi chasmuli mnishvnelobidan debili imis amgeba 
    
-    const mappedCoinList = arr_of_coins.map((e,i)=>{return <li className='li_search' key={i} onClick={fnc} ><span>{e.coin}<span style={{color:'gray'}}> /USDT</span></span></li>});
+    const mappedCoinList = arr_of_coins.map((e,i)=>{return <li className='li_search' key={i} onClick={(e)=>{setCurrency(e.target.getAttribute('data')); document.getElementsByClassName('tv-lightweight-charts')[0].remove();}}  ><span data={e.market}>{e.coin}<span style={{color:'gray'}} data={e.market}> /USDT</span></span></li>});
     const [getTime,setTime] = useState('1m');
     
 useEffect(()=>{
@@ -101,7 +102,7 @@ useEffect(()=>{
                         
                     </div>
                     
-                    <div className='currencyIndicator'>{currency.toUpperCase()}</div>
+                    <div className='currencyIndicator'>{currency}</div>
                         </div>
                                                                          
                 </div>
