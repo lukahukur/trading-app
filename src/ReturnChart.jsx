@@ -12,6 +12,7 @@ const styles = {
 
 const ReturnChart = ({currency,coinsOBJ,setCurrency})=>{
     const fnc = ()=>{console.log('please do it')};
+    const [clicked,setClicked] = useState(0);
     const m1 = useRef();
     const m5 = useRef();
     const w1= useRef();
@@ -41,12 +42,36 @@ const ReturnChart = ({currency,coinsOBJ,setCurrency})=>{
             
           
        });
-   
+      
+  
 
     },[]);
    //luka mere gadaakete attributshi chasmuli mnishvnelobidan debili imis amgeba 
-   
-    const mappedCoinList = arr_of_coins.map((e,i)=>{return <li className='li_search' key={i} onClick={(e)=>{setCurrency(e.target.getAttribute('data')); document.getElementsByClassName('tv-lightweight-charts')[0].remove();}}  ><span data={e.market}>{e.coin}<span style={{color:'gray'}} data={e.market}> /USDT</span></span></li>});
+//    let counter = 0;
+        useEffect(()=>{
+            function changeState__Coin(e){
+                setCurrency(e.target.getAttribute('data'));
+                document.getElementsByClassName('tv-lightweight-charts')[0].remove()
+                setClicked(clicked +1)
+               }
+            for(var i =0;i<li.current.childNodes.length;i++){
+
+                li.current.childNodes[i].addEventListener('click',changeState__Coin)
+                if(li.current.childNodes[i].childNodes[0].getAttribute('data') === currency){
+                 li.current.childNodes[i].removeEventListener('click',changeState__Coin)
+                 console.log('yes')
+                 
+             }else{
+                 console.log('continue')
+                 continue;
+               
+             }
+         }
+        },[clicked]);
+
+    
+    const mappedCoinList = arr_of_coins.map((e,i)=>{return <li className='li_search' key={i}>
+          <span data={e.market}>{e.coin}<span style={{color:'gray'}} data={e.market}> /USDT</span></span></li>});
     const [getTime,setTime] = useState('1m');
     
 useEffect(()=>{
