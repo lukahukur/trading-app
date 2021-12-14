@@ -32,6 +32,7 @@ const ReturnChart = ({currency,coinsOBJ,setCurrency})=>{
  
        input_ref.current.addEventListener('input',(event)=>{
             let temp = [];
+            
             coinsOBJ.filter((e)=>{
             
                     if(e.market.includes(event.target.value.toLowerCase()) === true){
@@ -50,22 +51,25 @@ const ReturnChart = ({currency,coinsOBJ,setCurrency})=>{
 
    
   useEffect(()=>{
+     
     for(var i =0;i<li.current.childNodes.length;i++){
         li.current.childNodes[i].addEventListener('click',changeState__Coin)
  }
 
     let clicked= 0;
-    
+    for(var i =0;i<li.current.childNodes.length;i++){
+        if(li.current.childNodes[i].childNodes[0].getAttribute('data') === currency){
+            li.current.childNodes[i].removeEventListener('click',changeState__Coin);
+        }
+    }
     function changeState__Coin(e){
         if(clicked === 0){
             setCurrency(e.target.getAttribute('data'));
             document.getElementsByClassName('tv-lightweight-charts')[0].remove();
         }
         clicked ++;
-   
-      
        }
-      
+       
   },[currency]);
 
     
