@@ -64,7 +64,7 @@ function App() {
 
   ]
 
-  
+
   const [currency,getCurrency] = useState('btcusdt');
   const [sell,isSelling] = useState(false);
   function setCurrency(e){
@@ -76,7 +76,7 @@ function App() {
     <div>
     <Header/>
     <div className='crt-wrppr'>
-      <ReturnChart currency={currency} coinsOBJ={coinsOBJ} setCurrency={setCurrency}/>
+      <ReturnChart currency={currency} coinsOBJ={coinsOBJ} setCurrency={setCurrency} />
       <LivePrice currency={currency}/>
       <div className='formJs'>
       <BuySellForm sell={sell} isSelling={isSelling} currency={currency}></BuySellForm>

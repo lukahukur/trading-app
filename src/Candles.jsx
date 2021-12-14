@@ -3,17 +3,21 @@ import { createChart } from 'lightweight-charts';
 
 
 
-const CreateChart = ({currency,time}) =>{
+const CreateChart = ({currency,time,getChart}) =>{
  const [lastCandle,setLastCandle] = useState({});
  const [initCandles, setInitCandles] = useState([]);
   const chartRef = useRef();
+
  const[precision,setPrecision] = useState(3);
 const [sizes,setSizes] = useState({
   width:1200,
   height:500
 })
 
-
+useEffect(()=>{
+  getChart(chartRef.current);
+ 
+},[]);
   useEffect(()=>{
           
 
@@ -170,7 +174,7 @@ const [sizes,setSizes] = useState({
     
    },[]);
    
-  
+   
 
            return(
              <div className='React_fragment'>

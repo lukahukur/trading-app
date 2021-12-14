@@ -11,8 +11,9 @@ const styles = {
   
 
 const ReturnChart = ({currency,coinsOBJ,setCurrency})=>{
-    const fnc = ()=>{console.log('please do it')};
-    const [clicked,setClicked] = useState(0);
+  
+
+   
     const m1 = useRef();
     const m5 = useRef();
     const w1= useRef();
@@ -20,8 +21,10 @@ const ReturnChart = ({currency,coinsOBJ,setCurrency})=>{
     const d_ref = useRef();
     const input_ref = useRef();
     const li = useRef();
-  
+       
     const [arr_of_coins,setC] = useState([...coinsOBJ]) ;
+    const [chartplz,setChart] = useState('');
+    
 
 
     useEffect(()=>{
@@ -42,32 +45,28 @@ const ReturnChart = ({currency,coinsOBJ,setCurrency})=>{
             
           
        });
-      
   
-
     },[]);
-   //luka mere gadaakete attributshi chasmuli mnishvnelobidan debili imis amgeba 
-//    let counter = 0;
-        useEffect(()=>{
-            function changeState__Coin(e){
-                setCurrency(e.target.getAttribute('data'));
-                document.getElementsByClassName('tv-lightweight-charts')[0].remove()
-                setClicked(clicked +1)
-               }
-            for(var i =0;i<li.current.childNodes.length;i++){
 
-                li.current.childNodes[i].addEventListener('click',changeState__Coin)
-                if(li.current.childNodes[i].childNodes[0].getAttribute('data') === currency){
-                 li.current.childNodes[i].removeEventListener('click',changeState__Coin)
-                 console.log('yes')
-                 
-             }else{
-                 console.log('continue')
-                 continue;
-               
-             }
-         }
-        },[clicked]);
+   
+  useEffect(()=>{
+    for(var i =0;i<li.current.childNodes.length;i++){
+        li.current.childNodes[i].addEventListener('click',changeState__Coin)
+ }
+
+    let clicked= 0;
+    
+    function changeState__Coin(e){
+        if(clicked === 0){
+            setCurrency(e.target.getAttribute('data'));
+            document.getElementsByClassName('tv-lightweight-charts')[0].remove();
+        }
+        clicked ++;
+   
+      
+       }
+      
+  },[currency]);
 
     
     const mappedCoinList = arr_of_coins.map((e,i)=>{return <li className='li_search' key={i}>
@@ -153,7 +152,7 @@ useEffect(()=>{
                     </button>
                     </div>
                 </div>
-             <CreateChart currency={currency}  time={getTime}/>
+             <CreateChart currency={currency}  time={getTime} getChart={(e)=>{setChart(e)}}/>
             </div>
     );
 }
