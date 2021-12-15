@@ -24,44 +24,17 @@ const ReturnChart = ({currency,coinsOBJ,setCurrency})=>{
        
     const [arr_of_coins,setC] = useState([...coinsOBJ]) ;
     const [chartplz,setChart] = useState('');
-    
-
-
-    useEffect(()=>{
-      
- 
-       input_ref.current.addEventListener('input',(event)=>{
-            let temp = [];
-            
-            coinsOBJ.filter((e)=>{
-            
-                    if(e.market.includes(event.target.value.toLowerCase()) === true){
-                        temp.unshift(e);
-                        setC([...temp])
-                        
-                    }
-                
-                   
-            })
-            
-          
-       });
-  
-    },[]);
-
-   
+       
   useEffect(()=>{
      
     for(var i =0;i<li.current.childNodes.length;i++){
         li.current.childNodes[i].addEventListener('click',changeState__Coin)
- }
-
-    let clicked= 0;
-    for(var i =0;i<li.current.childNodes.length;i++){
         if(li.current.childNodes[i].childNodes[0].getAttribute('data') === currency){
             li.current.childNodes[i].removeEventListener('click',changeState__Coin);
         }
-    }
+ }
+
+    let clicked= 0;
     function changeState__Coin(e){
         if(clicked === 0){
             setCurrency(e.target.getAttribute('data'));
@@ -69,6 +42,28 @@ const ReturnChart = ({currency,coinsOBJ,setCurrency})=>{
         }
         clicked ++;
        }
+
+       input_ref.current.addEventListener('input',(event)=>{
+        let temp = [];
+  
+        coinsOBJ.filter((e)=>{
+            for(var i =0;i<li.current.childNodes.length;i++){
+                li.current.childNodes[i].addEventListener('click',changeState__Coin)
+                if(li.current.childNodes[i].childNodes[0].getAttribute('data') === currency){
+                    li.current.childNodes[i].removeEventListener('click',changeState__Coin);
+                }
+         }
+                if(e.market.includes(event.target.value.toLowerCase()) === true){
+                    temp.unshift(e);
+                    setC([...temp])
+                    
+                }
+            
+               
+        })
+        
+      
+   });
        
   },[currency]);
 
