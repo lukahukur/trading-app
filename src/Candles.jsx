@@ -58,7 +58,7 @@ const [sizes,setSizes] = useState({
           type: 'custom',
           minMove: 0.0000001,
         formatter: price => '$' + parseFloat(price)
-        .toFixed(currency === 'btcusdt' || 'ethusdt' || 'bnbusdt'?2:currency === 'shibusdt'?7:currency === 'trxusdt'?6:currency === 'dogeusdt' || 'magicusdt'?4:currency === 'xrpusdt'?5:3),
+        .toFixed(currency === 'btcusdt'|| currency === 'ethusdt' || currency === 'bnbusdt'?2:currency === 'shibusdt'?7:currency === 'trxusdt'?6:currency === 'xrpusdt'?5:currency === 'dogeusdt' || currency === 'magicusdt'?4:3),
       },
      
           upColor: '#0ECB81',
