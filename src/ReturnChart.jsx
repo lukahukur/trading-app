@@ -23,7 +23,7 @@ const ReturnChart = ({currency,coinsOBJ,setCurrency})=>{
     const li = useRef();
        
     const [arr_of_coins,setC] = useState([...coinsOBJ]) ;
-    const [chartplz,setChart] = useState('');
+    
        
   useEffect(()=>{
      
@@ -47,6 +47,8 @@ const ReturnChart = ({currency,coinsOBJ,setCurrency})=>{
         let temp = [];
   
         coinsOBJ.filter((e)=>{
+            //repeated code
+            //yes,Im lazy ass
             for(var i =0;i<li.current.childNodes.length;i++){
                 li.current.childNodes[i].addEventListener('click',changeState__Coin)
                 if(li.current.childNodes[i].childNodes[0].getAttribute('data') === currency){
@@ -151,7 +153,7 @@ useEffect(()=>{
                     </button>
                     </div>
                 </div>
-             <CreateChart currency={currency}  time={getTime} getChart={(e)=>{setChart(e)}}/>
+             <CreateChart currency={currency}  time={getTime} />
             </div>
     );
 }

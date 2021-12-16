@@ -14,52 +14,62 @@ function App() {
         {
           market:'btcusdt',
           name:'BTC/USDT',
-          coin:'BTC'
+          coin:'BTC',
+          fixed:2
         },
         {
           market:'shibusdt',
           name:'SHIB/USDT',
-          coin:'SHIB'
+          coin:'SHIB',
+          fixed:7
         },
         {
           market:'ethusdt',
           name:'ETH/USDT',
-          coin:'ETH'
+          coin:'ETH',
+          fixed:2
         },
         {
           market:'dogeusdt',
           name:'DOGE/USDT',
-          coin:'DOGE'
+          coin:'DOGE',
+          fixed:4
         },
         {
           market:'bnbusdt',
           name:'BNB/USDT',
-          coin:'BNB'
+          coin:'BNB',
+          fixed:2
         },
         {
           market:'uniusdt',
           name:'UNI/USDT',
-          coin:'UNI'
+          coin:'UNI',
+          fixed:3
         },
         {
           market:'trxusdt',
           name:'TRX/USDT',
-          coin:'TRX'
+          coin:'TRX',
+          fixed:6
         },
         {
           market:'xrpusdt',
           name:'XRP/BTC',
-          coin:'XRP'
+          coin:'XRP',
+          fixed:5
         },
         {
           market:'solusdt',
           name:'SOL/USDT',
-          coin:'SOL'
+          coin:'SOL',
+          fixed:3
         },
         {
           market:'maticusdt',
           name:'MATIC/USDT',
-          coin:'MAGIC'
+          coin:'MAGIC',
+          fixed:4
         }
 
   ]

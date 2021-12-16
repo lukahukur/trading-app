@@ -3,7 +3,7 @@ import { createChart } from 'lightweight-charts';
 
 
 
-const CreateChart = ({currency,time,getChart}) =>{
+const CreateChart = ({currency,time}) =>{
  const [lastCandle,setLastCandle] = useState({});
  const [initCandles, setInitCandles] = useState([]);
   const chartRef = useRef();
@@ -14,10 +14,7 @@ const [sizes,setSizes] = useState({
   height:500
 })
 
-useEffect(()=>{
-  getChart(chartRef.current);
- 
-},[]);
+
   useEffect(()=>{
           
 
@@ -56,11 +53,12 @@ useEffect(()=>{
             borderColor: '#272D35',
             
         },
-        ////////////////////////////////////
+
         priceFormat: {
           type: 'custom',
-          minMove: 1000,
-          formatter: price => '$' + parseFloat(price).toFixed(2),
+          minMove: 0.0000001,
+        formatter: price => '$' + parseFloat(price)
+        .toFixed(currency === 'btcusdt' || 'ethusdt' || 'bnbusdt'?2:currency === 'shibusdt'?7:currency === 'trxusdt'?6:currency === 'dogeusdt' || 'magicusdt'?4:currency === 'xrpusdt'?5:3),
       },
      
           upColor: '#0ECB81',
