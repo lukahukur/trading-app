@@ -22,7 +22,7 @@ function BuySellForm({sell,isSelling,currency}){
         </div>
 
         <div className='inp_wp'>
-        <div className='inp_wp_div'>  <p>Price</p><input type="text" style={{width:'100%'}} /> <p style={{color:'white',textTransform: 'uppercase'}}>{currency.substring(3,7)}</p></div>
+        <div className='inp_wp_div'>  <p>Price</p><input type="text" style={{width:'100%'}} /> <p style={{color:'white',textTransform: 'uppercase'}}>{'usdt'}</p></div>
         <div className='inp_wp_div'> <p>Amount</p> <input type="text" style={{width:'100%'}}/> <p style={{color:'white',textTransform: 'uppercase'}}>{currency.substring(0,3)}</p> </div>
         <input type="range" className='range_price'/>
            <input type="button" value={sell === true ?'SELL' : 'BUY'} style={sell?{backgroundColor:'#F6465D',border:'none',borderRadius:'5px'}:{backgroundColor:'#0ECB81',border:'none',borderRadius:'5px'}}/>

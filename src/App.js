@@ -1,8 +1,7 @@
 import './App.css';
 import ReturnChart from './ReturnChart';
 import LivePrice from './LivePrice';
-import { useEffect, useState } from 'react';
-import reportWebVitals from './reportWebVitals';
+import {useState } from 'react';
 import Header from './components/Header';
 import BuySellForm from './components/buySellForm';
 

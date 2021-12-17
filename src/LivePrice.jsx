@@ -1,50 +1,79 @@
-import { useEffect, useState } from "react/cjs/react.development";
+import { useEffect, useState,useRef } from "react/cjs/react.development";
 import ScaleLoader from "react-spinners/ScaleLoader";
-import { useMemo } from "react";
+
 
 function LivePrice({currency}){
     const [trades,setTrades] = useState([]);
     const [tHistory,setTHistory] = useState([]);
   const [fetChed,setFetched] = useState(false);
+  const refCurrencyNow = useRef('btcusdt');
+    useEffect(()=>{
+      refCurrencyNow.current = currency;
+    });
+    const nowCurrency = refCurrencyNow.current;
 
 
 
-
-    useMemo(()=>{
-        const ws = new WebSocket(`wss://stream.binance.com:9443/ws/${currency}@trade`);
+    useEffect(()=>{
+  
+      const ws = new WebSocket(`wss://stream.binance.com:9443/ws/${currency}@trade`);
         ws.onmessage = (e)=>{
-                const parsedData = JSON.parse(e.data);
-                setTrades(parsedData);
-               setFetched(true);
-                
+         
+          const parsedData = JSON.parse(e.data);
+         
+            if(parsedData.s === currency.toUpperCase()){
+              setTrades(parsedData);
+            }
+          
+            setFetched(true); 
+      }
+   
+    
+
+    },[currency]);
+
+
+
+
+    useEffect(()=>{
+      if(tHistory.length <=19){
+        if(trades.s === currency.toUpperCase()){
+          setTHistory(()=>{
+       
+            let temp = tHistory;
+            temp.push(trades);
+             return[...temp]
+           });
+        } else if(nowCurrency !== currency){
+          setTHistory([ ])
+          setFetched(false);
         }
         
-    },[]);
-    useMemo(()=>{
-      if(tHistory.length <=19){
-     setTHistory(()=>{
-      let temp = tHistory;
-      temp.push(trades);
-       return[...temp]
-     });
-    }else{
+      
+    
+    }
+    else if(trades.s === currency.toUpperCase()){
+    
      let shorter = tHistory;
      shorter = shorter.slice(1,20);
       setTHistory([...shorter,trades]);
      
     }
-    // setTHistory([...tHistory,trades]);
-    
-    },[trades])
- 
-   
+    else if(nowCurrency !== currency){
+      setTHistory([ ])
+      setFetched(false);
+    }
+  
+    },[trades,currency])
+
+  
 
  
 
   const list = tHistory.map((e,i)=>{
     let date = new Date(e.T);
-  if(e.m === false){return <li key={i}  className='JohnJoLi' ><div className='row'>   <div style={{color:'green'}}>{parseFloat(e.p).toFixed(3)}</div> <div>{e.q} </div>  <div>{date.toString().slice(16,25)} </div>  </div></li>;}
-  if(e.m === true){return <li key={i}  className='JohnJoLi'><div className = 'row'>   <div style={{color:'red'}}>{parseFloat(e.p).toFixed(3)}</div>  <div>{e.q}</div>  <div>{date.toString().slice(16,25)}</div> </div></li>;}
+  if(e.m === false){return <li key={i}  className='JohnJoLi' ><div className='row'>   <div style={{color:'green'}}>{parseFloat(e.p).toFixed(2)}</div> <div>{e.q} </div>  <div>{date.toString().slice(16,25)} </div>  </div></li>;}
+  if(e.m === true){return <li key={i}  className='JohnJoLi'><div className = 'row'>   <div style={{color:'red'}}>{parseFloat(e.p).toFixed(2)}</div>  <div>{e.q}</div>  <div>{date.toString().slice(16,25)}</div> </div></li>;}
   });
  
 return(
