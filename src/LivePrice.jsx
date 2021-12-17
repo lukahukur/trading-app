@@ -72,8 +72,18 @@ function LivePrice({currency}){
 
   const list = tHistory.map((e,i)=>{
     let date = new Date(e.T);
-  if(e.m === false){return <li key={i}  className='JohnJoLi' ><div className='row'>   <div style={{color:'green'}}>{parseFloat(e.p).toFixed(2)}</div> <div>{e.q} </div>  <div>{date.toString().slice(16,25)} </div>  </div></li>;}
-  if(e.m === true){return <li key={i}  className='JohnJoLi'><div className = 'row'>   <div style={{color:'red'}}>{parseFloat(e.p).toFixed(2)}</div>  <div>{e.q}</div>  <div>{date.toString().slice(16,25)}</div> </div></li>;}
+  if(e.m === false){return <li key={i}  className='JohnJoLi' ><div className='row'> 
+  
+    <div style={{color:'green'}}>{parseFloat(e.p)
+    .toFixed(currency === 'shibusdt'?8:2)
+    }</div> <div>{parseFloat(e.q).toFixed(currency === 'shibusdt'?0:5)} </div>  <div>{date.toString().slice(16,25)} </div>  </div></li>;}
+
+  if(e.m === true){return <li key={i}  className='JohnJoLi'>
+    
+    <div className = 'row'>   <div style={{color:'red'}}>{parseFloat(e.p)
+    .toFixed(currency === 'shibusdt'?8:2)
+    }</div>  <div>{parseFloat(e.q).toFixed(currency === 'shibusdt'?0:5)}</div>  <div>{date.toString().slice(16,25)}</div> </div></li>;}
+
   });
  
 return(
