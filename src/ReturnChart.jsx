@@ -108,8 +108,10 @@ useEffect(()=>{
     return(
         <div className={styles.c_w}>
                 <div className ='search_w'>
-                        <div className='s_w_II'>
-                    <div className='searchBox'><img src={searchIcon} className='miniicon'/>
+                        
+                        
+                    <div className='s_w_II'>
+                     <div className='searchBox'><img src={searchIcon} className='miniicon'/>
                         
                         <input type="text" id='Inp' ref={input_ref} autoComplete="off"/>
 
@@ -123,12 +125,12 @@ useEffect(()=>{
                                 }
                                 
                             </ul>
-                         </div>  
+                           </div>  
                         
+                      </div>
+                        <div className='hr_24_crr'>sdsd</div>
+                        <div className='currencyIndicator'>{currency}</div>
                     </div>
-                    
-                    <div className='currencyIndicator'>{currency}</div>
-                        </div>
                                                                          
                 </div>
 

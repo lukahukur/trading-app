@@ -4,7 +4,8 @@ import LivePrice from './LivePrice';
 import {useState } from 'react';
 import Header from './components/Header';
 import BuySellForm from './components/buySellForm';
-
+import react from 'react';
+import History from './components/history';
 
 
 function App() {
@@ -82,17 +83,21 @@ function App() {
  
 
   return (
-    <div>
+<react.Fragment>
+
     <Header/>
     <div className='crt-wrppr'>
       <ReturnChart currency={currency} coinsOBJ={coinsOBJ} setCurrency={setCurrency} />
       <LivePrice currency={currency}/>
-      <div className='formJs'>
-      <BuySellForm sell={sell} isSelling={isSelling} currency={currency}></BuySellForm>
+       <div className='formJs'>
+        <BuySellForm sell={sell} isSelling={isSelling} currency={currency}></BuySellForm>
       </div>
+    </div>
+      <div className='grid_lvl_2'>
+    <History/>
       </div>
     
-      </div>
+</react.Fragment>
   );
 }
 
