@@ -41,8 +41,10 @@ function LivePrice({currency}){
           setTHistory(()=>{
        
             let temp = tHistory;
+           
             temp.push(trades);
              return[...temp]
+             
            });
         } else if(nowCurrency !== currency){
           setTHistory([ ])

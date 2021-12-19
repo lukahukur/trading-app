@@ -13,7 +13,7 @@ const styles = {
 const ReturnChart = ({currency,coinsOBJ,setCurrency})=>{
   
 
-   
+    const [change24hr,set24rhchange] = useState([]);
     const m1 = useRef();
     const m5 = useRef();
     const w1= useRef();
@@ -21,10 +21,23 @@ const ReturnChart = ({currency,coinsOBJ,setCurrency})=>{
     const d_ref = useRef();
     const input_ref = useRef();
     const li = useRef();
-       
+
     const [arr_of_coins,setC] = useState([...coinsOBJ]) ;
-    
+  
+    useEffect(()=>{
+        const ws = new WebSocket("wss://stream.binance.com:9443/ws/!ticker@arr");
+        ws.onmessage = (e)=>{
+            const parsedData = JSON.parse(e.data);
+            set24rhchange(parsedData)
+            
+        }
        
+    },[currency]);
+  
+  useEffect(()=>{
+       
+
+  },[change24hr,currency]);
   useEffect(()=>{
      
     for(var i =0;i<li.current.childNodes.length;i++){
@@ -113,7 +126,7 @@ useEffect(()=>{
                     <div className='s_w_II'>
                      <div className='searchBox'><img src={searchIcon} className='miniicon'/>
                         
-                        <input type="text" id='Inp' ref={input_ref} autoComplete="off"/>
+                        <input type="text" id='Inp' ref={input_ref} autoComplete="off" placeholder={currency.toUpperCase()}/>
 
 
                         <div className='dropDown' ref={d_ref} >
@@ -128,7 +141,48 @@ useEffect(()=>{
                            </div>  
                         
                       </div>
-                        <div className='hr_24_crr'>sdsd</div>
+                        <div className='hr_24_crr' >
+                            <span className='clm'>
+                            <span>24h High</span>
+                            {
+                            change24hr.map((e,i)=>{
+                                if(currency.toUpperCase() === e.s){
+                                    return <span className='w' key={i}>{parseFloat(e.h).toFixed(2)}</span>
+                                }
+                            })
+                            
+                        }</span>
+
+                        <span className='clm l'>
+                            <span>24h Low</span>
+                            {
+                            change24hr.map((e,i)=>{
+                                if(currency.toUpperCase() === e.s){
+                                    return <span className='w' key={i}>{parseFloat(e.l).toFixed(2)}</span>
+                                }
+                            })
+                            
+                        }</span>
+                          <span className='clm l'>
+                            <span>24h change</span>
+                            <span className='s_w2'>
+                            {
+                            change24hr.map((e,i)=>{
+                                if(currency.toUpperCase() === e.s){
+                                    return <span className='w' key={i} style={e.p > 0? {color:'#0ECB81'}:{color:'#F6465D'}}>{(parseFloat(e.p))}</span>
+                                }
+
+                            })}
+                            
+                            {
+                            change24hr.map((e,i)=>{
+                                if(currency.toUpperCase() === e.s){
+                                    return <span className='w' key={i} style={e.p > 0? {color:'#0ECB81'}:{color:'#F6465D'}}>{(parseFloat(e.P).toFixed(2) + '%')}</span>
+                                }
+                            })}</span>
+                                 </span>
+                        
+                        </div>
                         <div className='currencyIndicator'>{currency}</div>
                     </div>
                                                                          

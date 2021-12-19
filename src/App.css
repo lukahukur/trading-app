@@ -117,13 +117,6 @@ body {
 
 
 
-  .hr_24_crr
-  {
-    color: white;
-    border: 1px solid red;
-    width: 19vw;
-  
-  }
 
 
 
@@ -236,9 +229,10 @@ margin: 0;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
 }
   .search_w{
-    padding: 14px 1vw;
+    padding: 6px 1vw;
 
   }
  
@@ -248,7 +242,7 @@ margin: 0;
       flex-direction: row;
       width: 350px;
       align-items: center;
-      height: 27px;
+      height: 36px;
       padding-right: 3px
       
   }
@@ -273,7 +267,7 @@ margin: 0;
  
   .currencyIndicator{
   color: #2FF9F6;
-  font-size: 20px;
+  font-size: 22px;
   text-transform: uppercase;
   }
   
@@ -288,7 +282,7 @@ margin: 0;
   color: rgb(212, 212, 212);
   width: 350px;
   top:76px;
-margin-top: 2px;
+margin-top: 10px;
 padding-top: 2px;
   overflow-y: scroll;
   height: 200px;
@@ -365,9 +359,34 @@ display: none;
     border-bottom: 1px solid #272D35;
   }
   .dsp_grd{
-
+    display: grid;
   }
+  .hr_24_crr{
+    display: flex;
+    flex-direction: row;
+    height: 43px;
+    width: 19vw;
+    align-items: center;
+  }
+  .s_w2{
+    display: flex;
+    width: 74px;
+    justify-content: space-between;
+  }
+.clm{
+  display: flex;
+  flex-direction: column;
+  color: rgb(132, 142, 156);
+  font-size: 13px;
 
+}
+.w{
+  color: white;
+  font-size: 12px;
+}
+.l{
+  margin-left: 1vw;
+}
   @media only screen and (max-width: 1475px){
         .price-live{
           font-size: 13px;
