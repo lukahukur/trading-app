@@ -9,10 +9,17 @@ const styles = {
     noHover:'nh'
   }
   
-
-const ReturnChart = ({currency,coinsOBJ,setCurrency})=>{
+//   let streams = [
+//     "ethusdt@trade","bnbusdt@trade",
+//     "xrpusdt@trade","shibusdt@trade",
+//     "dogeusdt@trade","uniusdt@trade",
+//     "trxusdt@trade","solusdt@trade",
+//     "maticusdt@trade"
+//   ];
+const ReturnChart = ({currency,coinsOBJ,setCurrency,getTrades})=>{
   
 
+    const [curr,setCurr]= useState([]);
     const [change24hr,set24rhchange] = useState([]);
     const m1 = useRef();
     const m5 = useRef();
@@ -20,20 +27,35 @@ const ReturnChart = ({currency,coinsOBJ,setCurrency})=>{
     const M1 = useRef();
     const d_ref = useRef();
     const input_ref = useRef();
+    const p_r = useRef();
     const li = useRef();
 
     const [arr_of_coins,setC] = useState([...coinsOBJ]) ;
-  
+    
     useEffect(()=>{
         const ws = new WebSocket("wss://stream.binance.com:9443/ws/!ticker@arr");
         ws.onmessage = (e)=>{
             const parsedData = JSON.parse(e.data);
+            
             set24rhchange(parsedData)
             
         }
-       
+    
     },[currency]);
+
+   useEffect(()=>{
+    if(currency.toUpperCase() === getTrades.s){
+        
+        setCurr(getTrades)
+
+       
+p_r.current.style.color = curr.m?'#F6465D' : '#0ECB81';
   
+    }
+    
+   },[currency,getTrades]);
+
+
   useEffect(()=>{
        
 
@@ -142,7 +164,14 @@ useEffect(()=>{
                         
                       </div>
                         <div className='hr_24_crr' >
-                            <span className='clm'>
+                        <span className='clm '>
+                        <span>Price</span>
+                            {
+                           
+                <span className='w' ref={p_r}>{parseFloat(curr.p).toFixed(2)}</span>
+                                
+                        }</span>
+                            <span className='clm l'>
                             <span>24h High</span>
                             {
                             change24hr.map((e,i)=>{

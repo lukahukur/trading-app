@@ -2,7 +2,7 @@ import { useEffect, useState,useRef } from "react/cjs/react.development";
 import ScaleLoader from "react-spinners/ScaleLoader";
 
 
-function LivePrice({currency}){
+function LivePrice({currency,tr}){
     const [trades,setTrades] = useState([]);
     const [tHistory,setTHistory] = useState([]);
   const [fetChed,setFetched] = useState(false);
@@ -23,6 +23,7 @@ function LivePrice({currency}){
          
             if(parsedData.s === currency.toUpperCase()){
               setTrades(parsedData);
+             tr(parsedData)
             }
           
             setFetched(true); 

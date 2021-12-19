@@ -6,6 +6,8 @@ import Header from './components/Header';
 import BuySellForm from './components/buySellForm';
 import react from 'react';
 import History from './components/history';
+import { getTTFB } from 'web-vitals';
+import { useEffect } from 'react/cjs/react.development';
 
 
 function App() {
@@ -77,9 +79,13 @@ function App() {
 
   const [currency,getCurrency] = useState('btcusdt');
   const [sell,isSelling] = useState(false);
+  const [getTrades,setTrades] = useState({});
   function setCurrency(e){
       getCurrency(e);
   }
+
+
+
  
 
   return (
@@ -87,8 +93,8 @@ function App() {
 
     <Header/>
     <div className='crt-wrppr'>
-      <ReturnChart currency={currency} coinsOBJ={coinsOBJ} setCurrency={setCurrency} />
-      <LivePrice currency={currency}/>
+      <ReturnChart currency={currency} coinsOBJ={coinsOBJ} setCurrency={setCurrency} getTrades={getTrades}/>
+      <LivePrice currency={currency} tr={(e)=>{setTrades(e)}}/>
        <div className='formJs'>
         <BuySellForm sell={sell} isSelling={isSelling} currency={currency}></BuySellForm>
       </div>

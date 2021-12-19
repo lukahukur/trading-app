@@ -79,7 +79,7 @@ body {
     color :#F6465D;
   }
   .green{
-    color: #0ECB81
+    color: #0ECB81;
   }
   .JohnJoLi{
     display: flex;
@@ -378,11 +378,13 @@ display: none;
   flex-direction: column;
   color: rgb(132, 142, 156);
   font-size: 13px;
-
+  font-family: plex;
 }
 .w{
   color: white;
   font-size: 12px;
+  margin-top: 3px;
+
 }
 .l{
   margin-left: 1vw;
