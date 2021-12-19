@@ -6,8 +6,8 @@ import Header from './components/Header';
 import BuySellForm from './components/buySellForm';
 import react from 'react';
 import History from './components/history';
-import { getTTFB } from 'web-vitals';
-import { useEffect } from 'react/cjs/react.development';
+import OrderBook from './components/OrderBook';
+
 
 
 function App() {
@@ -101,6 +101,7 @@ function App() {
     </div>
       <div className='grid_lvl_2'>
     <History/>
+    <OrderBook currency={currency} getTrades={getTrades}/>
       </div>
     
 </react.Fragment>

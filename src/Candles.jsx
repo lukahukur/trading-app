@@ -17,7 +17,7 @@ const [sizes,setSizes] = useState({
 
   useEffect(()=>{
           
-
+////api/v3/trades
     async function getCandleData(){
       let crrUpper = currency.toUpperCase();
       
@@ -29,7 +29,7 @@ const [sizes,setSizes] = useState({
         });
         setInitCandles(cData)
         document.getElementsByClassName('tv-lightweight-charts')[0].remove();
-       
+       console.log(cData)
     }
      getCandleData();
     

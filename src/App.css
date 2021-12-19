@@ -389,6 +389,41 @@ display: none;
 .l{
   margin-left: 1vw;
 }
+
+
+
+
+
+.orderbook_wrapper{
+  width:301px;
+  border: 1px solid #272D35;
+  border-left:none ;
+  border-top: none;
+  
+}
+.top_lvl_orders{
+display: flex;
+flex-direction: column;
+}
+
+.middle_lvl_price{
+
+}
+.botttom_lvl_orders{
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+
+
+
+
+
+
+
+
   @media only screen and (max-width: 1475px){
         .price-live{
           font-size: 13px;
