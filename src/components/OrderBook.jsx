@@ -32,16 +32,17 @@ function OrderBook({currency,getTrades}){
                         p:e.price,
                         Q:e.quoteQty,
                         m:e.isBuyerMaker,
-                        b:e.isBestMatch
+                        b:e.isBestMatch,
+                        c:currency
                     } ;
                 });    
-                  
                   setData(parsed);
                
                   isFetched(true);
+                
                   return isFetched(false);
             }
-                setInterval(()=>{ getData()},1000);
+                setInterval(()=>{ getData()},1500);
            
          
           },[currency]);
@@ -49,7 +50,8 @@ function OrderBook({currency,getTrades}){
 
 
     useEffect(()=>{
-       
+      api.forEach((e)=>{
+          if(e.c === currency){
             setSellHistory(()=>{
                 let tmp = api;
                 for(var j = 0;j<tmp.length;j++){
@@ -69,11 +71,15 @@ function OrderBook({currency,getTrades}){
 
                 return e
                });
+             
                return [...filtered];
             });
+          }
+      })
+            
         
-    console.log(sellHistory)
-
+        
+       
     },[currency,fetched]);
 
  
