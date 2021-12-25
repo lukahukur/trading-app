@@ -142,7 +142,7 @@ const [sizes,setSizes] = useState({
      useEffect(()=>{
       const handler = () => {
        if(window.innerWidth <= 1920 && window.innerWidth > 1475){
-        setSizes({width:window.innerWidth-640,height:400})
+        setSizes({width:window.innerWidth-640,height:450})
         document.getElementsByClassName('tv-lightweight-charts')[0].remove();
        }
          if(window.innerWidth <= 1475){
@@ -162,7 +162,7 @@ const [sizes,setSizes] = useState({
      },[])
    useEffect(()=>{
     if(window.innerWidth <= 1920 && window.innerWidth > 1475){
-      setSizes({width:window.innerWidth-640,height:400})
+      setSizes({width:window.innerWidth-640,height:450})
       document.getElementsByClassName('tv-lightweight-charts')[0].remove();
      }
      if(window.innerWidth <= 1475){

@@ -7,7 +7,7 @@
   font-family: plex;
   src: url('./IBM_Plex_Sans/Arial\ Semicomprimida.ttf');
 }
- 
+
 ::-webkit-scrollbar {
   display: none;
   width: 0;
@@ -42,8 +42,8 @@ body {
     color: #59626E;
     display: flex;
     flex-direction: column;
-   
     border: 0.5px solid #272D35;
+    border-left: none;
     border-top: none;
     font-size: 14px;
     margin: 0;
@@ -67,7 +67,7 @@ body {
   .lp{
    border-bottom: 1px solid #272D35;
     margin-top: -3px;
-    height: 59px;
+    height: 45px;
     display: flex;
     align-items: center;
     color: white;
@@ -104,7 +104,7 @@ body {
     flex-direction: row;
     justify-content: space-between;
     margin-top: auto;
-    padding: 0vw 19px;
+    padding: 0vw 22px;
     color: #AFB5BE;
     font-size: 17px;
     width: 290px;
@@ -336,9 +336,9 @@ display: none;
 
   .grid_lvl_2{
     display: grid;
-    grid-template-columns: calc(100% - 637px) auto auto;
+    grid-template-columns: calc(100% - 637px) 300px auto;
     width: 100%;
-    height: 450px;
+    height: 370px;
     border: 1px solid #272D35;
     border-top: none;
   }
@@ -397,13 +397,31 @@ display: none;
 .orderbook_wrapper{
   width:301px;
   border: 1px solid #272D35;
-  border-left:none ;
   border-top: none;
+  font-size: 14px;
+  font-family: openSans;
+  display: flex;
+  flex-direction:column ;
   
+  border-bottom: none;
+  align-items: center;
+
+
 }
+.orderW{
+  display: flex;
+  flex-direction:column ;
+  justify-content: center;
+  border-bottom: none;
+  align-items: center;
+  width: 300px;
+  /* border: 1px solid yellow; */
+}
+
 .top_lvl_orders{
 display: flex;
 flex-direction: column;
+
 }
 
 .middle_lvl_price{
@@ -414,15 +432,63 @@ flex-direction: column;
   flex-direction: column;
 }
 
+.LI_P{
+  display: flex;
+  justify-content: space-between;
+  width: 247px;
+ 
+}
 
 
+.botttom_lvl_orders ul{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
 
+.orderbook_wrapper ul{
+  list-style-type: none;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0;
+}
 
+.head{
+  height: 56px;
+  width: 100%;
+  padding-left: 1.4vw;
+  font-size: 20px;
+  color: white;
+  display: flex;
+  border-bottom: 1px solid #272D35;
+  align-items: center;
+  margin-bottom: 10px;
+}
 
+.b2{
+  color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 401px;
+  margin-bottom: 10px;
+}
 
-
-
-
+.wrapper_t_1{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 40px;
+  color :white;
+  font-size: 20px;
+  width: 250px;
+}
+.arr{
+  width: 25px;
+}
 
   @media only screen and (max-width: 1475px){
         .price-live{

@@ -94,14 +94,15 @@ function App() {
     <Header/>
     <div className='crt-wrppr'>
       <ReturnChart currency={currency} coinsOBJ={coinsOBJ} setCurrency={setCurrency} getTrades={getTrades}/>
-      <LivePrice currency={currency} tr={(e)=>{setTrades(e)}}/>
+      <OrderBook currency={currency} getTrades={getTrades}/>
+     
        <div className='formJs'>
         <BuySellForm sell={sell} isSelling={isSelling} currency={currency}></BuySellForm>
       </div>
     </div>
       <div className='grid_lvl_2'>
     <History/>
-    <OrderBook currency={currency} getTrades={getTrades}/>
+    <LivePrice currency={currency} tr={(e)=>{setTrades(e)}}/>
       </div>
     
 </react.Fragment>

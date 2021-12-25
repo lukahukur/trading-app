@@ -37,7 +37,7 @@ function LivePrice({currency,tr}){
 
 
     useEffect(()=>{
-      if(tHistory.length <=19){
+      if(tHistory.length <=14){
         if(trades.s === currency.toUpperCase()){
           setTHistory(()=>{
        
@@ -58,7 +58,7 @@ function LivePrice({currency,tr}){
     else if(trades.s === currency.toUpperCase()){
     
      let shorter = tHistory;
-     shorter = shorter.slice(1,20);
+     shorter = shorter.slice(1,15);
       setTHistory([...shorter,trades]);
      
     }
@@ -91,11 +91,11 @@ function LivePrice({currency,tr}){
  
 return(
     
-    <div className='price-live' style={fetChed ? {width:'auto'}:{ width: '302px'}}>
+    <div className='price-live' style={fetChed ? {width:'auto'}:{ width: '300px'}}>
      
         
       
-{ fetChed ?<div > <div className='lp'><span>Live Trades</span></div> <ul className='flex-column' > <li className='c-w'><span>Price</span>  <span style={{marginLeft:'10px'}}>Amount</span>  <span>Time</span>   </li>{list} </ul> </div>:  <div style={{width:'302px',height:'100%',display:'flex',justifyContent:'center',alignItems:'center'}}>  <ScaleLoader color={'#00B7FF'}/> </div> }
+{ fetChed ?<div > <div className='lp'><span>Live Trades</span></div> <ul className='flex-column' > <li className='c-w'><span>Price</span>  <span style={{marginLeft:'10px'}}>Amount</span>  <span>Time</span>   </li>{list} </ul> </div>:  <div style={{width:'300px',height:'100%',display:'flex',justifyContent:'center',alignItems:'center'}}>  <ScaleLoader color={'#00B7FF'}/> </div> }
   
       
      </div>
