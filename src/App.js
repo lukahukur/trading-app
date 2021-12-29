@@ -1,111 +1,29 @@
 import './App.css';
-import ReturnChart from './ReturnChart';
-import LivePrice from './LivePrice';
-import {useState } from 'react';
-import Header from './components/Header';
-import BuySellForm from './components/buySellForm';
+import {useState,useEffect } from 'react';
 import react from 'react';
-import History from './components/history';
-import OrderBook from './components/OrderBook';
-
-
+import Wrapper from './Wrapper';
+import {Routes,Route,Link} from 'react-router-dom'
 
 function App() {
 
-  const coinsOBJ = [ 
-        {
-          market:'btcusdt',
-          name:'BTC/USDT',
-          coin:'BTC',
-          fixed:2
-        },
-        {
-          market:'shibusdt',
-          name:'SHIB/USDT',
-          coin:'SHIB',
-          fixed:7
-        },
-        {
-          market:'ethusdt',
-          name:'ETH/USDT',
-          coin:'ETH',
-          fixed:2
-        },
-        {
-          market:'dogeusdt',
-          name:'DOGE/USDT',
-          coin:'DOGE',
-          fixed:4
-        },
-        {
-          market:'bnbusdt',
-          name:'BNB/USDT',
-          coin:'BNB',
-          fixed:2
-        },
-        {
-          market:'uniusdt',
-          name:'UNI/USDT',
-          coin:'UNI',
-          fixed:3
-        },
-        {
-          market:'trxusdt',
-          name:'TRX/USDT',
-          coin:'TRX',
-          fixed:6
-        },
-        {
-          market:'xrpusdt',
-          name:'XRP/BTC',
-          coin:'XRP',
-          fixed:5
-        },
-        {
-          market:'solusdt',
-          name:'SOL/USDT',
-          coin:'SOL',
-          fixed:3
-        },
-        {
-          market:'maticusdt',
-          name:'MATIC/USDT',
-          coin:'MAGIC',
-          fixed:4
-        }
 
-  ]
-
-
-  const [currency,getCurrency] = useState('btcusdt');
-  const [sell,isSelling] = useState(false);
-  const [getTrades,setTrades] = useState({});
-  function setCurrency(e){
-      getCurrency(e);
-  }
-
-
-
- 
 
   return (
 <react.Fragment>
-
-    <Header/>
-    <div className='crt-wrppr'>
-      <ReturnChart currency={currency} coinsOBJ={coinsOBJ} setCurrency={setCurrency} getTrades={getTrades}/>
-      <OrderBook currency={currency} getTrades={getTrades}/>
-     
-       <div className='formJs'>
-        <BuySellForm sell={sell} isSelling={isSelling} currency={currency}></BuySellForm>
-      </div>
-    </div>
-      <div className='grid_lvl_2'>
-    <History/>
-    <LivePrice currency={currency} tr={(e)=>{setTrades(e)}}/>
-      </div>
-    
+  <Routes>
+   <Route index path='/' element={<Wrapper currency={'btcusdt'}  fixed={2} />}/> 
+   <Route index path='/shibusdt' element={<Wrapper currency={'shibusdt'} fixed={7}/>}/> 
+   <Route index path='/ethusdt' element={<Wrapper  currency={'ethusdt'} fixed={2} /> }/> 
+   <Route index path='/dogeusdt' element={<Wrapper  currency={'dogeusdt'} fixed={5}/>}/> 
+   <Route index path='/bnbusdt' element={<Wrapper  currency={'bnbusdt'} fixed={2}/>}/> 
+   <Route index path='/uniusdt' element={<Wrapper  currency={'uniusdt'} fixed={3}/>}/> 
+   <Route index path='/trxusdt' element={<Wrapper  currency={'trxusdt'} fixed={6}/>}/> 
+   <Route index path='/xrpusdt' element={<Wrapper  currency={'xrpusdt'} fixed={5}/>}/> 
+   <Route index path='/solusdt' element={<Wrapper currency={'solusdt'}  fixed={2}/>}/> 
+   <Route index path='/maticusdt' element={<Wrapper  currency={'maticusdt'}fixed={3}/>}/> 
+  </Routes>
 </react.Fragment>
+
   );
 }
 

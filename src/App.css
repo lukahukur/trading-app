@@ -1,13 +1,15 @@
 @font-face {
   font-family: openSans;
-  src: url('./OpenSans/OpenSans-Medium.ttf');
+  src: url('./bp/Regular.otf');
 }
 
 @font-face {
   font-family: plex;
-  src: url('./IBM_Plex_Sans/Arial\ Semicomprimida.ttf');
+  src: url('./bp/Medium.woff2');
 }
-
+.displayNone{
+  display: none;
+}
 ::-webkit-scrollbar {
   display: none;
   width: 0;
@@ -17,6 +19,14 @@ body {
   -ms-overflow-style: inherit;
   scrollbar-width: none; /* Firefox */
   
+}
+a{
+  text-decoration: none;
+  color: inherit;
+  margin-bottom: 7px;
+}
+a span{
+  color: #757679;
 }
   .header {
     display: flex;
@@ -86,6 +96,7 @@ body {
     justify-content: row;
     width: 290px;
     color: #AFB5BE;
+    font-family: plex;
     
   }
   .JohnJoLi:hover{
@@ -104,7 +115,7 @@ body {
     flex-direction: row;
     justify-content: space-between;
     margin-top: auto;
-    padding: 0vw 22px;
+    padding: 0vw 17px;
     color: #AFB5BE;
     font-size: 17px;
     width: 290px;
@@ -230,10 +241,15 @@ margin: 0;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  width: 97%;
 }
   .search_w{
-    padding: 6px 1vw;
+    display: flex;
+    height: 55px;
+    align-items: center;
+    justify-content: center;
 
+  
   }
  
   .searchBox{
@@ -378,13 +394,15 @@ display: none;
   flex-direction: column;
   color: rgb(132, 142, 156);
   font-size: 13px;
-  font-family: plex;
+  font-family: arial ;
+  height: 30px;
 }
 .w{
   color: white;
   font-size: 12px;
   margin-top: 3px;
-
+  font-family: plex;
+height: 18px;
 }
 .l{
   margin-left: 1vw;
@@ -424,9 +442,7 @@ flex-direction: column;
 
 }
 
-.middle_lvl_price{
 
-}
 .botttom_lvl_orders{
   display: flex;
   flex-direction: column;
@@ -473,7 +489,7 @@ flex-direction: column;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  width: 401px;
+  width: 414px;
   margin-bottom: 10px;
 }
 
@@ -487,7 +503,7 @@ flex-direction: column;
   width: 250px;
 }
 .arr{
-  width: 25px;
+  width: 20px;
 }
 
   @media only screen and (max-width: 1475px){

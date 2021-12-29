@@ -40,3 +40,12 @@ code {
   border: none;
   color:#5E6673 ;
 }
+.e_q{
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+  width: 80px;
+  padding-right: 7px;
+  align-items:center;
+
+}

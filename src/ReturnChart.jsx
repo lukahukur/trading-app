@@ -1,6 +1,7 @@
 import CreateChart from './Candles';
 import React,{useState,useEffect,useRef} from "react";
 import searchIcon from './../src/search.png';
+import {Link} from 'react-router-dom';
 
 const styles = {
     c_w:'wrapper_candles',
@@ -16,7 +17,7 @@ const styles = {
 //     "trxusdt@trade","solusdt@trade",
 //     "maticusdt@trade"
 //   ];
-const ReturnChart = ({currency,coinsOBJ,setCurrency,getTrades})=>{
+const ReturnChart = ({currency,coinsOBJ,fixed,getTrades})=>{
   
 
     const [curr,setCurr]= useState([]);
@@ -29,18 +30,20 @@ const ReturnChart = ({currency,coinsOBJ,setCurrency,getTrades})=>{
     const input_ref = useRef();
     const p_r = useRef();
     const li = useRef();
+    const [is,setIfIs] = useState(false);
 
     const [arr_of_coins,setC] = useState([...coinsOBJ]) ;
-    
+   
     useEffect(()=>{
         const ws = new WebSocket("wss://stream.binance.com:9443/ws/!ticker@arr");
         ws.onmessage = (e)=>{
             const parsedData = JSON.parse(e.data);
             
             set24rhchange(parsedData)
-            
+            setIfIs(true)
         }
-    
+
+        return () => ws.close()
     },[currency]);
 
    useEffect(()=>{
@@ -49,47 +52,43 @@ const ReturnChart = ({currency,coinsOBJ,setCurrency,getTrades})=>{
         setCurr(getTrades)
 
        
-p_r.current.style.color = curr.m?'#F6465D' : '#0ECB81';
+// p_r.current.style.color = curr.m?'#F6465D' : '#0ECB81';
   
     }
     
-   },[currency,getTrades]);
+   },[currency,getTrades,is]);
+
+
+
+  
+//document.getElementsByClassName('tv-lightweight-charts')[0].remove();
+
+function filterLinks(){
+   for(let i = 0;i<li.current.childNodes.length;i++){
+    if(li.current.childNodes[i].getAttribute('data').includes(input_ref.current.value.toLowerCase()) ){
+        li.current.childNodes[i].classList.remove('displayNone')
+    
+}else{
+    li.current.childNodes[i].classList.add('displayNone')
+}
+
+
+
+
+}
+}
+useEffect(()=>{
+   input_ref.current.addEventListener('input',filterLinks)
+},[]);
 
 
   useEffect(()=>{
-       
-
-  },[change24hr,currency]);
-  useEffect(()=>{
-     
-    for(var i =0;i<li.current.childNodes.length;i++){
-        li.current.childNodes[i].addEventListener('click',changeState__Coin)
-        if(li.current.childNodes[i].childNodes[0].getAttribute('data') === currency){
-            li.current.childNodes[i].removeEventListener('click',changeState__Coin);
-        }
- }
-
-    let clicked= 0;
-    function changeState__Coin(e){
-        if(clicked === 0){
-            setCurrency(e.target.getAttribute('data'));
-            document.getElementsByClassName('tv-lightweight-charts')[0].remove();
-        }
-        clicked ++;
-       }
-
        input_ref.current.addEventListener('input',(event)=>{
         let temp = [];
   
         coinsOBJ.filter((e)=>{
-            //repeated code
-            //yes,Im lazy ass
-            for(var i =0;i<li.current.childNodes.length;i++){
-                li.current.childNodes[i].addEventListener('click',changeState__Coin)
-                if(li.current.childNodes[i].childNodes[0].getAttribute('data') === currency){
-                    li.current.childNodes[i].removeEventListener('click',changeState__Coin);
-                }
-         }
+         
+        
                 if(e.market.includes(event.target.value.toLowerCase()) === true){
                     temp.unshift(e);
                     setC([...temp])
@@ -105,8 +104,10 @@ p_r.current.style.color = curr.m?'#F6465D' : '#0ECB81';
   },[currency]);
 
     
-    const mappedCoinList = arr_of_coins.map((e,i)=>{return <li className='li_search' key={i}>
-          <span data={e.market}>{e.coin}<span style={{color:'gray'}} data={e.market}> /USDT</span></span></li>});
+
+
+
+
     const [getTime,setTime] = useState('1m');
     
 useEffect(()=>{
@@ -139,7 +140,7 @@ useEffect(()=>{
  });
 
 },[getTime]);
-    
+
     return(
         <div className={styles.c_w}>
                 <div className ='search_w'>
@@ -154,21 +155,26 @@ useEffect(()=>{
                         <div className='dropDown' ref={d_ref} >
                             
                             <ul className={'ul_search'} ref={li} >
-    
-                                {
-                                mappedCoinList
-                                }
-                                
+                            <a href='/'data={'btcusdt'} >BTC<span className='gr'>/USDT</span></a>
+                            <a href='/shibusdt' data={'shibusdt'}>SHIB<span className='gr'>/USDT</span></a>
+                            <a href='/ethusdt'data={'ethusdt'}>ETH<span className='gr'>/USDT</span></a>
+                            <a href='/dogeusdt'data={'dogeusdt'}>DOGE<span className='gr'>/USDT</span></a>
+                            <a href='/bnbusdt'data={'bnbusdt'}>BNB<span className='gr'>/USDT</span></a>
+                            <a href='/uniusdt'data={'uniusdt'}>UNI<span className='gr'>/USDT</span></a>
+                            <a href='/trxusdt'data={'trxusdt'}>TRX<span className='gr'>/USDT</span></a>
+                            <a href='/xrpusdt'data={'xrpusdt'}>XRP<span className='gr'>/USDT</span></a>
+                            <a href='/solusdt'data={'solusdt'}>SOL<span className='gr'>/USDT</span></a>
+                            <a href='/maticusdt'data={'maticusdt'}>MATIC<span className='gr'>/USDT</span></a>      
                             </ul>
                            </div>  
                         
                       </div>
-                        <div className='hr_24_crr' >
+                     { is?  <div className='hr_24_crr' >
                         <span className='clm '>
                         <span>Price</span>
                             {
                            
-                <span className='w' ref={p_r}>{parseFloat(curr.p).toFixed(2)}</span>
+                <span className='w' ref={p_r}>{parseFloat(curr.p).toFixed(fixed)}</span>
                                 
                         }</span>
                             <span className='clm l'>
@@ -176,7 +182,7 @@ useEffect(()=>{
                             {
                             change24hr.map((e,i)=>{
                                 if(currency.toUpperCase() === e.s){
-                                    return <span className='w' key={i}>{parseFloat(e.h).toFixed(2)}</span>
+                                    return <span className='w' key={i}>{parseFloat(e.h).toFixed(fixed)}</span>
                                 }
                             })
                             
@@ -187,7 +193,7 @@ useEffect(()=>{
                             {
                             change24hr.map((e,i)=>{
                                 if(currency.toUpperCase() === e.s){
-                                    return <span className='w' key={i}>{parseFloat(e.l).toFixed(2)}</span>
+                                    return <span className = 'w' key={i}>{parseFloat(e.l).toFixed(fixed)}</span>
                                 }
                             })
                             
@@ -198,11 +204,11 @@ useEffect(()=>{
                             {
                             change24hr.map((e,i)=>{
                                 if(currency.toUpperCase() === e.s){
-                                    return <span className='w' key={i} style={e.p > 0? {color:'#0ECB81'}:{color:'#F6465D'}}>{(parseFloat(e.p))}</span>
+                                    return <span className='w' key={i} style={e.p > 0? {color:'#0ECB81',marginRight:'7px'}:{color:'#F6465D',marginRight:'7px'}}>{(parseFloat(e.p))}</span>
                                 }
 
                             })}
-                            
+                           
                             {
                             change24hr.map((e,i)=>{
                                 if(currency.toUpperCase() === e.s){
@@ -212,6 +218,7 @@ useEffect(()=>{
                                  </span>
                         
                         </div>
+               :<span></span> }
                         <div className='currencyIndicator'>{currency}</div>
                     </div>
                                                                          

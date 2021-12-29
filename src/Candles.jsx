@@ -93,7 +93,7 @@ const [sizes,setSizes] = useState({
           },
           textColor: '#5E6673',
           fontSize: 11,
-          fontFamily: 'Calibri',
+          fontFamily: 'Binance PLEX',
       },
   });
   chart.applyOptions({

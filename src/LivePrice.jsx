@@ -2,7 +2,7 @@ import { useEffect, useState,useRef } from "react/cjs/react.development";
 import ScaleLoader from "react-spinners/ScaleLoader";
 
 
-function LivePrice({currency,tr}){
+function LivePrice({currency,tr,fixed}){
     const [trades,setTrades] = useState([]);
     const [tHistory,setTHistory] = useState([]);
   const [fetChed,setFetched] = useState(false);
@@ -30,7 +30,7 @@ function LivePrice({currency,tr}){
       }
    
     
-
+      return () => ws.close()
     },[currency]);
 
 
@@ -71,21 +71,23 @@ function LivePrice({currency,tr}){
 
   
 
- 
+    function kFormatter(num) {
+      return Math.abs(num) > 999 ? Math.sign(num)*((Math.abs(num)/1000).toFixed(1)) + 'k' : Math.sign(num)*Math.abs(num)
+  }
 
   const list = tHistory.map((e,i)=>{
     let date = new Date(e.T);
   if(e.m === false){return <li key={i}  className='JohnJoLi' ><div className='row'> 
   
     <div style={{color:'green'}}>{parseFloat(e.p)
-    .toFixed(currency === 'shibusdt'?8:2)
-    }</div> <div>{parseFloat(e.q).toFixed(currency === 'shibusdt'?0:5)} </div>  <div>{date.toString().slice(16,25)} </div>  </div></li>;}
+    .toFixed(fixed)
+    }</div> <div className="e_q">{kFormatter(e.q)} </div>  <div>{date.toString().slice(16,25)} </div>  </div></li>;}
 
   if(e.m === true){return <li key={i}  className='JohnJoLi'>
     
     <div className = 'row'>   <div style={{color:'red'}}>{parseFloat(e.p)
-    .toFixed(currency === 'shibusdt'?8:2)
-    }</div>  <div>{parseFloat(e.q).toFixed(currency === 'shibusdt'?0:5)}</div>  <div>{date.toString().slice(16,25)}</div> </div></li>;}
+    .toFixed(fixed)
+    }</div>  <div className="e_q">{kFormatter(e.q)}</div>  <div>{date.toString().slice(16,25)}</div> </div></li>;}
 
   });
  
