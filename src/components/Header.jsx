@@ -1,4 +1,5 @@
 import react from 'react';
+import AvatarsFox from './../Avatars/fox.png'
 function Header(){
 
 return(
@@ -7,7 +8,18 @@ return(
         <div>Trading Simulator</div>
         </div>
         
-        <div> User</div>
+        <div className='userWrapper'> 
+
+
+
+        <div className='Money'>
+        <span className='userName'>Luka Cho</span>
+        <span className='sochik'>$1000000000</span>
+        </div>
+        
+        <img src={AvatarsFox} className='avatar'/>
+        
+        </div>
             
            
 

@@ -9,7 +9,7 @@ import History from './components/history';
 import OrderBook from './components/OrderBook';
 import { useEffect } from "react/cjs/react.development";
 
-function Wrapper({currency,fixed}){
+function Wrapper({currency,fixed,str}){
   const [isDone,condition] = useState(false);
 function setCondition(e){
   condition(e);
@@ -95,7 +95,7 @@ function setCondition(e){
           
   <Header/>
     <div className='crt-wrppr'>
-      <ReturnChart currency={currency} coinsOBJ={coinsOBJ}  getTrades={getTrades} fixed={fixed}/>
+      <ReturnChart currency={currency} coinsOBJ={coinsOBJ}  getTrades={getTrades} fixed={fixed} str={str}/>
       <OrderBook currency={currency} getTrades={getTrades} fixed={fixed} />
      
        <div className='formJs'>

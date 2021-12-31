@@ -3,7 +3,7 @@ import { createChart } from 'lightweight-charts';
 
 
 
-const CreateChart = ({currency,time}) =>{
+const CreateChart = ({currency,time,fixed}) =>{
  const [lastCandle,setLastCandle] = useState({});
  const [initCandles, setInitCandles] = useState([]);
   const chartRef = useRef();
@@ -58,7 +58,7 @@ const [sizes,setSizes] = useState({
           type: 'custom',
           minMove: 0.0000001,
         formatter: price => '$' + parseFloat(price)
-        .toFixed(currency === 'btcusdt'|| currency === 'ethusdt' || currency === 'bnbusdt'?2:currency === 'shibusdt'?7:currency === 'trxusdt'?6:currency === 'xrpusdt'?5:currency === 'dogeusdt' || currency === 'magicusdt'?4:3),
+        .toFixed(fixed),
       },
      
           upColor: '#0ECB81',
@@ -122,7 +122,7 @@ const [sizes,setSizes] = useState({
       ws.onmessage = (e)=>{
 
   const t = JSON.parse(e.data)
-
+        
   candles.update({
       time: t.k.t/1000,
       open: t.k.o,
@@ -142,7 +142,7 @@ const [sizes,setSizes] = useState({
      useEffect(()=>{
       const handler = () => {
        if(window.innerWidth <= 1920 && window.innerWidth > 1475){
-        setSizes({width:window.innerWidth-640,height:450})
+        setSizes({width:window.innerWidth-640,height:490})
         document.getElementsByClassName('tv-lightweight-charts')[0].remove();
        }
          if(window.innerWidth <= 1475){
@@ -162,7 +162,7 @@ const [sizes,setSizes] = useState({
      },[])
    useEffect(()=>{
     if(window.innerWidth <= 1920 && window.innerWidth > 1475){
-      setSizes({width:window.innerWidth-640,height:450})
+      setSizes({width:window.innerWidth-640,height:490})
       document.getElementsByClassName('tv-lightweight-charts')[0].remove();
      }
      if(window.innerWidth <= 1475){

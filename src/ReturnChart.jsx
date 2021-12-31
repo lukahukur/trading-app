@@ -17,7 +17,7 @@ const styles = {
 //     "trxusdt@trade","solusdt@trade",
 //     "maticusdt@trade"
 //   ];
-const ReturnChart = ({currency,coinsOBJ,fixed,getTrades})=>{
+const ReturnChart = ({currency,coinsOBJ,fixed,getTrades,str})=>{
   
 
     const [curr,setCurr]= useState([]);
@@ -35,29 +35,29 @@ const ReturnChart = ({currency,coinsOBJ,fixed,getTrades})=>{
     const [arr_of_coins,setC] = useState([...coinsOBJ]) ;
    
     useEffect(()=>{
-        const ws = new WebSocket("wss://stream.binance.com:9443/ws/!ticker@arr");
+        const ws = new WebSocket(`wss://stream.binance.com:9443/ws/${currency}@ticker`);
         ws.onmessage = (e)=>{
             const parsedData = JSON.parse(e.data);
             
             set24rhchange(parsedData)
             setIfIs(true)
+           
         }
 
         return () => ws.close()
     },[currency]);
 
    useEffect(()=>{
-    if(currency.toUpperCase() === getTrades.s){
+    
         
         setCurr(getTrades)
 
        
-// p_r.current.style.color = curr.m?'#F6465D' : '#0ECB81';
   
-    }
+    
     
    },[currency,getTrades,is]);
-
+ 
 
 
   
@@ -143,10 +143,12 @@ useEffect(()=>{
 
     return(
         <div className={styles.c_w}>
+            
                 <div className ='search_w'>
                         
-                        
+                       
                     <div className='s_w_II'>
+                    <span className='cllls'>
                      <div className='searchBox'><img src={searchIcon} className='miniicon'/>
                         
                         <input type="text" id='Inp' ref={input_ref} autoComplete="off" placeholder={currency.toUpperCase()}/>
@@ -166,6 +168,7 @@ useEffect(()=>{
                             <a href='/solusdt'data={'solusdt'}>SOL<span className='gr'>/USDT</span></a>
                             <a href='/maticusdt'data={'maticusdt'}>MATIC<span className='gr'>/USDT</span></a>      
                             </ul>
+                        
                            </div>  
                         
                       </div>
@@ -174,52 +177,59 @@ useEffect(()=>{
                         <span>Price</span>
                             {
                            
-                <span className='w' ref={p_r}>{parseFloat(curr.p).toFixed(fixed)}</span>
+                <span className='w' style={{color:'#9E058A'}} ref={p_r}>{parseFloat(curr.p).toFixed(fixed)}</span>
                                 
                         }</span>
                             <span className='clm l'>
                             <span>24h High</span>
                             {
-                            change24hr.map((e,i)=>{
-                                if(currency.toUpperCase() === e.s){
-                                    return <span className='w' key={i}>{parseFloat(e.h).toFixed(fixed)}</span>
-                                }
-                            })
+                               
+                     <span className='w'>{parseFloat(change24hr.h).toFixed(fixed)}</span>
+                                
+                           
                             
                         }</span>
 
                         <span className='clm l'>
                             <span>24h Low</span>
                             {
-                            change24hr.map((e,i)=>{
-                                if(currency.toUpperCase() === e.s){
-                                    return <span className = 'w' key={i}>{parseFloat(e.l).toFixed(fixed)}</span>
-                                }
-                            })
+                          
+                               
+                             <span className = 'w' >{parseFloat(change24hr.l).toFixed(fixed)}</span>
+                                
+                           
                             
                         }</span>
+                         <span className='clm l'>
+                             <span>24h volume <span style={{color:'#9E058A',textTransform: 'uppercase'}}>{currency.substring(0,str)}</span></span>
+                             <span className='w'>{parseFloat(change24hr.v)}</span>
+                           </span>
                           <span className='clm l'>
                             <span>24h change</span>
                             <span className='s_w2'>
                             {
-                            change24hr.map((e,i)=>{
-                                if(currency.toUpperCase() === e.s){
-                                    return <span className='w' key={i} style={e.p > 0? {color:'#0ECB81',marginRight:'7px'}:{color:'#F6465D',marginRight:'7px'}}>{(parseFloat(e.p))}</span>
-                                }
+                           
+                                
+                                   <span className='w' style={change24hr.p >= 0? {color:'#1AA517',marginRight:'7px'}:{color:'rgb(200 2 28)',marginRight:'7px'}}>{(parseFloat(change24hr.p))}</span>
+                                
 
-                            })}
+                            
+                            }
                            
                             {
-                            change24hr.map((e,i)=>{
-                                if(currency.toUpperCase() === e.s){
-                                    return <span className='w' key={i} style={e.p > 0? {color:'#0ECB81'}:{color:'#F6465D'}}>{(parseFloat(e.P).toFixed(2) + '%')}</span>
-                                }
-                            })}</span>
+                           
+                                   <span className='w' style={change24hr.p >= 0? {color:'#1AA517'}:{color:'rgb(200 2 28)'}}>{(parseFloat(change24hr.P).toFixed(2) + '%')}</span>
+                                
+                            }
+                            </span>
+                           
                                  </span>
-                        
+                                
                         </div>
-               :<span></span> }
+               :<span></span> }</span>
+
                         <div className='currencyIndicator'>{currency}</div>
+
                     </div>
                                                                          
                 </div>
@@ -245,7 +255,7 @@ useEffect(()=>{
                     </button>
                     </div>
                 </div>
-             <CreateChart currency={currency}  time={getTime} />
+             <CreateChart currency={currency}  time={getTime} fixed={fixed} />
             </div>
     );
 }

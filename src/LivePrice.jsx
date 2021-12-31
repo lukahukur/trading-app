@@ -37,7 +37,7 @@ function LivePrice({currency,tr,fixed}){
 
 
     useEffect(()=>{
-      if(tHistory.length <=14){
+      if(tHistory.length <=19){
         if(trades.s === currency.toUpperCase()){
           setTHistory(()=>{
        
@@ -58,7 +58,7 @@ function LivePrice({currency,tr,fixed}){
     else if(trades.s === currency.toUpperCase()){
     
      let shorter = tHistory;
-     shorter = shorter.slice(1,15);
+     shorter = shorter.slice(1,20);
       setTHistory([...shorter,trades]);
      
     }
@@ -81,11 +81,13 @@ function LivePrice({currency,tr,fixed}){
   
     <div style={{color:'green'}}>{parseFloat(e.p)
     .toFixed(fixed)
-    }</div> <div className="e_q">{kFormatter(e.q)} </div>  <div>{date.toString().slice(16,25)} </div>  </div></li>;}
+    }</div> 
+    
+    <div className="e_q">{kFormatter(e.q)} </div>  <div>{date.toString().slice(16,25)} </div>  </div></li>;}
 
   if(e.m === true){return <li key={i}  className='JohnJoLi'>
     
-    <div className = 'row'>   <div style={{color:'red'}}>{parseFloat(e.p)
+    <div className = 'row'>   <div style={{color:'rgb(150, 4, 4)'}}>{parseFloat(e.p)
     .toFixed(fixed)
     }</div>  <div className="e_q">{kFormatter(e.q)}</div>  <div>{date.toString().slice(16,25)}</div> </div></li>;}
 
@@ -93,11 +95,11 @@ function LivePrice({currency,tr,fixed}){
  
 return(
     
-    <div className='price-live' style={fetChed ? {width:'auto'}:{ width: '300px'}}>
+    <div className='price-live' style={fetChed ? {width:'auto'}:{ width: '321px'}}>
      
         
       
-{ fetChed ?<div > <div className='lp'><span>Live Trades</span></div> <ul className='flex-column' > <li className='c-w'><span>Price</span>  <span style={{marginLeft:'10px'}}>Amount</span>  <span>Time</span>   </li>{list} </ul> </div>:  <div style={{width:'300px',height:'100%',display:'flex',justifyContent:'center',alignItems:'center'}}>  <ScaleLoader color={'#00B7FF'}/> </div> }
+{ fetChed ?<div > <div className='lp'><span>Live Trades</span></div> <ul className='flex-column' > <li className='c-w'><span>Price</span>  <span style={{marginLeft:'10px'}}>Amount</span>  <span>Time</span>   </li>{list} </ul> </div>:  <div style={{width:'321px',height:'100%',display:'flex',justifyContent:'center',alignItems:'center'}}>  <ScaleLoader color={'#00B7FF'}/> </div> }
   
       
      </div>

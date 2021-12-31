@@ -49,3 +49,47 @@ code {
   align-items:center;
 
 }
+.header {
+  display: flex;
+  flex-direction: row;
+  width: auto;
+  height: 60px;
+  border: 1px solid #272D35;
+  border-bottom: none;
+  color:rgb(0, 183, 255);
+  align-items: center;
+  justify-content: space-around;
+  padding: 0px 12px;
+  
+
+}
+.userWrapper{
+  display: flex;
+  justify-content: space-between;
+ 
+}
+.avatar{
+  width: 2.1vw;
+  border-radius: 90%;
+
+}
+.Money{
+  display: flex;
+  flex-direction: column;
+
+  width: 100px;
+}
+.sochik{
+  width: 100%;
+  text-align: right;
+  margin-left: -5px;
+  font-family: plex;
+  color: rgb(26, 180, 26);
+}
+.userName{
+  color: white;
+  font-family: Binance Plex SemiBold;
+  width: 100%;
+  text-align: right;
+  margin-left: -5px;
+}

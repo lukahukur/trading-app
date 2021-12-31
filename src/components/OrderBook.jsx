@@ -4,14 +4,41 @@ import arrowGreen from './../../src/arrGreen.svg'
 import arrowRed from './../../src/arrRed.svg'
 
 function OrderBook({currency,getTrades,fixed}){
+    function sum(e){
+        let a =+ e;
+        return a
+    }
  const [wssData,setData] = useState([]); 
  const [isWss,setWss] = useState(false);
 const [red,R] = useState([]);
 const [green,G] = useState([]); 
 const [trades,setTrades] = useState([]);
- //ask = red 
-//bid = greem 
-// or like this man
+const [fixedState,setFixedState] = useState(2);
+useEffect(()=>{
+    switch(currency){
+        case'xrpusdt':
+        setFixedState(0);
+        break;
+        case 'shibusdt':
+            setFixedState(0)
+            break;
+        case 'dogeusdt':
+            setFixedState(4)
+            break;
+        case 'btcusdt':
+            setFixedState(5)
+            break; 
+        case 'sol':
+            setFixedState(5)
+            break;
+            default: 
+            setFixedState(4);
+    }
+},[currency]);
+
+
+
+
 useEffect(()=>{
   if(typeof(getTrades.p) === 'string'){
     setWss(true)
@@ -59,8 +86,10 @@ useEffect(()=>{
         return () => ws.close()
         
     },[currency]);
+
  
 
+ 
 useEffect(()=>{
    
     
@@ -72,32 +101,51 @@ useEffect(()=>{
        if(nowCurrency !== currency){
         setWss(false)
      }
-
+  
+      
+    
 },[currency,wssData,isWss]);
     return(
         <react.Fragment>
             <div className="orderbook_wrapper">
                 <div className="head">Order Book</div>
-          { isWss? <span className="orderW">
+            { isWss? <span className="orderW" >
               <span className="b2">
               <span>Price</span>
-              <span>Amount</span>
-
+              <span style={{display:'flex',width:'70px',justifyContent:'right'}}>Amount</span>
+              <span>Total</span>
               </span>
             <div className="top_lvl_orders">
-               <ul style={{color:'red'}}>
+               <ul >
                {
-                  red.map((e,i)=>{
-                       return <li key={i} className="LI_P"><span>{parseFloat(e[0]).toFixed(fixed)}</span><span style={{color:'#AFB5BE'}}>{kFormatter(e[1])}</span></li>
+                  red.map((e,i,arr)=>{
+                       return <li key={i} style={{color:'#b70404'}} className="LI_P">
+                           <span style={{color:'rgb(150, 4, 4)',width:'70px',display:'flex',justifyContent:'left'}}>{parseFloat(e[0]).toFixed(fixed)}</span>
+                       <span style={{color:'#AFB5BE',width:'70px',display:'flex',justifyContent:'right'}}>{parseFloat(e[1]).toFixed(fixedState)}</span>
+                       
+                       
+                       
+                       <span style={{color:'#AFB5BE',width:'70px',display:'flex',justifyContent:'right'}}>{
+                         
+                   (e[0]*e[1]).toFixed(1)
+
+                       }</span>
+                       </li>
                    })
                }
                </ul>
               
             </div>
             <div className="middle_lvl_price">
-                <div className="wrapper_t_1" style={!tradePrev|| tradePrev === trades.p ?{color:'white'}: trades.p > tradePrev ?{color:'green'}:{color:'red'}}>
-         {parseFloat( trades.p).toFixed(fixed) }<img src={trades.p > tradePrev ?arrowGreen:arrowRed} className="arr" style={!tradePrev|| tradePrev === trades.p ?{display:'none'}: trades.p > tradePrev ?{transform:'rotate(90deg)'}:{transform:'rotate(-90deg)',marginLeft:'8px'}}/>
+                <div className="wrapper_t_1" style={!tradePrev|| tradePrev === trades.p ?{color:'white'}: trades.p > tradePrev ?{color:'green'}:{color:'rgb(150, 4, 4)'}}>
+          {parseFloat( trades.p).toFixed(fixed) }
+          {/* <img src={trades.p > tradePrev ?arrowGreen:arrowRed} className="arr" style={!tradePrev|| tradePrev === trades.p ?{display:'none'}: trades.p > tradePrev ?{transform:'rotate(90deg)'}:{transform:'rotate(-90deg)',marginLeft:'8px'}}/> */}
                
+          <svg height="20" width='25' className={!tradePrev|| tradePrev === trades.p?'displayNone':'displayBlock'} style={trades.p > tradePrev?{transform:'rotate(0deg)',opacity:1,fill:'green'}:{transform:'rotate(180deg)',opacity:1,fill:'rgb(150, 4, 4)'}}>
+<path d="M5 13.47l1.41-1.41 5.1 5.1V3h1.99v14.15l5.09-5.09L20 13.47l-7.5 7.5-7.5-7.5z" viewBox="0 0 24 24" />
+
+</svg>
+
                
                 </div>
           
@@ -106,15 +154,35 @@ useEffect(()=>{
             <ul style={{color:'green'}}>
             {
                    green.map((e,i)=>{
-                       return <li key={i} className="LI_P"><span>{parseFloat(e[0]).toFixed(fixed)}</span><span style={{color:'#AFB5BE'}}>{kFormatter(e[1])}</span></li>
+                       return <li key={i} className="LI_P">
+                           <span style={{color:'green',width:'70px',display:'flex',justifyContent:'left'}}>{parseFloat(e[0]).toFixed(fixed)}</span>
+
+
+                       
+                       <span style={{color:'#AFB5BE',width:'70px',display:'flex',justifyContent:'right'}}>{parseFloat(e[1]).toFixed(fixedState)}</span>
+                       
+                       
+                       
+                       <span style={{color:'#AFB5BE',width:'70px',display:'flex',justifyContent:'right'}}>{
+                         
+                         (e[0]*e[1]).toFixed(1)
+
+                       }</span>
+                       
+                       
+                       
+                       </li>
                    })
                }
                 </ul>
             </div>
             </span>:
-            <span style={{display:'flex',height:'400px',width:'300px',alignItems:'center',justifyContent:'center',alignContent:'center'}}><ScaleLoader color={'#00B7FF'}/></span> }
+            <span style={{display:'flex',height:'400px',width:'300px',alignItems:'center',justifyContent:'center',alignContent:'center'}}>
+                <ScaleLoader color={'#00B7FF'}/>
+                
+                </span> }
             </div>
-
+      
         </react.Fragment>
     )
 }
