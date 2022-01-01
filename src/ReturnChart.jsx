@@ -31,7 +31,7 @@ const ReturnChart = ({currency,coinsOBJ,fixed,getTrades,str})=>{
     const p_r = useRef();
     const li = useRef();
     const [is,setIfIs] = useState(false);
-
+    
     const [arr_of_coins,setC] = useState([...coinsOBJ]) ;
    
     useEffect(()=>{
@@ -58,7 +58,6 @@ const ReturnChart = ({currency,coinsOBJ,fixed,getTrades,str})=>{
     
    },[currency,getTrades,is]);
  
-
 
   
 //document.getElementsByClassName('tv-lightweight-charts')[0].remove();

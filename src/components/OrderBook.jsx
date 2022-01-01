@@ -71,11 +71,11 @@ useEffect(()=>{
         },[getTrades,currency]);
   
     useEffect(()=>{
-        const ws = new WebSocket(`wss://stream.binance.com:9443/ws/${currency}@depth10`);
+        const ws = new WebSocket(`wss://stream.binance.com:9443/ws/${currency}@depth10@1000ms`);
         ws.onmessage = (e)=>{
            
            const parsedCuteData = JSON.parse(e.data);
-           
+  
             const asks = parsedCuteData.asks;
             const bids = parsedCuteData.bids;
             const final = [currency,asks,bids];
@@ -95,7 +95,7 @@ useEffect(()=>{
     
     if(wssData[0] === currency){
         const [curr,red,green] = wssData;
-        R(red);
+        R(red.reverse());
         G(green)
       } 
        if(nowCurrency !== currency){
@@ -141,8 +141,8 @@ useEffect(()=>{
           {parseFloat( trades.p).toFixed(fixed) }
           {/* <img src={trades.p > tradePrev ?arrowGreen:arrowRed} className="arr" style={!tradePrev|| tradePrev === trades.p ?{display:'none'}: trades.p > tradePrev ?{transform:'rotate(90deg)'}:{transform:'rotate(-90deg)',marginLeft:'8px'}}/> */}
                
-          <svg height="20" width='25' className={!tradePrev|| tradePrev === trades.p?'displayNone':'displayBlock'} style={trades.p > tradePrev?{transform:'rotate(0deg)',opacity:1,fill:'green'}:{transform:'rotate(180deg)',opacity:1,fill:'rgb(150, 4, 4)'}}>
-<path d="M5 13.47l1.41-1.41 5.1 5.1V3h1.99v14.15l5.09-5.09L20 13.47l-7.5 7.5-7.5-7.5z" viewBox="0 0 24 24" />
+          <svg height="20" viewBox="0 0 24 24"  width='20'preserveAspectRatio="none" className={!tradePrev|| tradePrev === trades.p?'displayNone':'displayBlock'} style={trades.p > tradePrev?{transform:'rotate(0deg)',opacity:1,fill:'green'}:{transform:'rotate(180deg)',opacity:1,fill:'rgb(150, 4, 4)'}}>
+<path d="M5 13.47l1.41-1.41 5.1 5.1V3h1.99v14.15l5.09-5.09L20 13.47l-7.5 7.5-7.5-7.5z" />
 
 </svg>
 

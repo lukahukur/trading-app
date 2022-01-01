@@ -16,17 +16,18 @@ function LivePrice({currency,tr,fixed}){
 
     useEffect(()=>{
   
-      const ws = new WebSocket(`wss://stream.binance.com:9443/ws/${currency}@trade`);
+      const ws = new WebSocket(`wss://stream.binance.com:9443/ws/${currency}@aggTrade`);
         ws.onmessage = (e)=>{
          
           const parsedData = JSON.parse(e.data);
-         
-            if(parsedData.s === currency.toUpperCase()){
+       
+            if(parsedData.M === true){
               setTrades(parsedData);
              tr(parsedData)
+             setFetched(true); 
             }
           
-            setFetched(true); 
+            
       }
    
     
@@ -34,39 +35,44 @@ function LivePrice({currency,tr,fixed}){
     },[currency]);
 
 
-
+useEffect(()=>{
+  async function resp(){
+  const response = await fetch(`https://api3.binance.com/api/v3/aggTrades?symbol=${currency.toUpperCase()}&limit=19`);
+  let data = await response.json();
+ 
+  setTHistory([...data])
+  
+  }
+  resp();
+},[currency]);
 
     useEffect(()=>{
-      if(tHistory.length <=19){
-        if(trades.s === currency.toUpperCase()){
+      if(tHistory.length <=18){
           setTHistory(()=>{
        
             let temp = tHistory;
            
-            temp.push(trades);
+            temp.unshift(trades);
              return[...temp]
              
            });
-        } else if(nowCurrency !== currency){
-          setTHistory([ ])
-          setFetched(false);
-        }
-        
-      
+    }else{
+     
     
-    }
-    else if(trades.s === currency.toUpperCase()){
     
-     let shorter = tHistory;
-     shorter = shorter.slice(1,20);
-      setTHistory([...shorter,trades]);
+    
+     setTHistory(()=>{
+      let shorter = tHistory;
+     shorter.pop();
+      shorter.unshift(trades)
+      return[...shorter]
+
+     });
+ 
+      // setTHistory([...shorter,trades]);
      
     }
-    else if(nowCurrency !== currency){
-      setTHistory([ ])
-      setFetched(false);
-    }
-  
+   
     },[trades,currency])
 
   

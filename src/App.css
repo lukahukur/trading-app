@@ -38,6 +38,7 @@ a span{
     display: flex;
     width: 100%;
     border: #272D35 0.5px solid;
+    border-bottom: none;
   }
   .price-live{
     color: #59626E;
@@ -45,7 +46,6 @@ a span{
     flex-direction: column;
     border: 0.5px solid #272D35;
     border-left: none;
-    border-top: none;
     font-size: 14px;
     margin: 0;
     border-bottom: none;
@@ -100,6 +100,7 @@ a span{
     justify-content: row;
     justify-content: space-between;
     width: 290px ;
+    margin-bottom: 1px;
   }
   .c-w{
     display: flex;
@@ -130,7 +131,7 @@ a span{
   margin-top: -2px;
   margin-left: 1.45vw;
   margin-right: 0.9vw;
-  padding-top: 50px;
+  padding-top: 74px;
   
 }
 
@@ -262,13 +263,14 @@ margin: 0;
     outline:none;
     background-color: #161A1E;
     border: none;
-    font-size: 15px;
+    font-size: 12px;
     caret-color:#59626E;
     color: white;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: Plex;
     width: 100%
     
   }
+
   .miniicon{
     width: 25px;
   
@@ -354,7 +356,7 @@ display: none;
   }
   .h_wrp{
     border: 1px solid #272D35;
-    border-top: none;
+
     border-left: none;
     width: auto;
   }
