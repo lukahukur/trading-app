@@ -176,7 +176,7 @@ useEffect(()=>{
                         <span>Price</span>
                             {
                            
-                <span className='w' style={{color:'#9E058A'}} ref={p_r}>{parseFloat(curr.p).toFixed(fixed)}</span>
+                <span className='w' style={{color:'#9E058A'}} ref={p_r}>{ !parseFloat(curr.p)?'...':parseFloat(curr.p).toFixed(fixed)}</span>
                                 
                         }</span>
                             <span className='clm l'>

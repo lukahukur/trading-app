@@ -177,6 +177,24 @@ a span{
     
     
   }
+  .Avbl{
+    color: rgb(132, 142, 156);
+    font-size: 12px ;
+    margin-top: 30px;
+    font-family: arial;
+    margin-bottom: 30px;
+  }
+  .Limit{
+    color: rgb(132, 142, 156);
+    width: 180px;
+    display: flex;
+    align-items: center ;
+    justify-content: space-between;
+    margin-top: 20px;
+    font-family: plex;
+    font-size: 14px;
+  }
+ 
 .inp_wp_div{
   display: flex;
   flex-direction:row;
@@ -202,6 +220,7 @@ margin: 0;
  padding-right:0.2vw;
  text-align: right;
  width: 20vw;
+
 }
 .addBlue{
   color: #2FF9E8;
@@ -459,8 +478,14 @@ flex-direction: column;
   justify-content: space-between;
   width: 287px;
   margin-bottom: 4.2px;
+  cursor: pointer;
+  height: 18px;
 }
-
+.LI_P:hover{
+  border-bottom:1px dotted #fffb00;
+  box-sizing: border-box;
+  
+}
 
 .botttom_lvl_orders ul{
   list-style-type: none;
@@ -495,7 +520,7 @@ flex-direction: column;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  width: 361px;
+  width: 343px;
   margin-bottom: 10px;
 }
 
@@ -510,6 +535,18 @@ flex-direction: column;
 }
 .arr{
   width: 20px;
+}
+.TXT{
+  color: white;
+  font-family: plex;
+  font-size: 15px;
+  
+}
+.Head_WRRP{
+  width: 15vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
   @media only screen and (max-width: 1475px){

@@ -44,7 +44,7 @@ code {
   display: flex;
   flex-direction: row;
   justify-content: right;
-  width: 80px;
+  width: 116px;
   padding-right: 7px;
   align-items:center;
 
@@ -58,7 +58,7 @@ code {
   border-bottom: none;
   color:rgb(0, 183, 255);
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   padding: 0px 12px;
   
 

@@ -53,6 +53,7 @@ const [sizes,setSizes] = useState({
             borderColor: '#272D35',
             
         },
+       
 
         priceFormat: {
           type: 'custom',
@@ -94,6 +95,7 @@ const [sizes,setSizes] = useState({
           textColor: '#5E6673',
           fontSize: 11,
           fontFamily: 'Binance PLEX',
+          
       },
   });
   chart.applyOptions({
@@ -110,6 +112,7 @@ const [sizes,setSizes] = useState({
         },
     },
 });
+
    
       
         candles.setData(initCandles);

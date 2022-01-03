@@ -2,7 +2,7 @@ import { useEffect, useState,useRef } from "react/cjs/react.development";
 import ScaleLoader from "react-spinners/ScaleLoader";
 
 
-function LivePrice({currency,tr,fixed}){
+function LivePrice({currency,tr,fixed,setCondition,setPriceVal}){
     const [trades,setTrades] = useState([]);
     const [tHistory,setTHistory] = useState([]);
   const [fetChed,setFetched] = useState(false);
@@ -11,20 +11,44 @@ function LivePrice({currency,tr,fixed}){
       refCurrencyNow.current = currency;
     });
     const nowCurrency = refCurrencyNow.current;
+    const refTrades = useRef();
+    useEffect(()=>{
+      refTrades.current = trades;
+    });
+    const nowTrades = refTrades.currency;
+
 
 
 
     useEffect(()=>{
   
-      const ws = new WebSocket(`wss://stream.binance.com:9443/ws/${currency}@aggTrade`);
+      const ws = new WebSocket("wss://stream.binance.com:9443/ws");
+      ws.onopen = function(evt) {
+          ws.send(JSON.stringify({
+            "method": "SUBSCRIBE",
+            "params": [
+              `${currency}@aggTrade`
+            ],
+            "id": 1
+          }));
+          ws.send(JSON.stringify({
+            "method": "SET_PROPERTY",
+            "params": [
+              "combined",
+              false
+            ],
+            "id": 2
+          }))
+      }
         ws.onmessage = (e)=>{
          
           const parsedData = JSON.parse(e.data);
        
-            if(parsedData.M === true){
+            if(parsedData.p !== nowTrades){
               setTrades(parsedData);
              tr(parsedData)
              setFetched(true); 
+             setCondition(true)
             }
           
             
@@ -83,7 +107,7 @@ useEffect(()=>{
 
   const list = tHistory.map((e,i)=>{
     let date = new Date(e.T);
-  if(e.m === false){return <li key={i}  className='JohnJoLi' ><div className='row'> 
+  if(e.m === false){return <li key={i}  className='JohnJoLi' onClick={()=>{setPriceVal(e.p)}}><div className='row'> 
   
     <div style={{color:'green'}}>{parseFloat(e.p)
     .toFixed(fixed)
@@ -91,7 +115,7 @@ useEffect(()=>{
     
     <div className="e_q">{kFormatter(e.q)} </div>  <div>{date.toString().slice(16,25)} </div>  </div></li>;}
 
-  if(e.m === true){return <li key={i}  className='JohnJoLi'>
+  if(e.m === true){return <li key={i}  className='JohnJoLi' onClick={()=>{setPriceVal(e.p)}}>
     
     <div className = 'row'>   <div style={{color:'rgb(150, 4, 4)'}}>{parseFloat(e.p)
     .toFixed(fixed)
@@ -105,7 +129,7 @@ return(
      
         
       
-{ fetChed ?<div > <div className='lp'><span>Live Trades</span></div> <ul className='flex-column' > <li className='c-w'><span>Price</span>  <span style={{marginLeft:'10px'}}>Amount</span>  <span>Time</span>   </li>{list} </ul> </div>:  <div style={{width:'321px',height:'100%',display:'flex',justifyContent:'center',alignItems:'center'}}>  <ScaleLoader color={'#00B7FF'}/> </div> }
+{ fetChed ?<div > <div className='lp'><span>Live Trades</span></div> <ul className='flex-column' > <li className='c-w'><span>Price</span>  <span style={{marginLeft:'46px'}}>Amount</span>  <span>Time</span>   </li>{list} </ul> </div>:  <div style={{width:'321px',height:'100%',display:'flex',justifyContent:'center',alignItems:'center'}}>  <ScaleLoader color={'#00B7FF'}/> </div> }
   
       
      </div>
