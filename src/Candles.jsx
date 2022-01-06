@@ -94,7 +94,7 @@ const [sizes,setSizes] = useState({
           },
           textColor: '#5E6673',
           fontSize: 11,
-          fontFamily: 'Binance PLEX',
+          fontFamily: 'plex',
           
       },
   });

@@ -2,7 +2,11 @@ import react from 'react';
 import AvatarsFox from './../Avatars/fox.png'
 import logo from './../logo.png'
 function Header(props){
-
+    var formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+      });
+   
 return(
     <div className='header'>
         <div>
@@ -21,7 +25,7 @@ return(
         
         <div className='Money'>
         <span className='userName'>Luka Cho</span>
-        <span className='sochik'>${props.wallet}</span>
+        <span className='sochik'>{formatter.format(props.wallet)}</span>
         </div>
         
         <img src={AvatarsFox} className='avatar'/>

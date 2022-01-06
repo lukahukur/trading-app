@@ -18,61 +18,61 @@ function setCondition(e){
         {
           market:'btcusdt',
           name:'BTC/USDT',
-          coin:'BTC',
+          coin:'btc',
           fixed:2
         },
         {
           market:'shibusdt',
           name:'SHIB/USDT',
-          coin:'SHIB',
+          coin:'shib',
           fixed:7
         },
         {
           market:'ethusdt',
           name:'ETH/USDT',
-          coin:'ETH',
+          coin:'eth',
           fixed:2
         },
         {
           market:'dogeusdt',
           name:'DOGE/USDT',
-          coin:'DOGE',
+          coin:'doge',
           fixed:4
         },
         {
           market:'bnbusdt',
           name:'BNB/USDT',
-          coin:'BNB',
+          coin:'bnb',
           fixed:2
         },
         {
           market:'uniusdt',
           name:'UNI/USDT',
-          coin:'UNI',
+          coin:'uni',
           fixed:3
         },
         {
           market:'trxusdt',
           name:'TRX/USDT',
-          coin:'TRX',
+          coin:'trx',
           fixed:6
         },
         {
           market:'xrpusdt',
           name:'XRP/BTC',
-          coin:'XRP',
+          coin:'xrp',
           fixed:5
         },
         {
           market:'solusdt',
           name:'SOL/USDT',
-          coin:'SOL',
+          coin:'sol',
           fixed:3
         },
         {
           market:'maticusdt',
           name:'MATIC/USDT',
-          coin:'MAGIC',
+          coin:'magic',
           fixed:4
         }
 
@@ -82,7 +82,8 @@ function setCondition(e){
 
   const [priceVal,setPriceVal] = useState();
   const [getTrades,setTrades] = useState({});
-
+  const [orders,setOrderBook] = useState([]);
+ 
     return(
        <span>
          
@@ -96,10 +97,10 @@ function setCondition(e){
     <div className='crt-wrppr'>
 
       <ReturnChart currency={currency} coinsOBJ={coinsOBJ}  getTrades={getTrades} fixed={fixed} str={str}/>
-      <OrderBook currency={currency} getTrades={getTrades} fixed={fixed} setPriceVal={(e)=>{setPriceVal(e)}}/>
+      <OrderBook currency={currency} setOrder={(e)=>{setOrderBook(e)}} getTrades={getTrades} fixed={fixed} setPriceVal={(e)=>{setPriceVal(e)}}/>
      
        <div className='formJs'>
-        <BuySellForm priceVal={priceVal} currency={currency} fixed={fixed} isDone={isDone} str={str} wallet={wallet} setWallet={setWallet} cryptoWallet={cryptoWallet} setCryptoWallet={setCryptoWallet} getTrades={getTrades}></BuySellForm>
+        <BuySellForm orders={orders}  coinsOBJ={coinsOBJ} priceVal={priceVal} currency={currency} fixed={fixed} isDone={isDone} str={str} wallet={wallet} setWallet={setWallet} cryptoWallet={cryptoWallet} setCryptoWallet={setCryptoWallet} getTrades={getTrades}></BuySellForm>
       </div>
           
     </div>

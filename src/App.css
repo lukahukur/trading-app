@@ -7,6 +7,10 @@
   font-family: plex;
   src: url('./bp/Medium.woff2');
 }
+@font-face {
+  font-family: plexRegular;
+  src: url('./bp/Regular.woff2');
+}
 .displayNone{
   display: none;
 }
@@ -208,6 +212,17 @@ a span{
   padding-right: 0.8vw;
   
 }
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
 .inp_wp_div input{
   background-color: #1E2026;
 margin: 0;
@@ -216,10 +231,10 @@ margin: 0;
    margin-left: 0.4vw;
   border: none;
   width: min-content;
- padding-top: 4px;
  padding-right:0.2vw;
  text-align: right;
  width: 20vw;
+ font-family: plexRegular;
 
 }
 .addBlue{
@@ -375,7 +390,7 @@ display: none;
   }
   .h_wrp{
     border: 1px solid #272D35;
-
+    border-bottom: none;
     border-left: none;
     width: auto;
   }
@@ -548,7 +563,15 @@ flex-direction: column;
   align-items: center;
   justify-content: space-between;
 }
+.alertJan{
+color: rgb(183, 4, 4);
+width: 100%;
+display: flex;
+align-items: center;
+justify-content: center;
+font-family: plex;
 
+}
   @media only screen and (max-width: 1475px){
         .price-live{
           font-size: 13px;

@@ -2,12 +2,13 @@ import react,{useEffect,useState,useRef} from "react";
 import ScaleLoader from "react-spinners/ScaleLoader";
 
 
-function OrderBook({currency,getTrades,fixed,setPriceVal}){
+function OrderBook({currency,getTrades,fixed,setPriceVal,setOrder}){
     function sum(e){
         let a =+ e;
         return a
     }
  const [wssData,setData] = useState([]); 
+
  const [isWss,setWss] = useState(false);
 const [red,R] = useState([]);
 const [green,G] = useState([]); 
@@ -79,6 +80,7 @@ useEffect(()=>{
             const bids = parsedCuteData.bids;
             const final = [currency,asks,bids];
             setData(final)
+            setOrder([...asks,...bids])
         //    let finallMap = parsedCuteData.map();
         
         }
