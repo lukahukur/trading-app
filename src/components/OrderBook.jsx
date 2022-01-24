@@ -80,7 +80,7 @@ useEffect(()=>{
             const bids = parsedCuteData.bids;
             const final = [currency,asks,bids];
             setData(final)
-            setOrder([...asks,...bids])
+            setOrder([...bids])
         //    let finallMap = parsedCuteData.map();
         
         }
@@ -140,7 +140,7 @@ useEffect(()=>{
             <div className="middle_lvl_price">
                 <div className="wrapper_t_1"   style={!tradePrev|| tradePrev === trades.p ?{color:'white'}: trades.p > tradePrev ?{color:'green'}:{color:'rgb(150, 4, 4)'}}>
          <span style={{cursor:'pointer'}} onClick={()=>{setPriceVal(trades.p)}}> {parseFloat( trades.p).toFixed(fixed) }</span>
-          {/* <img src={trades.p > tradePrev ?arrowGreen:arrowRed} className="arr" style={!tradePrev|| tradePrev === trades.p ?{display:'none'}: trades.p > tradePrev ?{transform:'rotate(90deg)'}:{transform:'rotate(-90deg)',marginLeft:'8px'}}/> */}
+         
                <span style={{width:'20px',height:'20px'}}>
 
                
@@ -160,6 +160,7 @@ useEffect(()=>{
                 </div>
           
             </div>
+            
             <div className="botttom_lvl_orders">
             <ul style={{color:'green'}}>
             {

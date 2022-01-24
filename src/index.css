@@ -69,8 +69,9 @@ code {
  
 }
 .avatar{
-  width: 2.1vw;
-  border-radius: 90%;
+  width: 40px;
+  
+  border-radius: 50%;
 
 }
 .Money{

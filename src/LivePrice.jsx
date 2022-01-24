@@ -1,5 +1,6 @@
 import { useEffect, useState,useRef } from "react/cjs/react.development";
 import ScaleLoader from "react-spinners/ScaleLoader";
+import { useCallback, useMemo } from "react";
 
 
 function LivePrice({currency,tr,fixed,setCondition,setPriceVal}){
@@ -122,10 +123,13 @@ useEffect(()=>{
     }</div>  <div className="e_q">{kFormatter(e.q)}</div>  <div>{date.toString().slice(16,25)}</div> </div></li>;}
 
   });
+
+
+ 
  
 return(
     
-    <div className='price-live' style={fetChed ? {width:'auto'}:{ width: '321px'}}>
+    <div className='price-live' style={fetChed ? {width:'auto'}:{ width: 'auto'}}>
      
         
       

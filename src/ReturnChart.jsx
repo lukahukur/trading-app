@@ -227,7 +227,7 @@ useEffect(()=>{
                         </div>
                :<span></span> }</span>
 
-                        <div className='currencyIndicator'>{currency.substring(0,str)}<span style={{fontFamily:'arial'}}>/</span>USDT</div>
+                        <div className='currencyIndicator'> <span>{currency.substring(0,str)}<span style={{fontFamily:'arial'}}>/</span></span>USDT</div>
 
                     </div>
                                                                          

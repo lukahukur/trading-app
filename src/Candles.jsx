@@ -149,7 +149,7 @@ const [sizes,setSizes] = useState({
         document.getElementsByClassName('tv-lightweight-charts')[0].remove();
        }
          if(window.innerWidth <= 1475){
-          setSizes({width:window.innerWidth-631,height:350})
+          setSizes({width:window.innerWidth-550,height:450})
           document.getElementsByClassName('tv-lightweight-charts')[0].remove();
          }
         
@@ -169,7 +169,7 @@ const [sizes,setSizes] = useState({
       document.getElementsByClassName('tv-lightweight-charts')[0].remove();
      }
      if(window.innerWidth <= 1475){
-      setSizes({width:window.innerWidth-631,height:350})
+      setSizes({width:window.innerWidth-550,height:450})
       document.getElementsByClassName('tv-lightweight-charts')[0].remove();
      }
     

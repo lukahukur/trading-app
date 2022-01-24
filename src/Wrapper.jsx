@@ -83,6 +83,7 @@ function setCondition(e){
   const [priceVal,setPriceVal] = useState();
   const [getTrades,setTrades] = useState({});
   const [orders,setOrderBook] = useState([]);
+  const [history,setHistoryOfTrades] = useState([]);
  
     return(
        <span>
@@ -100,13 +101,13 @@ function setCondition(e){
       <OrderBook currency={currency} setOrder={(e)=>{setOrderBook(e)}} getTrades={getTrades} fixed={fixed} setPriceVal={(e)=>{setPriceVal(e)}}/>
      
        <div className='formJs'>
-        <BuySellForm orders={orders}  coinsOBJ={coinsOBJ} priceVal={priceVal} currency={currency} fixed={fixed} isDone={isDone} str={str} wallet={wallet} setWallet={setWallet} cryptoWallet={cryptoWallet} setCryptoWallet={setCryptoWallet} getTrades={getTrades}></BuySellForm>
+        <BuySellForm history={history} setHistory={(e)=>{setHistoryOfTrades(e)}} orders={orders}  coinsOBJ={coinsOBJ} priceVal={priceVal} currency={currency} fixed={fixed} isDone={isDone} str={str} wallet={wallet} setWallet={setWallet} cryptoWallet={cryptoWallet} setCryptoWallet={setCryptoWallet} getTrades={getTrades}></BuySellForm>
       </div>
           
     </div>
 
       <div className='grid_lvl_2'>
-    <History/>
+    <History history={history} setHistory={(e)=>{setHistoryOfTrades(e)}}/>
     <LivePrice setPriceVal={(e)=>{setPriceVal(e)}} currency={currency} tr={(e)=>{setTrades(e)}} fixed={fixed} setCondition={(e)=>{setCondition(e)}} />
       </div>
       </react.Fragment>

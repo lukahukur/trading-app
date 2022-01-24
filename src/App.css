@@ -210,7 +210,11 @@ a span{
   height: 44px;
   padding-left:1vw;
   padding-right: 0.8vw;
-  
+  user-select: none;
+  -webkit-user-select: none; 
+   -khtml-user-select: none; 
+   -moz-user-select: none; 
+   -ms-user-select: none;
 }
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
@@ -400,7 +404,7 @@ display: none;
     display: flex;
     align-items: center;
     padding-left: 1vw;
-    font-family:  plex;
+    font-family:  plexRegular;
     font-size: 16px;
     border-bottom: 1px solid #272D35;
   }
@@ -572,6 +576,41 @@ justify-content: center;
 font-family: plex;
 
 }
+.history_{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 0.4fr;
+  color:white;
+  margin-left: 1vw;
+  margin-bottom: 10px;
+  font-family: plexRegular;
+  font-size: 14px;
+ 
+}
+.dsp_grd_h{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 0.4fr;
+  margin-top: 5px;
+  margin-left: 1vw;
+  margin-bottom: 10px;
+  color: #5E6673;
+  font-family: plexRegular;
+  
+
+}
+.H_wPP{
+  display: flex;
+  flex-direction: column;
+  height: 350px;
+  overflow-y: scroll;
+  
+}
+.rmv{
+  cursor: pointer;
+  color: rgb(180, 6, 6);
+  font-family: plex;
+}
+
+
   @media only screen and (max-width: 1475px){
         .price-live{
           font-size: 13px;
@@ -584,6 +623,56 @@ font-family: plex;
           margin-top: 6px;
         }
         .grid_lvl_2{
-          grid-template-columns: calc(100% - 628px) 280px 300px;
+          grid-template-columns: calc(100% - 547px) 280px 300px;
+        }
+        .LI_P{
+          margin-bottom: 1.2px;
+          width: 250px;
+        }
+        .clm{
+          font-size: 12px;
+        }
+        .w{
+          font-size: 11px;
+        }
+        .searchBox{
+          width: 215px;
+          height: 32px;
+        }
+        .dropDown{
+          width: 215px;
+        }
+        .currencyIndicator{
+          font-size: 20px;
+        
+        }
+        .row{
+          width: 250px;
+
+        }
+        .c-w{
+          width: 250px;
+        }
+        .orderbook_wrapper{
+          width:281px ;
+        }
+        .wrapper_t_1{
+          width:250px
+        }
+        .b2{
+          width: 289px;
+        }
+        .btn-wp input{
+          width: 112px;
+          height:36px ;
+        }
+        .btn-wp{
+          width: 225px;
+        }
+        .inp_wp{
+          width: 225px;
+        }
+        .inp_wp input{
+          width: 225px;
         }
   }
