@@ -1,7 +1,7 @@
 import react,{useState,useRef, useEffect} from 'react';
 
 
-function BuySellForm({currency,str,wallet,setWallet,cryptoWallet,setCryptoWallet,getTrades,isDone,fixed,priceVal,coinsOBJ,orders}){
+function BuySellForm({currency,str,wallet,setWallet,cryptoWallet,setCryptoWallet,getTrades,isDone,fixed,priceVal,coinsOBJ,orders,history,setHistory}){
     const btn_sell = useRef();
     const btn_buy = useRef(); 
     const [compare,setComparsion]= useState([]);
@@ -12,18 +12,49 @@ function BuySellForm({currency,str,wallet,setWallet,cryptoWallet,setCryptoWallet
     const btn = useRef();
     const alertRef = useRef();
     const [sell,isSelling] = useState(false);
- 
+    const [cmp,setCmp]= useState(0);
+    useEffect(()=>{
+        switch(currency) {
+            case 'btcusdt':
+             setCmp(0);
+              break;
+            case 'shibusdt':
+              setCmp(7);
+            break;
+              case 'dogeusdt':
+                  setCmp(3)
+            break;
+            case 'xrpusdt':
+                setCmp(4);
+            break;
+            case 'solusdt':
+                setCmp(1);
+                break;
+         case 'trxusdt':
+              setCmp(6);
+          break;    
+          case 'uniusdt':
+            setCmp(1);
+        break;    
+        case 'maticusdt':
+            setCmp(2)
+            break;
+        case 'bnbusdt':
+            setCmp(1);
+            break;
+            
+            default:
+            setCmp(0)
+          }
+    },[currency]);
     function trade(){
         if(input_amount.current.value.length === 0 || input_price.current.value.length === 0 || input_total.current.value.length === 0){
             
         }else{
 //selling 
-
         if(sell === true){
-     
-
-            
             coinsOBJ.map((e,i,arr)=>{
+                let mat = 0;
                 if(e.market === currency){
                     if(parseFloat(input_amount.current.value) > parseFloat(cryptoWallet[e.coin]) ){
                         alertRef.current.textContent = 'No Enough Crypto'
@@ -34,24 +65,32 @@ function BuySellForm({currency,str,wallet,setWallet,cryptoWallet,setCryptoWallet
                     else{
 //-------------------------------------------------------------------------------------------------------------------
                         compare.forEach((JJ)=>{
-                            if(JJ.toFixed(0) === parseFloat(input_price.current.value).toFixed(0)){
+                           
+                            if(JJ.toFixed(cmp) === parseFloat(input_price.current.value).toFixed(cmp)){
                             let sum = parseFloat(wallet) + parseFloat(input_price.current.value * input_amount.current.value)
-                     
+                                mat++;
                             setWallet(sum)
                             setCryptoWallet({...cryptoWallet,[e.coin]:parseFloat(cryptoWallet[e.coin]) - parseFloat(input_amount.current.value)})
+                         
                             }
-
                         });
+                        if(mat === 0){
+                            setHistory([...history,{
+                                price:input_price.current.value,
+                                time:new Date(),
+                                symbol:currency,
+                                side:'Sell',
+                                amount:input_amount.current.value,
+                                total:parseFloat(input_price.current.value * input_amount.current.value)
+                            }]);
+                        }
 //-------------------------------------------------------------------------------------------------------------------
                     }
                 }
             })
-         
-            
         }
     ///buying 
         else if(sell === false){
-         
          if((input_amount.current.value * input_price.current.value) > wallet || wallet <= 10){
             alertRef.current.textContent = 'No Enough Money'
             setTimeout(()=>{
@@ -59,26 +98,34 @@ function BuySellForm({currency,str,wallet,setWallet,cryptoWallet,setCryptoWallet
             },2000);
          }else{
             coinsOBJ.map((e,i,arr)=>{
-             
+             let matches = 0;
                 if(e.market === currency){
-//-------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------
                     compare.forEach((JJ)=>{
-                        if(JJ.toFixed(0) === parseFloat(input_price.current.value).toFixed(0)){
+                      
+                        if(JJ.toFixed(cmp) === parseFloat(input_price.current.value).toFixed(cmp)){
                             const total = parseFloat(input_amount.current.value) *parseFloat(input_price.current.value)
                             setCryptoWallet({...cryptoWallet,[e.coin]:parseFloat(cryptoWallet[e.coin]) + parseFloat(input_amount.current.value)});
-
+                            matches ++ ;
                             setWallet(()=>{
                               return (wallet - total).toFixed(
                                Number.isInteger(wallet-total) === true ?0:2 
                               )
                             });
-
-                            
                         }
                     });
-//----------------------------------------------------------------------------------------------------------------- -  --                  
+                    if(matches === 0){
+                        setHistory([...history,{
+                            price:input_price.current.value,
+                            time:new Date(),
+                            symbol:currency,
+                            side:'Buy',
+                            amount:input_amount.current.value,
+                            total:parseFloat(input_price.current.value * input_amount.current.value)
+                        }]);
+                    }
+//--------------------------------------------------------------------------------------------------------------------                  
                 }
-
                });
             }
         }
@@ -92,16 +139,56 @@ function BuySellForm({currency,str,wallet,setWallet,cryptoWallet,setCryptoWallet
                 b.push(parseFloat(orders[i][0]));
                 setComparsion(b);
         }
-
     },[orders]);
-
     useEffect(()=>{
-      
-    },[compare]);
+        compare.forEach((e,i)=>{
+         history.forEach((j,p)=>{
+            if(parseFloat(j.price).toFixed(cmp) === parseFloat(e).toFixed(cmp)){
+               let tmp = history;
+               tmp.splice(p,1);
+               setHistory([...tmp]);
+               //selling
+               if(j.side === 'Sell'){
+                coinsOBJ.map((e,i,arr)=>{
+                    if(e.market === currency){
+                            compare.forEach((JJ)=>{
+                                if(JJ.toFixed(cmp) === parseFloat(input_price.current.value).toFixed(cmp)){
+                                let sum = parseFloat(wallet) + parseFloat(input_price.current.value * input_amount.current.value)
+                                setWallet(sum)
+                                setCryptoWallet({...cryptoWallet,[e.coin]:parseFloat(cryptoWallet[e.coin]) - parseFloat(input_amount.current.value)})
+                             
+                                }
+                            });
+                    }
+                })
+               }
+               //buying
+               else if(j.side === 'Buy'){
+coinsOBJ.map((e,i,arr)=>{
+                if(e.market === currency){
+                    compare.forEach((cc)=>{
+                        if(cc.toFixed(cmp) === parseFloat(input_price.current.value).toFixed(cmp)){
+                            const total = parseFloat(input_amount.current.value) *parseFloat(input_price.current.value)
+                            setCryptoWallet({...cryptoWallet,[e.coin]:parseFloat(cryptoWallet[e.coin]) + parseFloat(input_amount.current.value)});
+                            setWallet(()=>{
+                              return (wallet - total).toFixed(
+                               Number.isInteger(wallet-total) === true ?0:2 
+                              )
+                            });
+                        }
+                    });      
+                }
+               });
+               }
+            }
+         })
+        });
+    },[compare,history]);
 
-    useEffect(()=>{
-    console.log(cryptoWallet)
-    },[cryptoWallet]);
+
+
+
+
     useEffect(()=>{
         input_total.current.value = parseFloat(input_price.current.value)*parseFloat(input_amount.current.value) ;
        
