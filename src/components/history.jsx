@@ -46,7 +46,7 @@ const hstr = react.useMemo(()=>{
 },[history]);
     return(
         <div className="h_wrp">
-            <div className="dsp_flx">Order History</div>
+            <div className="dsp_flx">Orders</div>
             <div className="dsp_grd">
                 <div className="dsp_grd_h">
                     <span>Time</span>

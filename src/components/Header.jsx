@@ -42,4 +42,11 @@ return(
     </div>
     );
 }
-export default Header;
+export default react.memo(Header,(prev,next)=>{
+    if(prev.wallet !== next.wallet){
+        return false
+    }
+    else{
+        return true
+    }
+});;

@@ -46,7 +46,11 @@ function BuySellForm({currency,str,wallet,setWallet,cryptoWallet,setCryptoWallet
             default:
             setCmp(0)
           }
+         
     },[currency]);
+
+
+    
     function trade(){
         if(input_amount.current.value.length === 0 || input_price.current.value.length === 0 || input_total.current.value.length === 0){
             
@@ -104,7 +108,7 @@ function BuySellForm({currency,str,wallet,setWallet,cryptoWallet,setCryptoWallet
                     compare.forEach((JJ)=>{
                       
                         if(JJ.toFixed(cmp) === parseFloat(input_price.current.value).toFixed(cmp)){
-                            const total = parseFloat(input_amount.current.value) *parseFloat(input_price.current.value)
+                            const total = parseFloat(input_amount.current.value) * parseFloat(input_price.current.value)
                             setCryptoWallet({...cryptoWallet,[e.coin]:parseFloat(cryptoWallet[e.coin]) + parseFloat(input_amount.current.value)});
                             matches ++ ;
                             setWallet(()=>{
@@ -131,6 +135,7 @@ function BuySellForm({currency,str,wallet,setWallet,cryptoWallet,setCryptoWallet
         }
         }
     }
+
     useEffect(()=>{
         let b = [];
         for(let i = 0;i<orders.length;i++){
@@ -260,17 +265,17 @@ useEffect(()=>{
         <div className='inp_wp'>
         <div className='inp_wp_div'>  <span>Price</span>
         
-        <input type="number" style={{width:'100%'}} ref={input_price}/> 
+        <input type="number" min='0' style={{width:'100%'}} ref={input_price}/> 
         
         
         <span style={{color:'white',textTransform: 'uppercase',fontFamily:'plexRegular',fontSize:'14px'}}>{'usdt'}</span></div>
-        <div  className='inp_wp_div'> <span>Amount</span> <input ref={input_amount} type="number" style={{width:'100%'}}/> <p style={{color:'white',textTransform: 'uppercase',fontFamily:'plexRegular',fontSize:'14px'}}>{currency.substring(0,str)}</p> </div>
+        <div  className='inp_wp_div'> <span>Amount</span> <input min='0' ref={input_amount} type="number" style={{width:'100%'}}/> <p style={{color:'white',textTransform: 'uppercase',fontFamily:'plexRegular',fontSize:'14px'}}>{currency.substring(0,str)}</p> </div>
 
 
         <input type="range" className='range_price' min="0" max={wallet}  step={wallet> 1?0.1:0.01 } ref={input_range} />
 
 
-        <div className='inp_wp_div' >  <span>Total</span><input ref={input_total} type="number" style={{width:'100%'}} /> <p style={{color:'white',textTransform: 'uppercase',fontFamily:'plexRegular',fontSize:'14px'}}>{'usdt'}</p></div>
+        <div className='inp_wp_div' >  <span>Total</span><input min='0' ref={input_total} type="number" style={{width:'100%'}} /> <p style={{color:'white',textTransform: 'uppercase',fontFamily:'plexRegular',fontSize:'14px'}}>{'usdt'}</p></div>
            <input onClick={()=>{trade()}} ref={btn} type="button" value={sell === true ?'SELL' : 'BUY'} style={sell?{backgroundColor:'#F6465D',border:'none',borderRadius:'5px',cursor:'pointer'}:{backgroundColor:'rgb(26, 180, 26)',border:'none',borderRadius:'5px',cursor:'pointer'}}/>
            <div className='alertJan' ref={alertRef}></div>
            </div>

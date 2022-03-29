@@ -198,4 +198,11 @@ useEffect(()=>{
     )
 }
 
-export default OrderBook;
+export default react.memo(OrderBook,(prev,next)=>{
+    if(prev.getTrades !== next.getTrades){
+        return false
+    }
+    else{
+        return true
+    }
+});

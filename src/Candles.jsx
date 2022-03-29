@@ -1,5 +1,6 @@
 import React,{useState,useEffect,useRef} from "react";
 import { createChart } from 'lightweight-charts';
+import react from "react";
 
 
 
@@ -189,4 +190,11 @@ const [sizes,setSizes] = useState({
            );
 
 }
-  export default CreateChart;
+  export default react.memo( CreateChart,(p,n)=>{
+if(p!==n){
+  return true
+}else{
+  return false
+}
+
+  });

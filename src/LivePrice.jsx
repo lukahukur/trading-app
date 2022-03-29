@@ -1,6 +1,7 @@
 import { useEffect, useState,useRef } from "react/cjs/react.development";
 import ScaleLoader from "react-spinners/ScaleLoader";
 import { useCallback, useMemo } from "react";
+import react from "react";
 
 
 function LivePrice({currency,tr,fixed,setCondition,setPriceVal}){
@@ -23,24 +24,7 @@ function LivePrice({currency,tr,fixed,setCondition,setPriceVal}){
 
     useEffect(()=>{
   
-      const ws = new WebSocket("wss://stream.binance.com:9443/ws");
-      ws.onopen = function(evt) {
-          ws.send(JSON.stringify({
-            "method": "SUBSCRIBE",
-            "params": [
-              `${currency}@aggTrade`
-            ],
-            "id": 1
-          }));
-          ws.send(JSON.stringify({
-            "method": "SET_PROPERTY",
-            "params": [
-              "combined",
-              false
-            ],
-            "id": 2
-          }))
-      }
+      const ws = new WebSocket(`wss://stream.binance.com:9443/ws/${currency}@aggTrade`);
         ws.onmessage = (e)=>{
          
           const parsedData = JSON.parse(e.data);
@@ -50,9 +34,10 @@ function LivePrice({currency,tr,fixed,setCondition,setPriceVal}){
              tr(parsedData)
              setFetched(true); 
              setCondition(true)
+           
             }
           
-            
+      
       }
    
     
@@ -141,7 +126,13 @@ return(
 );
 
 }
-export default LivePrice;
+export default react.memo( LivePrice,(prevProps, nextProps)=>{
+  if(prevProps!==nextProps){
+    return true
+  }else{
+    return false
+  }
+});
 
 
 
