@@ -190,11 +190,11 @@ const [sizes,setSizes] = useState({
            );
 
 }
-  export default react.memo( CreateChart,(p,n)=>{
-if(p!==n){
-  return true
-}else{
+  export default react.memo( CreateChart,(prevProps,nextProps)=>{
+if(prevProps.time!==nextProps.time){
   return false
+}else{
+  return true
 }
 
   });

@@ -72,7 +72,7 @@ function setCondition(e){
         {
           market:'maticusdt',
           name:'MATIC/USDT',
-          coin:'magic',
+          coin:'matic',
           fixed:4
         }
 
