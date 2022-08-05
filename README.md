@@ -1,3 +1,6 @@
-Its my project For Portfolio
 
-Hands off my code BITCH
+# Cryptocurrency Market Simulator
+
+ __🚧Application development is not completed yet🚧__ 
+
+Soon I will finish writing backend scripts 
