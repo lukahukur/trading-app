@@ -1,0 +1,79 @@
+.order_wrapper{
+
+  div:nth-child(odd){
+    @apply h-2/5  border p-4 ;
+  }
+
+}
+.prices{
+    @apply px-4 py-1 text-sm;
+}
+.curr_price{
+    font-family: bPl;
+    width: 330px;
+    @apply h-12 px-4 py-2 text-white font-medium text-lg;
+}
+.inputs{
+  @apply flex justify-between flex-row;
+  button{
+    @apply  bg-moreLighter text-white w-full h-10 first:rounded-l-md last:rounded-r-md;
+  }
+ 
+}
+.inp_wrapper{
+  @apply flex flex-col justify-between h-80 mt-4 ;
+  span{
+    input{
+      @apply h-11 w-full bg-light rounded-md p-4 text-gray-200 outline-none ;
+    }
+    span{
+      -webkit-user-select: none; /* Safari */
+      -ms-user-select: none; /* IE 10 and IE 11 */
+      user-select: none; /* Standard syntax */
+    }
+  }
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type=number] {
+  -moz-appearance: textfield;
+  }
+  button{
+    @apply h-10 rounded-md ;
+  }
+
+  input[type='range']{
+    -webkit-appearance: none;
+    height: 2px;
+    background: #474D57;
+  
+  }
+  
+input[type='range']::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    border-radius: 100%;
+    width: 16px;
+    height: 16px;
+    background:#767a83;
+    cursor: pointer;
+   
+  }
+}
+.coins{
+
+  @apply w-full h-full flex flex-col pt-1 mt-2 overflow-scroll overflow-x-hidden
+}
+.coins::-webkit-scrollbar {
+  @apply w-1 h-full;
+}
+
+.coins::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+.coins::-webkit-scrollbar-thumb {
+  @apply rounded-full bg-lightest;
+
+}

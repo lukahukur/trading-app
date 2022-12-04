@@ -1,0 +1,105 @@
+.index_body{
+
+.index_top{
+    @apply absolute
+           rounded-full
+           z-10
+           bg-gray-800
+           w-36
+           mt-4
+           items-center
+           justify-between
+           p-1
+           left-1/2
+           transform -translate-x-1/2
+           flex
+           ;
+
+    button{
+      @apply bg-sky-500
+             rounded-full
+             p-1
+             w-20
+    }
+
+        
+}
+  .indexContainer{
+    @apply absolute 
+           top-96 
+           bg-opacity-0
+           rounded-2xl 
+           min-h-fit
+           flex-initial
+           bg-gray-800 
+           left-1/4 
+           transform -translate-x-1/2 -translate-y-1/2
+           z-50 
+           text-white 
+           text-5xl  
+           w-128
+           h-56
+           justify-between 
+           ;
+           
+  
+      .intexContainerP{
+        
+          @apply mt-0
+          font-medium w-max;
+      }
+      .intexContainerP_S{
+         @apply text-4xl
+                
+      }
+      .btn_index_{
+        @apply bg-sky-600 
+                 rounded-full
+                 text-2xl
+                 w-44 
+                 h-1/4
+                 mt-5
+      }
+  }
+}
+
+
+.reg_form_wrapper{
+
+  @apply flex  h-tooooLarge items-center justify-center flex-col;
+
+    .reg_sign_up{
+  
+      @apply flex text-white w-80 justify-center h-14  text-4xl font-light;
+
+    }
+    .reg_form{
+      @apply flex flex-col  h-96 w-80 justify-around bg-gray-800 px-6 py-2 rounded-xl;
+            
+      input{
+
+        @apply py-1 px-2 text-white outline-none h-12 text-xl bg-moreLighter rounded-lg ;
+
+      }
+      label{
+        font-family: bPl;
+        @apply text-white text-lg;
+        
+      }
+      button{
+        @apply text-lessDarker font-semibold rounded-full h-10 w-32 transition-all duration-500 bg-gradient-to-tl from-purple-500 via-cyan-500  to-blue-500 bg-size-200 bg-pos-0 hover:bg-pos-100;
+      }
+      span{
+     
+        @apply flex text-white justify-center mt-2;
+      }
+     p{
+    
+      @apply flex text-white w-full justify-center text-lg;
+     }
+     p:hover{
+      @apply underline;
+     }
+   
+    }
+}
