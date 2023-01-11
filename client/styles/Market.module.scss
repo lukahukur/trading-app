@@ -1,175 +1,179 @@
-.intervalWrapper{
-    @apply w-full flex justify-start;
+.intervalWrapper {
+  @apply w-full flex justify-start;
 
-   .btn_wrapper{
+  .btn_wrapper {
     font-family: bPl;
     @apply items-center flex justify-between text-white w-96;
 
-        button{
-            @apply text-white text-sm
-        }
+    button {
+      @apply text-white text-sm;
     }
+  }
 }
-.d_menu{
-    svg{
-        @apply transition-all; 
-    }
-    &:hover svg{
-        @apply rotate-180;
-    }
-    &:hover path{
-        @apply fill-white transition-colors delay-150;
-    }
-    &:hover .dropDown_menu{
-      
-        @apply flex transition-all z-20 opacity-100 mt-0 items-center justify-center ;
-   
-    }
+.d_menu {
+  svg {
+    @apply transition-all;
+  }
+  &:hover svg {
+    @apply rotate-180;
+  }
+  &:hover path {
+    @apply fill-white transition-colors delay-150;
+  }
+  &:hover .dropDown_menu {
+    @apply flex transition-all z-20 opacity-100 mt-0 items-center justify-center;
+  }
 
-    .dropDown_menu{
-        //#1e2433
-        //#151e2b
-        // background-color: #1e2433;
-        @apply  absolute -z-10 opacity-0  -mt-6 p-1 bg-smth
-                h-32 w-64  rounded-md bg-opacity-50 backdrop-blur-sm
-        ;
-        .gridWrapper{
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            grid-template-rows: repeat(4, 1fr);
-            grid-column-gap: 7px;
-            grid-row-gap: 7px;
-
-        }
-        button{
-            font-family: bPl;
-            @apply w-14 rounded-sm flex bg-moreLighter h-6 items-center justify-center hover:bg-lightest
-        }
+  .dropDown_menu {
+    //#1e2433
+    //#151e2b
+    // background-color: #1e2433;
+    @apply absolute -z-10 opacity-0  -mt-6 p-1 bg-smth
+                h-32 w-64  rounded-md bg-opacity-50 backdrop-blur-sm;
+    .gridWrapper {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(4, 1fr);
+      grid-column-gap: 7px;
+      grid-row-gap: 7px;
     }
+    button {
+      font-family: bPl;
+      @apply w-14 rounded-sm flex bg-moreLighter h-6 items-center justify-center hover:bg-lightest;
+    }
+  }
 }
-.candlestickSeriesPrices{
-    bottom: 380px;
-    @apply relative  flex z-10 left-10 text-sm;
-    
+.candlestickSeriesPrices {
+  bottom: 380px;
+  @apply relative  flex z-10 left-10 text-sm;
 }
 .parent {
-    display: grid;
-    height: 930px;
-    grid-template-rows: 510px 412px;
-    grid-template-areas:
+  display: grid;
+  height: 930px;
+  grid-template-rows: 510px 412px;
+  grid-template-areas:
     'chart book form'
     'bids trade wallet';
-    grid-template-columns: min-content auto minmax(222px,100%);
-   @apply gap-3 py-4 mt-1 px-2;
+  grid-template-columns: min-content auto minmax(222px, 100%);
+  @apply gap-3 py-4 mt-1 px-2;
 }
-  
-.side { 
-    grid-area:side;
-    @apply bg-lessDarker rounded-xl; 
+
+.side {
+  grid-area: side;
+  @apply bg-lessDarker rounded-xl;
 }
-.chartWrp
-{   font-family: bPl;
-    grid-area: chart;
-    @apply bg-lessDarker rounded-lg overflow-hidden;
-    height: 510px;
-    -webkit-user-select: none; /* Safari */        
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* IE10+/Edge */
-    user-select: none; /* Standard */
+.chartWrp {
+  font-family: bPl;
+  grid-area: chart;
+  @apply bg-lessDarker rounded-lg overflow-hidden;
+  height: 510px;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
 }
 .order {
-    grid-area: book;
-    width: 330px;
-    @apply bg-lessDarker rounded-xl;
+  grid-area: book;
+  width: 330px;
+  @apply bg-lessDarker rounded-xl;
 }
 
 .form {
-     grid-area: form;
-     @apply bg-lessDarker rounded-xl;
+  grid-area: form;
+  @apply bg-lessDarker rounded-xl;
 }
 .bids {
-     grid-area: bids;
-     @apply bg-lessDarker rounded-xl;
+  grid-area: bids;
+  @apply bg-lessDarker rounded-xl;
 }
-.trades { 
-    grid-area: trade;
-    width: 330px;
-    @apply bg-lessDarker rounded-xl ;
-
+.trades {
+  grid-area: trade;
+  width: 330px;
+  @apply bg-lessDarker rounded-xl;
 }
-.wallet{
-    grid-area: wallet;
-    @apply bg-lessDarker rounded-xl ;
+.wallet {
+  grid-area: wallet;
+  @apply bg-lessDarker rounded-xl;
 }
-.sideBar{
-    font-family:bPl;
-    @apply w-full h-full flex flex-col items-center py-4;
-    span{
-        @apply  h-32;
-    }
+.sideBar {
+  font-family: bPl;
+  @apply w-full h-full flex flex-col items-center py-4;
+  span {
+    @apply h-32;
+  }
 }
-.search_wrapper{
-    @apply h-18 w-1/4 items-center flex;
-    .search_box{
-        @apply pl-4 w-56 flex items-center justify-around;
-        input{
-           
-            @apply  outline-none 
+.search_wrapper {
+  @apply h-18 w-1/4 items-center flex;
+  .search_box {
+    @apply pl-4 w-56 flex items-center justify-around;
+    input {
+      @apply outline-none 
                    text-white w-52 bg-smth rounded-md min-h-full bg-opacity-75
-                   pl-4 h-12
-                    ;
-        }
-        input::placeholder {
-            font: 14px bPl;
-        }
+                   pl-4 h-12;
     }
-    &:hover .search_dropDown{
-        @apply mt-10 transition-all  opacity-100 z-50 ;
+    input::placeholder {
+      font: 14px bPl;
     }
-    .search_dropDown{
-        @apply  overflow-scroll h-32 w-52 overflow-x-hidden delay-150
+  }
+  &:hover .search_dropDown {
+    @apply mt-10 transition-all  opacity-100 z-50;
+  }
+  .search_dropDown {
+    @apply overflow-scroll h-32 w-52 overflow-x-hidden delay-150
                 ease-in-out rounded-md opacity-0 absolute 
                 -z-10 pt-1 pb-1 mt-14 grid grid-cols-2 grid-rows-6 gap-x-1 gap-y-4
-                 bg-light bg-opacity-50 backdrop-blur-sm 
-                ;
-        button{
-            @apply w-22 h-6  bg-transparent text-blue-50 m-1 justify-center items-center  flex rounded-full text-sm;
-        }
+                 bg-light bg-opacity-50 backdrop-blur-sm;
+    button {
+      @apply w-22 h-6  bg-transparent text-blue-50 m-1 justify-center items-center  flex rounded-full text-sm;
     }
-    .search_dropDown::-webkit-scrollbar {
-        @apply w-1 h-full;
-      }
-    
-    .search_dropDown::-webkit-scrollbar-track {
-        @apply bg-transparent;
-    }
-    
-    .search_dropDown::-webkit-scrollbar-thumb {
-        @apply rounded-full bg-lightest;
-     
-    }
-    
-    .hvr_wrp{
-        @apply flex flex-col h-9 text-white;
-    }
+  }
+  .search_dropDown::-webkit-scrollbar {
+    @apply w-1 h-full;
+  }
+
+  .search_dropDown::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  .search_dropDown::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-lightest;
+  }
+
+  .hvr_wrp {
+    @apply flex flex-col h-9 text-white;
+  }
 }
 
-
-
-.ticker_wrapper{
-    font-family: bPl;
-    @apply  text-white pr-4 flex items-center  justify-around w-full;
-    .ticker_wrapper_price{
-        @apply flex-col  flex h-10 text-sm  min-w-minW max-w-32;
-    }
+.ticker_wrapper {
+  font-family: bPl;
+  @apply text-white pr-4 flex items-center  justify-around w-full;
+  .ticker_wrapper_price {
+    @apply flex-col  flex h-10 text-sm  min-w-minW max-w-32;
+  }
 }
 
-.svg_settings{
-        @apply w-5 h-5  delay-75 duration-75;
-        &:hover path{
-           @apply fill-white transition-all duration-75;
-        }
-        &:hover {
-            @apply transition-all rotate-180 ease-in-out;
-         }
+.svg_settings {
+  @apply w-5 h-5  delay-75 duration-75;
+  &:hover path {
+    @apply fill-white transition-all duration-75;
+  }
+  &:hover {
+    @apply transition-all rotate-180 ease-in-out;
+  }
+}
+
+.bidWrapper {
+  @apply grid grid-cols-5 gap-2 mt-3 gap-x-20 overflow-y-scroll overflow-x-hidden;
+}
+
+.bidWrapper::-webkit-scrollbar {
+  @apply w-1 h-full;
+}
+
+.bidWrapper::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+.bidWrapper::-webkit-scrollbar-thumb {
+  @apply rounded-full bg-lightest;
 }

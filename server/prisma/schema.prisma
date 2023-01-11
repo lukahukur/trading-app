@@ -1,0 +1,76 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model currencies {
+  id           Int            @id @default(autoincrement())
+  currency     String?        @unique(map: "crr_u") @db.VarChar(255)
+  history      history[]
+  transactions transactions[]
+}
+
+model history {
+  id                      Int         @id @default(autoincrement())
+  user_id                 Int?
+  side                    String?     @db.Char(128)
+  time                    Decimal?    @db.Decimal(11, 0)
+  currency                String?     @db.Char(255)
+  currencies              currencies? @relation(fields: [currency], references: [currency], onDelete: NoAction, onUpdate: NoAction)
+  side_history_sideToside side?       @relation("history_sideToside", fields: [side], references: [side], onDelete: NoAction, onUpdate: NoAction)
+  user_table              user_table? @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model side {
+  id                                   Int            @id @default(autoincrement())
+  side                                 String?        @unique(map: "side_unique") @db.VarChar(120)
+  history_history_sideToside           history[]      @relation("history_sideToside")
+  transactions_transactions_sideToside transactions[] @relation("transactions_sideToside")
+}
+
+model transactions {
+  id                           Int         @id @default(autoincrement())
+  user_id                      Int?
+  side                         String?     @db.VarChar(120)
+  amount                       Decimal?    @db.Decimal(33, 8)
+  time                         Decimal?    @db.Decimal(13, 0)
+  currency                     String?     @db.VarChar(120)
+  price                        Decimal?    @db.Decimal(10, 2)
+  currencies                   currencies? @relation(fields: [currency], references: [currency], onDelete: NoAction, onUpdate: NoAction)
+  side_transactions_sideToside side?       @relation("transactions_sideToside", fields: [side], references: [side], onDelete: NoAction, onUpdate: NoAction)
+  user_table                   user_table? @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model user_table {
+  id              Int            @id @default(autoincrement())
+  email           String?        @unique(map: "uniquemail") @db.VarChar(255)
+  verified        Boolean?
+  password        String?        @db.VarChar(255)
+  username        String?        @db.VarChar(128)
+  activation_link String?        @unique(map: "uuid_") @db.VarChar(255)
+  history         history[]
+  transactions    transactions[]
+  wallet          wallet?
+}
+
+model wallet {
+  id         Int         @id @default(autoincrement())
+  user_id    Int?        @unique(map: "unique_user_id")
+  btc        Decimal?    @db.Decimal(20, 6)
+  usdt       Decimal?    @db.Decimal(10, 2)
+  bnb        Decimal?    @db.Decimal(20, 4)
+  ada        Decimal?    @default(0) @db.Decimal(20, 2)
+  dot        Decimal?    @db.Decimal(20, 4)
+  eth        Decimal?    @db.Decimal(20, 6)
+  ltc        Decimal?    @db.Decimal(20, 4)
+  matic      Decimal?    @db.Decimal(20, 2)
+  shib       Decimal?    @db.Decimal(20, 2)
+  sol        Decimal?    @db.Decimal(20, 4)
+  uni        Decimal?    @db.Decimal(20, 4)
+  xrp        Decimal?    @db.Decimal(20, 2)
+  user_table user_table? @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_constraint_user_table")
+}

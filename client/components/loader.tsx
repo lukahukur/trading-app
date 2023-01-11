@@ -1,20 +1,18 @@
-
 const SVGComponent = () => (
-    <svg
+  <svg
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
     style={{
       margin: "auto",
-      marginBottom:'3px',
+      marginBottom: "3px",
       display: "block",
     }}
     width="80px"
     height="30px"
     viewBox="0 50 100 10"
     preserveAspectRatio="xMidYMid"
-
   >
-    <circle cx={30.5} cy={58} r={5} className='fill-white'>
+    <circle cx={30.5} cy={58} r={5} className="fill-white">
       <animate
         attributeName="cy"
         calcMode="spline"
@@ -26,7 +24,7 @@ const SVGComponent = () => (
         begin="-0.368421052631579s"
       />
     </circle>
-    <circle cx={43.5} cy={58} r={5} className='fill-white'>
+    <circle cx={43.5} cy={58} r={5} className="fill-white">
       <animate
         attributeName="cy"
         calcMode="spline"
@@ -38,7 +36,7 @@ const SVGComponent = () => (
         begin="-0.2763157894736842s"
       />
     </circle>
-    <circle cx={56.5} cy={58} r={5} className='fill-white'>
+    <circle cx={56.5} cy={58} r={5} className="fill-white">
       <animate
         attributeName="cy"
         calcMode="spline"
@@ -50,7 +48,7 @@ const SVGComponent = () => (
         begin="-0.1842105263157895s"
       />
     </circle>
-    <circle cx={69.5} cy={58} r={5} className='fill-white'>
+    <circle cx={69.5} cy={58} r={5} className="fill-white">
       <animate
         attributeName="cy"
         calcMode="spline"
@@ -63,5 +61,5 @@ const SVGComponent = () => (
       />
     </circle>
   </svg>
-);
-export default SVGComponent;
+)
+export default SVGComponent
