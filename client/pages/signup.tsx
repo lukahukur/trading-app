@@ -2,6 +2,7 @@ import styles from '../styles/Home.module.scss'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { useCreateAccountMutation } from '../store/_api'
+import * as Router from 'next/router'
 
 export default function Signup() {
   const [create, { data, error, isError, isSuccess }] =
@@ -10,6 +11,8 @@ export default function Signup() {
   const password = useRef<HTMLInputElement>(null)
   const email = useRef<HTMLInputElement>(null)
   const [getError, setError] = useState('')
+  const [getSuccessMessage, setSuccessMessage] = useState('')
+  const router = Router.useRouter()
 
   useEffect(() => {
     if (error) {
@@ -24,6 +27,9 @@ export default function Signup() {
       }
     }
     if (isSuccess) {
+      setError('')
+      setSuccessMessage('you are successfuly registered')
+      router.push('/signin')
     }
   }, [data, error, isSuccess])
 
@@ -78,6 +84,12 @@ export default function Signup() {
         {getError && (
           <span className="flex items-center justify-center text-red-600 w-80 h-10 mt-3 ">
             {getError}
+          </span>
+        )}
+
+        {getSuccessMessage && (
+          <span className="flex items-center justify-center text-green-500 w-80 h-10 mt-3">
+            {getSuccessMessage}
           </span>
         )}
       </span>

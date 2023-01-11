@@ -46,10 +46,10 @@ export class AuthController {
         path: '/',
       })
       .setCookie('refresh', req.user.refresh, {
-        maxAge: 7 * 24 * 60 * 60 * 1000,
-        sameSite: 'strict',
-        httpOnly: true,
-        path: '/',
+          maxAge: 7 * 24 * 60 * 60 * 1000,
+          sameSite: 'strict',
+          httpOnly: true,
+          path: '/',
       })
 
     return { message: 'set-cookie' }
