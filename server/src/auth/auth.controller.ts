@@ -16,7 +16,7 @@ import { ConfigService } from '@nestjs/config'
 import { AuthGuard } from '@nestjs/passport'
 import { FastifyReply } from 'fastify'
 import { OKpost, Redirect } from '../../types/decorators'
-import { BodySignUp, QueryUUIDDto, userDto } from '../dto/user.dto'
+import { QueryUUIDDto, userDto } from '../dto/user.dto'
 import { AuthService } from './auth.service'
 
 @Controller('auth')
@@ -46,10 +46,10 @@ export class AuthController {
         path: '/',
       })
       .setCookie('refresh', req.user.refresh, {
-          maxAge: 7 * 24 * 60 * 60 * 1000,
-          sameSite: 'strict',
-          httpOnly: true,
-          path: '/',
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+        sameSite: 'strict',
+        httpOnly: true,
+        path: '/',
       })
 
     return { message: 'set-cookie' }
