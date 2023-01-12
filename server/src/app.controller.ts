@@ -8,7 +8,7 @@ import { AppService } from './app.service'
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get()
+  @Get('health_check')
   @HttpCode(200)
   getHello(@Res() res: FastifyReply) {
     return res.status(200).send('OK')
