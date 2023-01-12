@@ -28,7 +28,7 @@ export const wssMiddleware: any = (store: AppStore) => {
       subscribtionManager.subscribe(action.payload, socket)
 
     if (startConnecting.match(action)) {
-      socket = io('http://localhost:5000/trade', {
+      socket = io(process.env.NEXT_PUBLIC_BURL + '/trade', {
         transports: ['websocket'],
       })
       socket.on('connect', () => {
@@ -48,10 +48,13 @@ export const wssMiddleware: any = (store: AppStore) => {
 
     // private data
     if (startConnecting.match(action)) {
-      socket_personalData = io('http://localhost:5000/userdata', {
-        transports: ['websocket'],
-      })
-
+      socket_personalData = io(
+        process.env.NEXT_PUBLIC_BURL + '/userdata',
+        {
+          transports: ['websocket'],
+        },
+      )
+      console.log(process.env.NEXT_PUBLIC_BURL)
       socket_personalData.on('data', (e) => {
         let response = e
 

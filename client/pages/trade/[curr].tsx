@@ -26,6 +26,7 @@ import {
   getDataFromBinanceApiDepth,
 } from '../../api/api'
 import { getKlineRecordCount } from '../../api/constant'
+import Head from 'next/head'
 
 let fired = false
 
@@ -36,7 +37,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 }) => {
   let authenticated: boolean
   const isTokenValid = await fetch(
-    'http://localhost:5000/auth/authOnLoad',
+    process.env.NEXT_PUBLIC_BURL + '/auth/authOnLoad',
     {
       method: 'POST',
       headers: {
@@ -136,52 +137,57 @@ const Page: NextPage<IndexPageTrades> = ({
   }, [])
 
   return (
-    <div className={styles.parent}>
-      {!renderChart && (
-        <span className="fixed w-full h-full overflow-hidden rounded-md bg-darkest  z-10000  flex items-center justify-center overflow-x-hidden">
-          <Preloader
-            firstColor={theme.secondaryUp}
-            secondColor={theme.secondaryDown}
+    <>
+      <Head>
+        <title> Spot {market.toUpperCase()}</title>
+      </Head>
+      <div className={styles.parent}>
+        {!renderChart && (
+          <span className="fixed w-full h-full overflow-hidden rounded-md bg-darkest  z-10000  flex items-center justify-center overflow-x-hidden">
+            <Preloader
+              firstColor={theme.secondaryUp}
+              secondColor={theme.secondaryDown}
+            />
+          </span>
+        )}
+        <div className={styles.chartWrp}>
+          <Ticker
+            drawPreloader={(e: boolean) => {
+              allowToRender(e)
+            }}
           />
-        </span>
-      )}
-      <div className={styles.chartWrp}>
-        <Ticker
-          drawPreloader={(e: boolean) => {
-            allowToRender(e)
-          }}
-        />
-        <Interval />
-        <Chart
-          market={market}
-          renderChart={renderChart}
-          data={dataState}
-        />
-      </div>
+          <Interval />
+          <Chart
+            market={market}
+            renderChart={renderChart}
+            data={dataState}
+          />
+        </div>
 
-      <div className={styles.order}>
-        <Orders response={depth} />
-      </div>
+        <div className={styles.order}>
+          <Orders response={depth} />
+        </div>
 
-      <div className={styles.form}>
-        <Form
-          authenticated={authenticated}
-          draw={renderChart}
-          res={responseTrades[0].price}
-        />
-      </div>
+        <div className={styles.form}>
+          <Form
+            authenticated={authenticated}
+            draw={renderChart}
+            res={responseTrades[0].price}
+          />
+        </div>
 
-      <div className={styles.bids}>
-        <Bids authenticated={authenticated} />
-      </div>
+        <div className={styles.bids}>
+          <Bids authenticated={authenticated} />
+        </div>
 
-      <div className={styles.trades}>
-        <Trades responseTrades={responseTrades} />
+        <div className={styles.trades}>
+          <Trades responseTrades={responseTrades} />
+        </div>
+        <div className={styles.wallet}>
+          <Wallet authenticated={authenticated} />
+        </div>
       </div>
-      <div className={styles.wallet}>
-        <Wallet authenticated={authenticated} />
-      </div>
-    </div>
+    </>
   )
 }
 

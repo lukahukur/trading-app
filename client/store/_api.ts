@@ -8,7 +8,7 @@ const controller = new AbortController()
 export const loginApi = createApi({
   reducerPath: 'loginApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:5000',
+    baseUrl: process.env.NEXT_PUBLIC_BURL,
     signal: controller.signal,
   }),
   extractRehydrationInfo(action, { reducerPath }) {
