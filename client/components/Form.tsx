@@ -6,17 +6,13 @@ import React, {
   FC,
   ChangeEvent,
 } from 'react'
-import config from '../tailwind.config'
 import { typedUseSelector, typedDispatch } from '../store'
-import { coinsType, tailwindTheme, Tcoins } from '../types'
+import { coinsType, Tcoins } from '../types'
 import Link from 'next/link'
 import { fixed } from '../api/index'
 import { makeTransaction } from '../store/dbws'
 import { Itrancation } from '../types/index'
 import { validateConfig } from 'next/dist/server/config-shared'
-
-const themeTailwind: tailwindTheme = config.theme!.extend!
-  .colors as any
 
 const Form: FC<{
   authenticated: boolean

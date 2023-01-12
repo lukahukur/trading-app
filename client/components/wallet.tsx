@@ -1,13 +1,10 @@
 import React, { FC, useEffect } from 'react'
-import { tailwindTheme, Tcoins } from '../types'
+import { Tcoins } from '../types'
 import { typedDispatch, typedUseSelector } from '../store'
-import config from '../tailwind.config'
+
 import styles from '../styles/data.module.scss'
 import { useLogoutMutation } from '../store/_api'
 import { addMoney } from '../store/dbws'
-
-const themeTailwind: tailwindTheme = config.theme!.extend!
-  .colors as any
 
 const Wallet: FC<{ authenticated: boolean }> = ({
   authenticated,

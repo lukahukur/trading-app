@@ -14,16 +14,11 @@ import {
   arrOfStreams,
   BinanceRestApiResponseTypeKline,
   BinanceStreams,
-  tailwindTheme,
   WsResponseTypeKline,
 } from '../types'
 import { wsController } from '../api/api'
 import styles from '../styles/Market.module.scss'
-import config from '../tailwind.config'
 import { setData } from '../store/klineSlice'
-
-const themeTailwind: tailwindTheme = config.theme!.extend!
-  .colors as any
 
 const Chart: FC<{
   market: BinanceStreams
@@ -80,8 +75,8 @@ const Chart: FC<{
       },
       layout: {
         //#171C29
-        backgroundColor: themeTailwind.lessDarker,
-        textColor: themeTailwind.textSecondary,
+        backgroundColor: 'hsl(230, 30%, 9%)',
+        textColor: '#9ca3af',
         fontFamily: 'bPl',
       },
       grid: {
@@ -122,8 +117,8 @@ const Chart: FC<{
     }
 
     var candlestick = chart.addCandlestickSeries({
-      upColor: themeTailwind.up,
-      downColor: themeTailwind.down,
+      upColor: 'rgba(38,198,218, 0.56)',
+      downColor: 'rgba(239,83,80, 0.4)',
       priceFormat: {
         type: 'price',
         minMove: mapOfStreams[market],
@@ -151,8 +146,8 @@ const Chart: FC<{
       }
     })
     let colorSchemeVolumeSeries = {
-      upColor: themeTailwind.secUp,
-      downColor: themeTailwind.secDown,
+      upColor: '#047D74',
+      downColor: '#D04749',
     }
     if (data) {
       data.forEach((e) => {
