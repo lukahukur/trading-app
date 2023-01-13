@@ -20,7 +20,7 @@
 ## Run Locally
 
 
-First, you should create postgreSQL db depending on schema.prisma
+First, you should create postgreSQL db and migrate schema.prisma
 
 Then, install all of the dependencies for server 
 ```bash
