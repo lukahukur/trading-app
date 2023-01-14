@@ -12,6 +12,9 @@
 /.next/
 /out/
 
+Dockerfile
+.dockerignore
+
 # production
 /build
 ../server/node_modules

@@ -1,4 +1,4 @@
-import type { NextPage } from 'next'
+import type { NextPage, NextPageContext } from 'next'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import GitLogo from '../public/GitHub.png'

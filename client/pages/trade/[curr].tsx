@@ -27,57 +27,8 @@ import {
 } from '../../api/api'
 import { getKlineRecordCount } from '../../api/constant'
 import Head from 'next/head'
-
+import axios from 'axios'
 let fired = false
-
-export const getServerSideProps: GetServerSideProps = async ({
-  req,
-  res,
-  resolvedUrl,
-}) => {
-  let authenticated: boolean
-  const isTokenValid = await fetch(
-    process.env.NEXT_PUBLIC_BURL + '/auth/authOnLoad',
-    {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      credentials: 'include',
-      body: JSON.stringify({
-        access: req.cookies.Authorization,
-      }),
-    },
-  ).then((e) => e.json())
-
-  let interval = store().getState().market.time
-  let stream = resolvedUrl.split('/')[2] as BinanceStreams
-  let canPass = arrOfStreams.includes(stream)
-  if (!canPass) return { notFound: true }
-
-  let response = await fetch(
-    `https://api.binance.com/api/v3/klines?symbol=${stream.toUpperCase()}&interval=${interval}&limit=${getKlineRecordCount}`,
-  ).then((e) => e.json())
-  let responseDepth = await fetch(
-    `https://api.binance.com/api/v3/depth?symbol=${stream.toUpperCase()}&limit=10`,
-  ).then((e) => e.json())
-  let responseTrades = await fetch(
-    `https://api3.binance.com/api/v3/trades?symbol=${stream.toUpperCase()}&limit=${18}`,
-  ).then((e) => e.json())
-
-  if ((await isTokenValid.statusCode) === 201) authenticated = true
-  else authenticated = false
-
-  return {
-    props: {
-      market: resolvedUrl.split('/')[2],
-      response: response,
-      responseDepth: responseDepth,
-      responseTrades: responseTrades,
-      authenticated: authenticated,
-    },
-  }
-}
 
 const Chart = dynamic(() => import('../../components/chart2'), {
   ssr: false,
@@ -192,3 +143,52 @@ const Page: NextPage<IndexPageTrades> = ({
 }
 
 export default Page
+
+export const getServerSideProps: GetServerSideProps = async ({
+  req,
+  res,
+  resolvedUrl,
+}) => {
+  let authenticated: boolean
+
+  let interval = store().getState().market.time
+  let stream = resolvedUrl.split('/')[2] as BinanceStreams
+  let canPass = arrOfStreams.includes(stream)
+  if (!canPass) return { notFound: true }
+
+  let response = await axios.get(
+    `https://api.binance.com/api/v3/klines?symbol=${stream.toUpperCase()}&interval=${interval}&limit=${getKlineRecordCount}`,
+  )
+
+  let responseDepth = await axios.get(
+    `https://api.binance.com/api/v3/depth?symbol=${stream.toUpperCase()}&limit=10`,
+  )
+  let responseTrades = await axios.get(
+    `https://api3.binance.com/api/v3/trades?symbol=${stream.toUpperCase()}&limit=${18}`,
+  )
+
+  try {
+    await axios.post(
+      process.env.NEXT_PUBLIC_BURL + '/auth/authOnLoad',
+      {
+        access: req.cookies.Authorization,
+      },
+    )
+
+    authenticated = true
+  } catch (err) {
+    authenticated = false
+
+    console.log(err)
+  }
+
+  return {
+    props: {
+      market: resolvedUrl.split('/')[2],
+      response: response.data,
+      responseDepth: responseDepth.data,
+      responseTrades: responseTrades.data,
+      authenticated: authenticated,
+    },
+  }
+}

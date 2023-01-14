@@ -17,11 +17,6 @@ import {
   SignToken,
 } from '../strategy'
 
-interface SignIn {
-  access: string
-  refresh: string
-}
-
 @Injectable()
 export class AuthService {
   constructor(
@@ -62,8 +57,25 @@ export class AuthService {
       },
       select: {
         email: true,
+        id: true,
       },
     })
+
+    if (!newUser) {
+      throw new InternalServerErrorException(
+        'can not create new User',
+      )
+    }
+
+    let wallet = await this.prisma.wallet.create({
+      data: {
+        user_id: newUser.id,
+      },
+    })
+
+    if (!wallet) {
+      throw new InternalServerErrorException('can not create wallet')
+    }
 
     return {
       statusCode: 201,
@@ -155,6 +167,7 @@ export class AuthService {
       )
     }
   }
+
   auth() {
     return { statusCode: 201, message: 'user authorized' }
   }

@@ -31,6 +31,7 @@ export class AuthController {
   signup(@Body() dto: userDto) {
     return this.authService.signup(dto)
   }
+
   @Post('signin')
   @OKpost()
   @UseGuards(AuthGuard('local'))
