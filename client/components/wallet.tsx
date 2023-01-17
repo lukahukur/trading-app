@@ -3,18 +3,21 @@ import { Tcoins } from '../types'
 import { typedDispatch, typedUseSelector } from '../store'
 
 import styles from '../styles/data.module.scss'
-import { useLogoutMutation } from '../store/_api'
 import { addMoney } from '../store/dbws'
 
-const Wallet: FC<{ authenticated: boolean }> = ({
-  authenticated,
-}) => {
+const Wallet: FC<{
+  authenticated: boolean
+  setAuthState: (e: boolean) => void
+}> = ({ authenticated, setAuthState }) => {
   const coins = typedUseSelector((store) => store.dbData.wallet)
-  const [logout, { error, data, isSuccess }] = useLogoutMutation()
 
   const dispatch = typedDispatch()
 
-  if (isSuccess) window.location.href = '/'
+  const logout = () => {
+    setAuthState(false)
+    localStorage.setItem('access', '')
+    window.location.href = '/'
+  }
 
   function coinsMap(c: any) {
     let nodes = []
@@ -74,7 +77,7 @@ const Wallet: FC<{ authenticated: boolean }> = ({
     >
       <span className="flex justify-between">
         <span>Wallet</span>
-        <button className="text-toxicBlue" onClick={() => logout('')}>
+        <button className="text-toxicBlue" onClick={() => logout()}>
           Log out
         </button>
       </span>

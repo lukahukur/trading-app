@@ -16,7 +16,6 @@ export default function Signup() {
 
   useEffect(() => {
     if (error) {
-      console.log(error as any)
       switch ((error as any).status) {
         case 400:
           setError('bad request')

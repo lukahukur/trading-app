@@ -48,17 +48,34 @@ const Chart: FC<{
       '@kline',
       interval,
     )
-    const handleResize = () => {
-      window.innerWidth - 700 >= a
-        ? chart.applyOptions({ width: window.innerWidth - 700 })
-        : chart.applyOptions({ width: a })
+    const handleResize = (apply: boolean) => {
+      let w = window.innerWidth
+
+      if (1536 < w) {
+        apply &&
+          chart.applyOptions({ width: window.innerWidth - 700 })
+
+        return window.innerWidth - 700
+      }
+
+      if (w > 1280 && w <= 1536) {
+        apply &&
+          chart.applyOptions({ width: window.innerWidth - 355 })
+        return window.innerWidth - 355
+      }
+
+      if (w > 1024 && w <= 1280) {
+        apply && chart.applyOptions({ width: window.innerWidth - 35 })
+        return window.innerWidth - 35
+      }
+      apply && chart.applyOptions({ width: 990 })
+      return 990
     }
 
     setPrices(cleanUp)
 
     var chart = createChart(container.current!, {
-      width:
-        window.innerWidth - 700 >= a ? window.innerWidth - 700 : a,
+      width: handleResize(false),
       height: 410,
       handleScale: {
         axisPressedMouseMove: true,
@@ -171,10 +188,10 @@ const Chart: FC<{
         colorSchemeVolumeSeries,
       )
     })
-    window.addEventListener('resize', handleResize)
+    window.addEventListener('resize', () => handleResize(true))
     return () => {
       removeMessageListener()
-      window.removeEventListener('resize', handleResize)
+      window.removeEventListener('resize', () => handleResize(true))
       chart?.remove()
       wsClose()
     }

@@ -10,6 +10,7 @@
     }
   }
 }
+
 .d_menu {
   svg {
     @apply transition-all;
@@ -94,6 +95,48 @@
 .wallet {
   grid-area: wallet;
   @apply bg-lessDarker rounded-xl;
+}
+
+/**
+  here is responsive styles
+*/
+@media only screen and (max-width: 1536px) {
+  .parent {
+    grid-template-areas:
+      'chart book'
+      'bids trade ';
+    grid-template-columns: auto auto;
+  }
+  .form {
+    display: none;
+  }
+  .wallet {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 1280px) {
+  .parent {
+    grid-template-areas:
+      'chart'
+      'bids';
+    grid-template-columns: auto auto;
+  }
+  .order {
+    display: none;
+  }
+  .trades {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .parent {
+    grid-template-areas:
+      'chart'
+      'bids';
+    grid-template-columns: 990px auto;
+  }
 }
 .sideBar {
   font-family: bPl;

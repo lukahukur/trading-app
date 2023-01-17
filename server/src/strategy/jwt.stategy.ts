@@ -32,9 +32,7 @@ export class JwtAuthGuard implements CanActivate {
   async canActivate(context: ExecutionContext) {
     let client: Socket = context.switchToWs().getClient()
     try {
-      const accessToken = parse(client.handshake.headers.cookie)[
-        'Authorization'
-      ]
+      const accessToken = client.handshake.auth.token
 
       const decoded = verify(accessToken, this.config.get('ACC'))
 

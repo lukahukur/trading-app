@@ -30,9 +30,9 @@ async function bootstrap() {
     secret: process.env.ACC,
   })
 
-  let PORT = process.env.PORT || 5000
+  let PORT = process.env.PORT || 8080
 
-  await app.listen(PORT)
+  await app.listen(PORT, '0.0.0.0')
 
   console.log('app is running on port ' + PORT)
 }

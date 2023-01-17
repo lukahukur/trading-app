@@ -46,15 +46,14 @@ export const wssMiddleware: any = (store: AppStore) => {
       })
     }
 
-    // private data
+    let url = process.env.NEXT_PUBLIC_BURL + '/userdata'
     if (startConnecting.match(action)) {
-      socket_personalData = io(
-        process.env.NEXT_PUBLIC_BURL + '/userdata',
-        {
-          transports: ['websocket'],
+      socket_personalData = io(url, {
+        auth: {
+          token: localStorage.getItem('access'),
         },
-      )
-      console.log(process.env.NEXT_PUBLIC_BURL)
+      })
+
       socket_personalData.on('data', (e) => {
         let response = e
 

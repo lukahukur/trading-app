@@ -2,7 +2,7 @@
   .index_top {
     @apply absolute
            rounded-full
-           z-10
+           z-50
            bg-gray-800
            w-36
            mt-4
@@ -18,39 +18,6 @@
              rounded-full
              p-1
              w-20;
-    }
-  }
-  .indexContainer {
-    @apply absolute 
-           top-96 
-           bg-opacity-0
-           rounded-2xl 
-           min-h-fit
-           flex-initial
-           bg-gray-800 
-           left-1/4 
-           transform -translate-x-1/2 -translate-y-1/2
-           z-50 
-           text-white 
-           text-5xl  
-           w-128
-           h-56
-           justify-between;
-
-    .intexContainerP {
-      @apply mt-0
-          font-medium w-max;
-    }
-    .intexContainerP_S {
-      @apply text-4xl;
-    }
-    .btn_index_ {
-      @apply bg-sky-600 
-                 rounded-full
-                 text-2xl
-                 w-44 
-                 h-1/4
-                 mt-5;
     }
   }
 }

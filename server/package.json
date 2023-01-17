@@ -31,6 +31,7 @@
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/platform-fastify": "^9.2.1",
     "@nestjs/platform-socket.io": "^9.2.1",
+    "@nestjs/throttler": "^3.1.0",
     "@nestjs/websockets": "^9.2.1",
     "@prisma/client": "^4.8.0",
     "@types/ws": "^8.5.4",

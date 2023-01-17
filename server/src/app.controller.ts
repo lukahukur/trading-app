@@ -13,4 +13,10 @@ export class AppController {
   getHello(@Res() res: FastifyReply) {
     return res.status(200).send('OK')
   }
+
+  @Get()
+  @HttpCode(200)
+  index(@Res() res: FastifyReply) {
+    return res.status(200).send('OK')
+  }
 }

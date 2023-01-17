@@ -39,18 +39,8 @@ export const loginApi = createApi({
         credentials: 'include',
       }),
     }),
-    logout: builder.mutation({
-      query: () => ({
-        url: '/auth/logout',
-        method: 'POST',
-        credentials: 'include',
-      }),
-    }),
   }),
 })
 
-export const {
-  useGetLoggedInMutation,
-  useCreateAccountMutation,
-  useLogoutMutation,
-} = loginApi
+export const { useGetLoggedInMutation, useCreateAccountMutation } =
+  loginApi

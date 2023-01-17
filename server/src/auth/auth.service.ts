@@ -4,6 +4,7 @@ import {
   Injectable,
   InternalServerErrorException,
   NotFoundException,
+  UnauthorizedException,
 } from '@nestjs/common'
 import { BodySignUp, QueryUUIDDto, userDto } from '../dto/user.dto'
 import { PrismaService } from '../prisma/prisma.service'
@@ -125,6 +126,46 @@ export class AuthService {
     return {
       access: AccessToken,
       refresh: RefreshToken,
+    }
+  }
+
+  async changePassword(email: string, newPassword: string) {
+    let user = await this.prisma.user_table.findUnique({
+      where: {
+        email: email,
+      },
+      select: {
+        email: true,
+      },
+    })
+
+    if (!user) {
+      throw new UnauthorizedException('no such user')
+    }
+
+    try {
+      let newPass = await hash(newPassword, 5)
+
+      await this.prisma.user_table.update({
+        where: {
+          email: email,
+        },
+        data: {
+          password: newPass,
+        },
+        select: {
+          email: true,
+        },
+      })
+
+      return {
+        statusCode: 201,
+        message: 'password is changed successfuly',
+      }
+    } catch (err) {
+      throw new InternalServerErrorException(
+        'cannot change the password',
+      )
     }
   }
 

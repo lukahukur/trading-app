@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit"
-import { loginApi } from "./_api"
+import { createSlice } from '@reduxjs/toolkit'
+import { loginApi } from './_api'
 
 type Istate = {
   authState: boolean
@@ -9,11 +9,10 @@ const initialState = {
 } as Istate
 
 export const authSlice = createSlice({
-  name: "auth",
+  name: 'auth',
   initialState,
   reducers: {
     setAuthState(state, action) {
-      console.log(action.type)
       state.authState = action.payload
     },
   },

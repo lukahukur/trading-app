@@ -1,4 +1,9 @@
-import { ArgumentsHost, Catch } from '@nestjs/common'
+import {
+  ArgumentsHost,
+  Catch,
+  ExceptionFilter,
+  HttpException,
+} from '@nestjs/common'
 import {
   BaseWsExceptionFilter,
   WsException,
@@ -11,7 +16,7 @@ export class BadRequestExceptionsFilter extends BaseWsExceptionFilter {
     // Here you have the exception and you can check the data
     const wsException = (new WsException(exception).getError() as any)
       .error
-
+    // console.log(wsException)
     const client = host.switchToWs().getClient() as Socket
     client.emit('error', wsException)
   }

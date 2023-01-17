@@ -57,7 +57,12 @@ export class ProtectedStreamService {
   }
 
   async addMoney(user_id: number, amount: number) {
+    let money = [100, 1_000, 10_000]
+
+    if (!money.includes(amount)) return { error: 'transation failed' }
+
     let res
+
     try {
       res = await this.prismaService
         .$queryRaw`update wallet set usdt = coalesce(usdt,0)+${amount} where user_id = ${user_id}`

@@ -81,7 +81,11 @@ export class RouteManager extends BinanceStream {
 
   constructor() {
     super()
+
     this.prices = this._prices
+    this.onerror((e) => {
+      console.log(e)
+    })
   }
 
   subscribe(

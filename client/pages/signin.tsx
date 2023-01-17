@@ -8,6 +8,7 @@ import Loader from '../components/loader'
 
 String.prototype.containsNumber = function () {
   let arrOfStr: string[] = this.split('')
+
   if (arrOfStr.find((e) => Number.isInteger(Number(e)))) {
     return true
   }
@@ -24,27 +25,43 @@ export default function Signin() {
 
   useEffect(() => {
     if (data) {
+      localStorage.setItem('access', data.access)
+
       window.location.href = '/trade/btcusdt'
     } else if (error) {
-      console.log(error)
       messageBox.current!.style!.display = 'flex'
-      setMessage('incorrect email or password')
+
+      switch ((error as any).statusCode) {
+        case 403:
+          setMessage('incorrect email or password')
+          break
+        case 429:
+          setMessage('too many requests, wait some time')
+          break
+        default:
+          setMessage('Error')
+      }
     }
   }, [data, error])
 
   async function submit() {
     const mailVal = email.current!.value
     const passwordVal = password.current!.value
+
     if (!mailVal || !passwordVal) {
       messageBox.current!.style!.display = 'flex'
 
       setMessage('not enougn information')
-    }
-    // else if(passwordVal!.length < 8 || passwordVal!.containsNumber() ===false){
-    //     messageBox.current!.style!.display = 'flex'
-    //     setMessage('pass is shorter than 8 characters or it doesn\'t contain the numbers')
-    // }
-    else {
+    } else if (
+      passwordVal!.length < 8 ||
+      passwordVal!.containsNumber() === false
+    ) {
+      messageBox.current!.style!.display = 'flex'
+
+      setMessage(
+        "pass is shorter than 8 characters or it doesn't contain the numbers",
+      )
+    } else {
       Login({ email: mailVal, password: passwordVal })
     }
   }

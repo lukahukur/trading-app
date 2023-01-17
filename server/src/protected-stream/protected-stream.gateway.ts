@@ -2,6 +2,7 @@ import {
   UseGuards,
   ValidationError,
   ValidationPipe,
+  ValidationPipeOptions,
 } from '@nestjs/common'
 import {
   OnGatewayConnection,
@@ -19,7 +20,18 @@ import { Stream } from '../../types/types'
 import { TransactionObject, MoneyDTO } from 'src/dto/user.dto'
 import { UseFilters, UsePipes } from '@nestjs/common/decorators'
 import { BadRequestExceptionsFilter } from 'src/dto/customValidationPipe/wsExceptionFilter'
-import { parse } from 'cookie'
+
+let validationPipeOptions: ValidationPipeOptions = {
+  exceptionFactory(validationErrors: ValidationError[] = []) {
+    // Here are the errors
+    if (this.isDetailedOutputDisabled) {
+      return new WsException(validationErrors)
+    }
+    const errors = this.flattenValidationErrors(validationErrors)
+
+    return new WsException(errors)
+  },
+}
 
 @WebSocketGateway({
   namespace: 'userdata',
@@ -39,19 +51,7 @@ export class ProtectedStreamGateway implements OnGatewayConnection {
 
   @SubscribeMessage(Stream.Transactions)
   @UseGuards(JwtAuthGuard)
-  @UsePipes(
-    new ValidationPipe({
-      exceptionFactory(validationErrors: ValidationError[] = []) {
-        // Here are the errors
-        if (this.isDetailedOutputDisabled) {
-          return new WsException(validationErrors)
-        }
-        const errors = this.flattenValidationErrors(validationErrors)
-
-        return new WsException(errors)
-      },
-    }),
-  )
+  @UsePipes(new ValidationPipe(validationPipeOptions))
   @UseFilters(BadRequestExceptionsFilter)
   async handleTransactions(
     @ConnectedSocket() client: any,
@@ -69,19 +69,7 @@ export class ProtectedStreamGateway implements OnGatewayConnection {
 
   @SubscribeMessage(Stream.AddMoney)
   @UseGuards(JwtAuthGuard)
-  @UsePipes(
-    new ValidationPipe({
-      exceptionFactory(validationErrors: ValidationError[] = []) {
-        // Here are the errors
-        if (this.isDetailedOutputDisabled) {
-          return new WsException(validationErrors)
-        }
-        const errors = this.flattenValidationErrors(validationErrors)
-
-        return new WsException(errors)
-      },
-    }),
-  )
+  @UsePipes(new ValidationPipe(validationPipeOptions))
   @UseFilters(BadRequestExceptionsFilter)
   async addMoney(
     @ConnectedSocket() client: any,
@@ -99,20 +87,13 @@ export class ProtectedStreamGateway implements OnGatewayConnection {
   }
 
   async handleConnection(client: Socket) {
-    if (!client.handshake.headers.cookie) {
-      return client.disconnect()
-    }
-    let token = parse(client.handshake.headers.cookie)
+    let token = client.handshake.auth.token
 
-    if (!token['Authorization']) return client.disconnect()
+    if (!token) return client.disconnect()
 
-    let payload = await this.streamService.handleConnection(
-      token['Authorization'],
-    )
+    let payload = await this.streamService.handleConnection(token)
 
-    if (!payload) {
-      return client.disconnect()
-    }
+    if (!payload) return client.disconnect()
 
     let response = await this.streamService.personalData(payload.id)
 

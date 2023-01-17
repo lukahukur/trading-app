@@ -36,16 +36,45 @@ const Home: NextPage = () => {
         </button>
       </span>
       <ChartComponent colors={{}}>
-        <div className={styles.indexContainer}>
-          <p className={styles.intexContainerP}>
-            Learn Market Trading Now
-          </p>
-          <p className={styles.intexContainerP_S}>
-            It&apos;s completely free
-          </p>
-          <a href={'/trade/btcusdt'}>
-            <button className={styles.btn_index_}>Get Started</button>
-          </a>
+        <div
+          className="w-screen h-screen flex z-40 justify-start items-center pl-10 pb-44 absolute top-0 left-0 
+                        xl:pl-40
+                        
+                        "
+        >
+          <div
+            className="
+           bg-opacity-0
+           rounded-2xl 
+           min-h-fit
+           flex-initial
+           z-50 
+           text-white 
+           text-5xl  
+           w-min
+            h-max
+           justify-between"
+          >
+            <p className="mt-0 font-medium w-72 sm:w-max ">
+              Learn Market Trading Now
+            </p>
+            <p className="text-4xl">It&apos;s completely free</p>
+            <a href={'/trade/btcusdt'}>
+              <button
+                className="bg-sky-600 
+                flex
+                justify-center
+                items-center
+                rounded-full
+                text-2xl
+                w-44 
+                h-14
+                mt-5"
+              >
+                Get Started
+              </button>
+            </a>
+          </div>
         </div>
       </ChartComponent>
     </span>

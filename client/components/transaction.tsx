@@ -21,8 +21,7 @@ const Transaction: FC<{ e: Transactions; time: Date }> = ({
       <span className="text-gray-400">{e.amount}</span>
       <span className="text-gray-400">
         {time.getFullYear()}-{Number(time.getMonth()) + 1}-
-        {time.getDate()} {time.getHours()}:{time.getMinutes()}:
-        {time.getSeconds()}
+        {time.getDate()} {time.getHours()}:{time.getMinutes()}
       </span>
     </>
   )

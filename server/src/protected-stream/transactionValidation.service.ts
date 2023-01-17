@@ -16,7 +16,6 @@ export class ValidateTransaction {
   ) {}
 
   async BUY(request: TransactionObject, user_id: number) {
-    console.log(request)
     const coin = request.coin
     return await this.prismaService.$transaction([
       this.prismaService.$queryRawUnsafe(
@@ -32,7 +31,7 @@ export class ValidateTransaction {
         .$queryRaw`UPDATE wallet SET usdt = COALESCE(usdt,0)-${
         request.amount * request.price
       } where user_id = ${user_id}`,
-      // this.updateHistory(request, user_id),
+      this.updateHistory(request, user_id),
     ])
   }
 

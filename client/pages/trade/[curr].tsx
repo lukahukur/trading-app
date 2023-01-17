@@ -1,6 +1,6 @@
 import { GetServerSideProps, NextPage } from 'next'
 import Interval from '../../components/chartInterval'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useLayoutEffect } from 'react'
 import { typedDispatch, typedUseSelector, store } from '../../store'
 import { startConnecting } from '../../store/binanceStream'
 import { changeMarket } from '../../store/market'
@@ -28,6 +28,7 @@ import {
 import { getKlineRecordCount } from '../../api/constant'
 import Head from 'next/head'
 import axios from 'axios'
+import { decode, JwtPayload } from 'jsonwebtoken'
 let fired = false
 
 const Chart = dynamic(() => import('../../components/chart2'), {
@@ -39,7 +40,6 @@ const Page: NextPage<IndexPageTrades> = ({
   response,
   responseDepth,
   responseTrades,
-  authenticated,
 }) => {
   const dispatch = typedDispatch()
   const interval = typedUseSelector((state) => state.market.time)
@@ -51,7 +51,7 @@ const Page: NextPage<IndexPageTrades> = ({
   const connected = typedUseSelector(
     (store) => store.binanceStreamSlice.connected,
   )
-
+  const [authenticated, setAuthState] = useState(false)
   let controller1 = new AbortController()
   let controller2 = new AbortController()
 
@@ -78,7 +78,20 @@ const Page: NextPage<IndexPageTrades> = ({
   }, [market, connected])
 
   useEffect(() => {
+    let token = localStorage.getItem('access')
+
     if (!fired) {
+      //checking if token is valid
+      if (token) {
+        let { exp } = decode(token) as JwtPayload
+
+        if (Date.now() >= exp! * 1000) {
+          setAuthState(false)
+        } else setAuthState(true)
+      } else setAuthState(false)
+      /**
+       * connecting to the streams
+       */
       dispatch(startConnecting())
       dispatch(startConnToDataWs())
     }
@@ -87,10 +100,11 @@ const Page: NextPage<IndexPageTrades> = ({
     }
   }, [])
 
+  let title = 'Spot ' + market.toUpperCase()
   return (
     <>
       <Head>
-        <title> Spot {market.toUpperCase()}</title>
+        <title>{title}</title>
       </Head>
       <div className={styles.parent}>
         {!renderChart && (
@@ -123,19 +137,27 @@ const Page: NextPage<IndexPageTrades> = ({
           <Form
             authenticated={authenticated}
             draw={renderChart}
-            res={responseTrades[0].price}
+            res={dataState[dataState.length - 1][2] as any}
           />
         </div>
 
         <div className={styles.bids}>
-          <Bids authenticated={authenticated} />
+          <Bids
+            authenticated={authenticated}
+            draw={renderChart}
+            res={dataState[dataState.length - 1][2] as any}
+            setAuthState={(e) => setAuthState(e)}
+          />
         </div>
 
         <div className={styles.trades}>
           <Trades responseTrades={responseTrades} />
         </div>
         <div className={styles.wallet}>
-          <Wallet authenticated={authenticated} />
+          <Wallet
+            authenticated={authenticated}
+            setAuthState={(e) => setAuthState(e)}
+          />
         </div>
       </div>
     </>
@@ -149,8 +171,6 @@ export const getServerSideProps: GetServerSideProps = async ({
   res,
   resolvedUrl,
 }) => {
-  let authenticated: boolean
-
   let interval = store().getState().market.time
   let stream = resolvedUrl.split('/')[2] as BinanceStreams
   let canPass = arrOfStreams.includes(stream)
@@ -167,28 +187,12 @@ export const getServerSideProps: GetServerSideProps = async ({
     `https://api3.binance.com/api/v3/trades?symbol=${stream.toUpperCase()}&limit=${18}`,
   )
 
-  try {
-    await axios.post(
-      process.env.NEXT_PUBLIC_BURL + '/auth/authOnLoad',
-      {
-        access: req.cookies.Authorization,
-      },
-    )
-
-    authenticated = true
-  } catch (err) {
-    authenticated = false
-
-    console.log(err)
-  }
-
   return {
     props: {
       market: resolvedUrl.split('/')[2],
       response: response.data,
       responseDepth: responseDepth.data,
       responseTrades: responseTrades.data,
-      authenticated: authenticated,
     },
   }
 }

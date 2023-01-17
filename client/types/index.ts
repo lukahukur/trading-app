@@ -215,7 +215,6 @@ export type IndexPageTrades = {
   response: BinanceRestApiResponseTypeKline[]
   responseDepth: TdepthRestApi
   responseTrades: restApiBinanceTradesResponse[]
-  authenticated: boolean
 }
 export type coinsType =
   | 'btc'

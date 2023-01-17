@@ -12,9 +12,9 @@
 /.next/
 /out/
 
-Dockerfile
-.dockerignore
 
+.env.local
+fly.toml
 # production
 /build
 ../server/node_modules
