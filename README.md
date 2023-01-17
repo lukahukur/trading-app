@@ -50,5 +50,5 @@ for client
 ## Contributing
 
 Contributions are always welcome!
-
+check issues :)
 
