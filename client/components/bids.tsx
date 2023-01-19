@@ -51,7 +51,12 @@ const Bids: FC<{
           style={{ fontFamily: 'bPl', height: '409px' }}
           className="flex justify-between items-start"
         >
-          <Transactions />
+          <span
+            style={{ height: '409px' }}
+            className="flex justify-start w-full items-start bg-lessDarker"
+          >
+            <Transactions />
+          </span>
           <span
             style={{ width: '500px', height: '100%' }}
             className=" bg-lessDarker rounded-xl ml-3"
@@ -65,7 +70,7 @@ const Bids: FC<{
       )}
     </>
   ) : (
-    <span className="text-toxicBlue text-xl flex items-center w-full h-full justify-center bg-darkest">
+    <span className="text-toxicBlue text-xl flex items-center w-full h-full justify-center bg-lessDarker rounded-lg">
       <span>
         Please{' '}
         <Link href={'../signin'}>

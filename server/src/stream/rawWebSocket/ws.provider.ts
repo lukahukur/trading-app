@@ -6,6 +6,7 @@ import {
 } from '../../../types/types'
 import { WebSocket } from 'ws'
 import { Injectable } from '@nestjs/common/decorators'
+import { schedule } from 'node-cron'
 
 /**
  * this @BinanceStream class connects to the Binance stream and gets current prices of currencies
@@ -30,8 +31,11 @@ export class BinanceStream {
     this._directConnection.on('message', this.listener)
     this._directConnection.on('open', this.onopen)
     this._directConnection.on('error', this.onerror)
-
-    this.handleReconnect()
+    try {
+      this.handleReconnect()
+    } catch (err) {
+      console.log(err, new Date().getTime())
+    }
   }
 
   protected updatePrices(
@@ -50,7 +54,7 @@ export class BinanceStream {
   }
 
   protected handleReconnect() {
-    setInterval(() => {
+    schedule('0 */12 * * *', () => {
       // reconnect to binance stream every 12h
       this._directConnection.off('message', this.listener)
       this._directConnection.off('close', this.onclose)
@@ -65,7 +69,7 @@ export class BinanceStream {
       this._directConnection.on('error', this.onerror)
 
       console.log('reconnecting...')
-    }, 1000 * 60 * 60 * 12)
+    })
   }
 
   protected connectToStream() {

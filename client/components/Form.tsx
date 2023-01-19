@@ -57,7 +57,7 @@ const Form: FC<{
     submit.current!.style.background = 'hsl(0, 100%, 24%)'
   }
   const wallet = typedUseSelector((e) => e.dbData.wallet)
-  console.log(wallet)
+
   function colorBuy() {
     sellBtn.current!.style.background = '#374151'
     buyBtn.current!.style.background = 'hsl(142, 76%, 34%)'
@@ -74,7 +74,7 @@ const Form: FC<{
       +priceInput.current!.value * +coinAmount,
     )
   }
-  console.log(currentCoinAmount)
+
   const rangeHandlerWhileBuying = (usdtAmount: number) => {
     totalInput.current!.value = formatCurrency(usdtAmount)
     amountInput.current!.value = formatCurrency(

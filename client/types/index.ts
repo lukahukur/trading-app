@@ -202,6 +202,7 @@ export type Tcoins<T> = {
   xrp: T
   doge: T
 }
+
 export type Transactions = {
   id: number
   user_id: number
@@ -211,6 +212,7 @@ export type Transactions = {
   currency: BinanceStreams
   price: number
 }
+
 export type IndexPageTrades = {
   market: BinanceStreams
   response: BinanceRestApiResponseTypeKline[]
