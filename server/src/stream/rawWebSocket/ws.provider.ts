@@ -26,18 +26,12 @@ export class BinanceStream {
 
     this._prices = new CurrenciesDTO()
 
-    this._directConnection.on('close', () => {
-      console.log('reconnecting...')
+    this._directConnection.on('close', this.onclose)
+    this._directConnection.on('message', this.listener)
+    this._directConnection.on('open', this.onopen)
+    this._directConnection.on('error', this.onerror)
 
-      this._directConnection = this.connectToStream()
-    })
-
-    this._directConnection.on('message', (e: any) => {
-      let message: WsResponseTypeTrades = this.decodeMessage(e)
-
-      //it updates current price object
-      this.updatePrices(message, this._prices)
-    })
+    this.handleReconnect()
   }
 
   protected updatePrices(
@@ -46,6 +40,32 @@ export class BinanceStream {
   ) {
     let stream = currentMessage.s.toLocaleLowerCase()
     priceObject[stream] = currentMessage // assigning current price
+  }
+
+  public listener = (e: any) => {
+    let message: WsResponseTypeTrades = this.decodeMessage(e)
+
+    //it updates current price object
+    this.updatePrices(message, this._prices)
+  }
+
+  protected handleReconnect() {
+    setInterval(() => {
+      // reconnect to binance stream every 12h
+      this._directConnection.off('message', this.listener)
+      this._directConnection.off('close', this.onclose)
+      this._directConnection.off('open', this.onopen)
+      this._directConnection.off('error', this.onerror)
+
+      this._directConnection = this.connectToStream()
+
+      this._directConnection.on('open', this.onopen)
+      this._directConnection.on('close', this.onclose)
+      this._directConnection.on('message', this.listener)
+      this._directConnection.on('error', this.onerror)
+
+      console.log('reconnecting...')
+    }, 1000 * 60 * 60 * 12)
   }
 
   protected connectToStream() {
@@ -65,12 +85,15 @@ export class BinanceStream {
     return this._directConnection.close()
   }
 
-  onopen(callback: () => void) {
-    return this._directConnection.on('open', callback)
+  onopen() {
+    console.log('connected')
   }
 
-  onerror(callback: (...args: any[]) => void) {
-    return this._directConnection.on('error', (e) => callback(e))
+  onerror(err) {
+    console.log(err)
+  }
+  onclose() {
+    console.log('closed')
   }
 }
 

@@ -1,9 +1,9 @@
 import React, { FC, useEffect } from 'react'
 import { Tcoins } from '../types'
-import { typedDispatch, typedUseSelector } from '../store'
-
+import { store, typedDispatch, typedUseSelector } from '../store'
 import styles from '../styles/data.module.scss'
 import { addMoney } from '../store/dbws'
+import { formatCurrency } from './Form'
 
 const Wallet: FC<{
   authenticated: boolean
@@ -19,11 +19,15 @@ const Wallet: FC<{
     window.location.href = '/'
   }
 
+  const coinState: any = {}
+
   function coinsMap(c: any) {
     let nodes = []
     for (let elem in c) {
+      coinState[elem] = false
       nodes.push([elem, c[elem]])
     }
+
     return nodes.map((e, i) => {
       return (
         <li
@@ -60,10 +64,20 @@ const Wallet: FC<{
               </button>
             </>
           )}
-          <span>
-            {e[0] === 'usdt'
-              ? Number(e[1]).toLocaleString()
-              : Number(e[1])}
+          <span
+            onClick={(event: any) => {
+              if (!e[1] || e[1] == 0) return
+
+              event.target.innerText =
+                coinState[e[0]] === false
+                  ? e[1]
+                  : formatCurrency(+e[1])
+
+              coinState[e[0]] = !coinState[e[0]]
+            }}
+            className="cursor-pointer"
+          >
+            {formatCurrency(+e[1])}
           </span>
         </li>
       )

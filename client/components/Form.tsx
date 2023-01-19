@@ -13,6 +13,18 @@ import { fixed } from '../api/index'
 import { makeTransaction } from '../store/dbws'
 import { Itrancation } from '../types/index'
 
+const formatter = new Intl.NumberFormat('en-US', {
+  minimumFractionDigits: 1,
+  maximumFractionDigits: 4,
+  minimumSignificantDigits: 1,
+  maximumSignificantDigits: 4,
+})
+
+export const formatCurrency = (e: number) => {
+  if (e < 1) return formatter.format(e)
+  else return e.toFixed(2).toString()
+}
+
 const Form: FC<{
   authenticated: boolean
   draw: boolean
@@ -35,18 +47,6 @@ const Form: FC<{
   const amountInput = useRef<HTMLInputElement>(null)
   const totalInput = useRef<HTMLInputElement>(null)
   const currentPrice = typedUseSelector((s) => s.kline.data)?.k
-
-  const formatter = new Intl.NumberFormat('en-US', {
-    minimumFractionDigits: 1,
-    maximumFractionDigits: 4,
-    minimumSignificantDigits: 1,
-    maximumSignificantDigits: 4,
-  })
-
-  const formatCurrency = (e: number) => {
-    if (e < 1) return formatter.format(e)
-    else return e.toFixed(2).toString()
-  }
 
   function colorSell() {
     buyBtn.current!.style.background = '#374151'
@@ -109,27 +109,23 @@ const Form: FC<{
 
   function validateRequest(callback: () => any) {
     const cleanUp = () => setTimeout(() => setError(''), 3000)
+    const amount = +amountInput.current!.value
+    const price = +priceInput.current!.value
 
-    if (
-      Number(amountInput.current!.value) > currentCoinAmount &&
-      isSelling
-    ) {
-      setError('No enough ' + coin)
-      return cleanUp()
-    }
-    if (
-      Number(priceInput.current!.value) *
-        Number(amountInput.current!.value) >
-        usdt &&
-      !isSelling
-    ) {
-      setError('No enough usdt')
-      return cleanUp()
-    }
     if (!amountInput.current!.value || !priceInput.current!.value) {
       setError('Empty field')
       return cleanUp()
     }
+
+    if (amount > currentCoinAmount && isSelling) {
+      setError('No enough ' + coin)
+      return cleanUp()
+    }
+    if (price * amount > usdt && !isSelling) {
+      setError('No enough usdt')
+      return cleanUp()
+    }
+
     return callback()
   }
 

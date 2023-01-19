@@ -1,5 +1,6 @@
 import react, { FC } from 'react'
 import { Transactions } from '../types'
+import { formatCurrency } from './Form'
 
 const Transaction: FC<{ e: Transactions; time: Date }> = ({
   e,
@@ -9,7 +10,9 @@ const Transaction: FC<{ e: Transactions; time: Date }> = ({
     <>
       <span
         className={
-          e.side === 'BUY' ? 'text-green-600' : 'text-red-500'
+          e.side === 'BUY'
+            ? 'text-green-600  w-10'
+            : 'text-red-500  w-10'
         }
       >
         {e.side.toUpperCase()}
@@ -21,7 +24,8 @@ const Transaction: FC<{ e: Transactions; time: Date }> = ({
       <span className="text-gray-400">{e.amount}</span>
       <span className="text-gray-400">
         {time.getFullYear()}-{Number(time.getMonth()) + 1}-
-        {time.getDate()} {time.getHours()}:{time.getMinutes()}
+        {time.getDate()} {time.getHours()}:{time.getMinutes()}:
+        {time.getSeconds()}
       </span>
     </>
   )

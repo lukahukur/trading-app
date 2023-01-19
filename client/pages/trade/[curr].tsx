@@ -108,7 +108,7 @@ const Page: NextPage<IndexPageTrades> = ({
       </Head>
       <div className={styles.parent}>
         {!renderChart && (
-          <span className="fixed w-full h-full overflow-hidden rounded-md bg-darkest  z-10000  flex items-center justify-center overflow-x-hidden">
+          <span className="fixed w-full h-full overflow-hidden rounded-md bg-darkest top-0 left-0 z-10000  flex items-center justify-center overflow-x-hidden">
             <Preloader
               firstColor={theme.secondaryUp}
               secondColor={theme.secondaryDown}
@@ -126,6 +126,7 @@ const Page: NextPage<IndexPageTrades> = ({
             market={market}
             renderChart={renderChart}
             data={dataState}
+            res={dataState[dataState.length - 1][2] as any}
           />
         </div>
 

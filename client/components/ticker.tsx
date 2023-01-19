@@ -113,9 +113,9 @@ const Ticker: NextPage<{ drawPreloader: (e: boolean) => void }> = ({
         <span className={styles.ticker_wrapper}>
           <span
             style={
-              window.innerWidth > 1570
-                ? { display: 'flex' }
-                : { display: 'none' }
+              window.innerWidth < 1570 && window.innerWidth > 1536
+                ? { display: 'none' }
+                : { display: 'flex' }
             }
             className={styles.ticker_wrapper_price}
           >

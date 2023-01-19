@@ -56,7 +56,7 @@
     'chart book form'
     'bids trade wallet';
   grid-template-columns: min-content auto minmax(222px, 100%);
-  @apply gap-3 py-4 mt-1 px-2;
+  @apply gap-3 py-4 mt-1 px-2 bg-darkest;
 }
 
 .side {
@@ -85,7 +85,7 @@
 }
 .bids {
   grid-area: bids;
-  @apply bg-lessDarker rounded-xl;
+  @apply bg-lessDarker rounded-xl -mx-3 sm:mx-0;
 }
 .trades {
   grid-area: trade;
@@ -95,6 +95,23 @@
 .wallet {
   grid-area: wallet;
   @apply bg-lessDarker rounded-xl;
+}
+.bidWrapper {
+  grid-template-columns: 0.1fr 0.5fr 0.5fr 0.5fr 0.8fr;
+  height: 100%;
+  @apply grid gap-2  w-full gap-x-20 overflow-y-scroll overflow-x-hidden bg-lessDarker p-3 rounded-xl 2xl:p-0;
+}
+
+.bidWrapper::-webkit-scrollbar {
+  @apply w-1 h-full;
+}
+
+.bidWrapper::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+.bidWrapper::-webkit-scrollbar-thumb {
+  @apply rounded-full bg-lightest;
 }
 
 /**
@@ -112,6 +129,15 @@
   }
   .wallet {
     display: none;
+  }
+  .bids {
+    background-color: transparent;
+  }
+  .bidWrapper {
+    width: 100%;
+    height: 100%;
+    grid-template-columns: 0.3fr 0.5fr 0.5fr 0.5fr 0.8fr;
+    @apply grid gap-1  gap-x-0;
   }
 }
 
@@ -175,7 +201,7 @@
   }
 
   .search_dropDown::-webkit-scrollbar-track {
-    @apply bg-transparent;
+    @apply bg-transparent py-3;
   }
 
   .search_dropDown::-webkit-scrollbar-thumb {
@@ -203,20 +229,4 @@
   &:hover {
     @apply transition-all rotate-180 ease-in-out;
   }
-}
-
-.bidWrapper {
-  @apply grid grid-cols-5 gap-2 mt-3 gap-x-20 overflow-y-scroll overflow-x-hidden;
-}
-
-.bidWrapper::-webkit-scrollbar {
-  @apply w-1 h-full;
-}
-
-.bidWrapper::-webkit-scrollbar-track {
-  @apply bg-transparent;
-}
-
-.bidWrapper::-webkit-scrollbar-thumb {
-  @apply rounded-full bg-lightest;
 }

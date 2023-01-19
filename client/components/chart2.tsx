@@ -1,9 +1,7 @@
 import { createChart } from 'lightweight-charts'
 import {
   FC,
-  useCallback,
   useEffect,
-  useMemo,
   useRef,
   useState,
   useLayoutEffect,
@@ -14,17 +12,21 @@ import {
   arrOfStreams,
   BinanceRestApiResponseTypeKline,
   BinanceStreams,
+  Itrancation,
+  Tcoins,
   WsResponseTypeKline,
 } from '../types'
 import { wsController } from '../api/api'
 import styles from '../styles/Market.module.scss'
 import { setData } from '../store/klineSlice'
+import { makeTransaction } from '../store/dbws'
 
 const Chart: FC<{
   market: BinanceStreams
   data: BinanceRestApiResponseTypeKline[]
   renderChart: boolean
-}> = ({ market, data, renderChart }) => {
+  res: string
+}> = ({ market, data, renderChart, res }) => {
   const interval = typedUseSelector((state) => state.market.time)
   const theme = typedUseSelector((state) => state.theme)
   const container = useRef<HTMLDivElement>(null)
@@ -34,13 +36,20 @@ const Chart: FC<{
     high: number
     low: number
   } | null>()
-
+  const [size, setSize] = useState(-1)
   const dispatch = typedDispatch()
 
-  let cleanUp = useMemo(() => {
-    return null
-  }, [market])
-  let a = 850
+  useEffect(() => {
+    const setWindowSize = () => {
+      setSize(window.innerWidth)
+    }
+
+    setSize(window.innerWidth)
+    window.addEventListener('resize', setWindowSize)
+    return () => {
+      window.removeEventListener('resize', setWindowSize)
+    }
+  }, [])
 
   useLayoutEffect(() => {
     const { message, wsClose } = wsController(
@@ -48,6 +57,7 @@ const Chart: FC<{
       '@kline',
       interval,
     )
+
     const handleResize = (apply: boolean) => {
       let w = window.innerWidth
 
@@ -68,11 +78,16 @@ const Chart: FC<{
         apply && chart.applyOptions({ width: window.innerWidth - 35 })
         return window.innerWidth - 35
       }
+
       apply && chart.applyOptions({ width: 990 })
       return 990
     }
 
-    setPrices(cleanUp)
+    const resizeHandlerTrue = () => {
+      handleResize(true)
+    }
+
+    setPrices(null)
 
     var chart = createChart(container.current!, {
       width: handleResize(false),
@@ -91,7 +106,6 @@ const Chart: FC<{
         borderVisible: false,
       },
       layout: {
-        //#171C29
         backgroundColor: 'hsl(230, 30%, 9%)',
         textColor: '#9ca3af',
         fontFamily: 'bPl',
@@ -152,6 +166,7 @@ const Chart: FC<{
         bottom: 0,
       },
     })
+
     chart.subscribeCrosshairMove((e) => {
       if (e.seriesPrices.entries().next().value) {
         setPrices({
@@ -162,10 +177,12 @@ const Chart: FC<{
         })
       }
     })
+
     let colorSchemeVolumeSeries = {
       upColor: '#047D74',
       downColor: '#D04749',
     }
+
     if (data) {
       data.forEach((e) => {
         updateVolumeSeries(
@@ -177,6 +194,7 @@ const Chart: FC<{
         updateCandlesticSeries(false, e, candlestick)
       })
     }
+
     const { removeMessageListener } = message((e) => {
       let data = e as WsResponseTypeKline
       dispatch(setData(data))
@@ -188,10 +206,12 @@ const Chart: FC<{
         colorSchemeVolumeSeries,
       )
     })
-    window.addEventListener('resize', () => handleResize(true))
+
+    window.addEventListener('resize', resizeHandlerTrue)
+
     return () => {
       removeMessageListener()
-      window.removeEventListener('resize', () => handleResize(true))
+      window.removeEventListener('resize', resizeHandlerTrue)
       chart?.remove()
       wsClose()
     }
@@ -200,6 +220,7 @@ const Chart: FC<{
   return (
     <>
       <div ref={container} />
+      {size <= 1536 && <MiniForm market={market} res={res} />}
       <div className={styles.candlestickSeriesPrices}>
         {prices && (
           <span className={styles.candleP_wrapper}>
@@ -228,6 +249,150 @@ const Chart: FC<{
         )}
       </div>
     </>
+  )
+}
+
+const MiniForm: FC<{ market: BinanceStreams; res: string }> = ({
+  market,
+  res,
+}) => {
+  const [side, setSide] = useState<'BUY' | 'SELL'>('BUY')
+  const coin = (market as string).toUpperCase().slice(0, -4)
+  const currentPrice = typedUseSelector((s) => s.kline.data)?.k
+  const currentCoinAmount = typedUseSelector(
+    (store) => store.dbData.wallet,
+  )[coin.toLocaleLowerCase() as keyof Tcoins<number>]
+  const wallet = typedUseSelector((store) => store.dbData.wallet)
+  const [getError, setError] = useState('')
+  const usdt = typedUseSelector((store) => store.dbData.wallet.usdt)
+  const dispatch = typedDispatch()
+  const amount = useRef<HTMLInputElement>(null)
+  const bestPrice = useRef<{
+    BUY: string | undefined
+    SELL: string | undefined
+  }>({
+    BUY: undefined,
+    SELL: undefined,
+  })
+
+  useEffect(() => {
+    bestPrice.current = {
+      BUY: currentPrice?.l,
+      SELL: currentPrice?.h,
+    }
+  }, [currentPrice])
+
+  useEffect(() => {
+    bestPrice.current = {
+      BUY: undefined,
+      SELL: undefined,
+    }
+  }, [market])
+
+  useEffect(() => {
+    // before stream is loaded, I sat those value to prevent undefinded
+    bestPrice.current = {
+      BUY: res,
+      SELL: res,
+    }
+  }, [res])
+
+  function onSubmit() {
+    let a = +amount.current!.value
+    validateRequest(() =>
+      dispatch(
+        makeTransaction({
+          side: side,
+          amount: a,
+          price: +bestPrice.current[side]!,
+          coin: coin.toLocaleLowerCase(),
+        } as Itrancation),
+      ),
+    )
+  }
+  const validateRequest = (c: (...args: any[]) => void) => {
+    const cleanUp = () => setTimeout(() => setError(''), 3000)
+
+    if (!amount.current!.value) {
+      setError('Empty field')
+      return cleanUp()
+    }
+    if (
+      !bestPrice.current.BUY ||
+      currentPrice?.s.toLowerCase() !== market
+    ) {
+      setError('Wait please')
+      return cleanUp()
+    }
+
+    if (
+      +amount.current!.value > +currentCoinAmount &&
+      side === 'SELL'
+    ) {
+      setError('No enough ' + coin)
+      return cleanUp()
+    }
+
+    if (
+      +bestPrice.current.BUY * +amount.current!.value > usdt &&
+      side === 'BUY'
+    ) {
+      setError('No enough usdt')
+      return cleanUp()
+    }
+
+    return c()
+  }
+
+  return (
+    <div
+      style={{
+        top: '200px',
+        left: '50px',
+      }}
+      className="absolute z-40 flex-col flex"
+    >
+      <span className="text-white w-40  flex justify-between ">
+        <button
+          style={
+            side === 'BUY'
+              ? { background: 'green', color: 'black' }
+              : { background: 'rgb(55, 65, 81)' }
+          }
+          onClick={() => setSide('BUY')}
+          className="flex w-1/2 justify-center items-center rounded-l-md text-sm h-6"
+        >
+          BUY
+        </button>
+        <button
+          style={
+            side === 'SELL'
+              ? { background: 'rgb(122, 0, 0)', color: 'black' }
+              : { background: 'rgb(55, 65, 81)' }
+          }
+          onClick={() => setSide('SELL')}
+          className="flex w-1/2 text-sm justify-center items-center rounded-r-md text-white"
+        >
+          SELL
+        </button>
+      </span>
+      <input
+        placeholder={`Amount ${coin}`}
+        ref={amount}
+        type="text"
+        className="h-6 px-2 w-40 text-sm bg-light rounded-md mt-2 text-gray-200 outline-none"
+      />
+      <button
+        onClick={onSubmit}
+        className="h-6 px-2 text-sm w-40 bg-light rounded-md mt-2 text-gray-200 outline-none"
+      >
+        {!getError ? (
+          'Sumbit'
+        ) : (
+          <span className="text-red-600">{getError}</span>
+        )}
+      </button>
+    </div>
   )
 }
 export default Chart
