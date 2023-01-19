@@ -184,6 +184,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   let responseDepth = await axios.get(
     `https://api.binance.com/api/v3/depth?symbol=${stream.toUpperCase()}&limit=10`,
   )
+
   let responseTrades = await axios.get(
     `https://api3.binance.com/api/v3/trades?symbol=${stream.toUpperCase()}&limit=${18}`,
   )

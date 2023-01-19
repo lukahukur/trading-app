@@ -200,6 +200,7 @@ export type Tcoins<T> = {
   sol: T
   uni: T
   xrp: T
+  doge: T
 }
 export type Transactions = {
   id: number

@@ -90,7 +90,6 @@ export default React.memo(
 
 const Transactions = () => {
   const orders = typedUseSelector((state) => state.dbData.orders)
-  console.log(orders)
   const mappedArrayOFOrders = orders.map((e: any) => {
     const time = new Date(Number(e.time))
 

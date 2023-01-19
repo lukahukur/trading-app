@@ -267,34 +267,19 @@ const MiniForm: FC<{ market: BinanceStreams; res: string }> = ({
   const usdt = typedUseSelector((store) => store.dbData.wallet.usdt)
   const dispatch = typedDispatch()
   const amount = useRef<HTMLInputElement>(null)
-  const bestPrice = useRef<{
-    BUY: string | undefined
-    SELL: string | undefined
-  }>({
-    BUY: undefined,
-    SELL: undefined,
-  })
+  const bestPrice = useRef<string | undefined>(undefined)
 
   useEffect(() => {
-    bestPrice.current = {
-      BUY: currentPrice?.l,
-      SELL: currentPrice?.h,
-    }
+    bestPrice.current = currentPrice?.c
   }, [currentPrice])
 
   useEffect(() => {
-    bestPrice.current = {
-      BUY: undefined,
-      SELL: undefined,
-    }
+    bestPrice.current = undefined
   }, [market])
 
   useEffect(() => {
     // before stream is loaded, I sat those value to prevent undefinded
-    bestPrice.current = {
-      BUY: res,
-      SELL: res,
-    }
+    bestPrice.current = res
   }, [res])
 
   function onSubmit() {
@@ -304,7 +289,7 @@ const MiniForm: FC<{ market: BinanceStreams; res: string }> = ({
         makeTransaction({
           side: side,
           amount: a,
-          price: +bestPrice.current[side]!,
+          price: +bestPrice.current!,
           coin: coin.toLocaleLowerCase(),
         } as Itrancation),
       ),
@@ -318,7 +303,7 @@ const MiniForm: FC<{ market: BinanceStreams; res: string }> = ({
       return cleanUp()
     }
     if (
-      !bestPrice.current.BUY ||
+      !bestPrice.current ||
       currentPrice?.s.toLowerCase() !== market
     ) {
       setError('Wait please')
@@ -334,7 +319,7 @@ const MiniForm: FC<{ market: BinanceStreams; res: string }> = ({
     }
 
     if (
-      +bestPrice.current.BUY * +amount.current!.value > usdt &&
+      +bestPrice.current * +amount.current!.value > usdt &&
       side === 'BUY'
     ) {
       setError('No enough usdt')

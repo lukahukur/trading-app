@@ -30,6 +30,7 @@ export const dbDataWs = createSlice({
       uni: 0,
       usdt: 0,
       xrp: 0,
+      doge: 0,
     },
     history: [],
   } as initial,

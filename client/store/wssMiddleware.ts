@@ -76,6 +76,10 @@ export const wssMiddleware: any = (store: AppStore) => {
       socket_personalData.on('error', (e) => {
         error(e)
         console.log(e)
+        if (e === 'invalid token') {
+          localStorage.removeItem('access')
+          location.reload()
+        }
       })
     }
 
