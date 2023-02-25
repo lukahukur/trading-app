@@ -29,6 +29,9 @@ import { getKlineRecordCount } from '../../api/constant'
 import Head from 'next/head'
 import axios from 'axios'
 import { decode, JwtPayload } from 'jsonwebtoken'
+import Success from '../../components/popups/success'
+import Failure from '../../components/popups/error'
+
 let fired = false
 
 const Chart = dynamic(() => import('../../components/chart2'), {
@@ -115,6 +118,8 @@ const Page: NextPage<IndexPageTrades> = ({
             />
           </span>
         )}
+        <Failure />
+        <Success />
         <div className={styles.chartWrp}>
           <Ticker
             drawPreloader={(e: boolean) => {
@@ -124,7 +129,7 @@ const Page: NextPage<IndexPageTrades> = ({
           <Interval />
           <Chart
             market={market}
-            renderChart={renderChart}
+            authenticated={authenticated}
             data={dataState}
             res={dataState[dataState.length - 1][2] as any}
           />

@@ -13,6 +13,7 @@ import { marketSlice } from './market'
 import themeReducer, { themeSlice } from './theme'
 import { dbDataWs } from './dbws'
 import klineSlice from './klineSlice'
+import { popupSlice } from './popup'
 
 export const store = () =>
   configureStore({
@@ -24,6 +25,7 @@ export const store = () =>
       [themeSlice.name]: themeReducer,
       [dbDataWs.name]: dbDataWs.reducer,
       [klineSlice.name]: klineSlice.reducer,
+      [popupSlice.name]: popupSlice.reducer,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({

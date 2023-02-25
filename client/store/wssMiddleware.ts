@@ -66,11 +66,15 @@ export const wssMiddleware: any = (store: AppStore) => {
         let transactions: Itrancation[] = response[1]
 
         store.dispatch(setOrders(transactions))
+        console.log('success')
       })
 
       socket_personalData.on('disconnect', () =>
         console.log('disconnected'),
       )
+      socket_personalData.on('throttler_error', (e) => {
+        console.log('Chill broo, Tooo many request', e)
+      })
       socket_personalData.on('connect_error', (e) => error(e))
 
       socket_personalData.on('error', (e) => {

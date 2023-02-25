@@ -23,10 +23,10 @@ import { makeTransaction } from '../store/dbws'
 
 const Chart: FC<{
   market: BinanceStreams
+  authenticated: boolean
   data: BinanceRestApiResponseTypeKline[]
-  renderChart: boolean
   res: string
-}> = ({ market, data, renderChart, res }) => {
+}> = ({ market, data, res, authenticated }) => {
   const interval = typedUseSelector((state) => state.market.time)
   const theme = typedUseSelector((state) => state.theme)
   const container = useRef<HTMLDivElement>(null)
@@ -220,7 +220,9 @@ const Chart: FC<{
   return (
     <>
       <div ref={container} />
-      {size <= 1536 && <MiniForm market={market} res={res} />}
+      {size <= 1536 && authenticated && (
+        <MiniForm market={market} res={res} />
+      )}
       <div className={styles.candlestickSeriesPrices}>
         {prices && (
           <span className={styles.candleP_wrapper}>

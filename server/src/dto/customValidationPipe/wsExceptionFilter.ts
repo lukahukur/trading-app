@@ -21,7 +21,7 @@ export class BadRequestExceptionsFilter extends BaseWsExceptionFilter {
 
     const client = host.switchToWs().getClient() as Socket
 
-    client.emit('error', wsException)
+    if (wsException) client.emit('error', wsException)
 
     if (TException) client.emit('throttler_error', TException)
   }
