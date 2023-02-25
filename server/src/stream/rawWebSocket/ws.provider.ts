@@ -23,19 +23,16 @@ export class BinanceStream {
   protected _prices: CurrenciesDTO
 
   constructor() {
+    // setTimeout(() => {
+    //   this.close()
+    // }, 5000)
     this._directConnection = this.connectToStream()
 
     this._prices = new CurrenciesDTO()
 
-    this._directConnection.on('close', this.onclose)
-    this._directConnection.on('message', this.listener)
-    this._directConnection.on('open', this.onopen)
-    this._directConnection.on('error', this.onerror)
-    try {
-      this.handleReconnect()
-    } catch (err) {
-      console.log(err, new Date().getTime())
-    }
+    this.addListeners()
+
+    this.handleReconnect()
   }
 
   protected updatePrices(
@@ -47,57 +44,63 @@ export class BinanceStream {
   }
 
   public listener = (e: any) => {
-    let message: WsResponseTypeTrades = this.decodeMessage(e)
+    var uint8array = new TextEncoder().encode(e)
 
     //it updates current price object
-    this.updatePrices(message, this._prices)
-  }
-
-  protected handleReconnect() {
-    schedule('0 */12 * * *', () => {
-      // reconnect to binance stream every 12h
-      this._directConnection.off('message', this.listener)
-      this._directConnection.off('close', this.onclose)
-      this._directConnection.off('open', this.onopen)
-      this._directConnection.off('error', this.onerror)
-
-      this._directConnection = this.connectToStream()
-
-      this._directConnection.on('open', this.onopen)
-      this._directConnection.on('close', this.onclose)
-      this._directConnection.on('message', this.listener)
-      this._directConnection.on('error', this.onerror)
-
-      console.log('reconnecting...')
-    })
-  }
-
-  protected connectToStream() {
-    let tradeStream = arrOfStreams.map((e) => e + '@trade')
-
-    return new WebSocket(
-      'wss://stream.binance.com:9443/ws/' + tradeStream.join('/'),
+    this.updatePrices(
+      JSON.parse(new TextDecoder().decode(uint8array)),
+      this._prices,
     )
   }
 
-  protected decodeMessage(e: string) {
-    var uint8array = new TextEncoder().encode(e)
-    return JSON.parse(new TextDecoder().decode(uint8array))
+  protected handleReconnect() {
+    schedule('30 */2 * * *', () => {
+      this.reconnect()
+    })
+  }
+
+  public reconnect() {
+    this.removeListeners()
+
+    this._directConnection = this.connectToStream()
+
+    this.addListeners()
+
+    console.log('reconnecting...')
+  }
+
+  protected connectToStream() {
+    return new WebSocket(
+      'wss://stream.binance.com:443/ws/' +
+        arrOfStreams.map((e) => e + '@trade').join('/'),
+    )
+  }
+
+  protected removeListeners() {
+    this._directConnection.off('message', this.listener)
+    this._directConnection.off('close', this.onclose)
+    this._directConnection.off('open', this.onopen)
+    this._directConnection.off('error', this.onerror)
+  }
+
+  protected addListeners() {
+    this._directConnection.on('close', this.onclose)
+    this._directConnection.on('message', this.listener)
+    this._directConnection.on('open', this.onopen)
+    this._directConnection.on('error', this.onerror)
   }
 
   close() {
     return this._directConnection.close()
   }
-
   onopen() {
     console.log('connected')
   }
-
   onerror(err) {
     console.log(err)
   }
-  onclose() {
-    console.log('closed')
+  onclose(e) {
+    console.log('message: ', e)
   }
 }
 

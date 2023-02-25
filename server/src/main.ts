@@ -38,3 +38,5 @@ async function bootstrap() {
 }
 
 bootstrap()
+
+console.log(process.env.REDIRECT_URL_MAIN)
