@@ -53,7 +53,7 @@ export class BinanceStream {
     )
   }
 
-  protected handleReconnect() {
+  private handleReconnect() {
     schedule('30 */2 * * *', () => {
       this.reconnect()
     })
@@ -69,21 +69,21 @@ export class BinanceStream {
     console.log('reconnecting...')
   }
 
-  protected connectToStream() {
+  private connectToStream() {
     return new WebSocket(
       'wss://stream.binance.com:443/ws/' +
         arrOfStreams.map((e) => e + '@trade').join('/'),
     )
   }
 
-  protected removeListeners() {
+  private removeListeners() {
     this._directConnection.off('message', this.listener)
     this._directConnection.off('close', this.onclose)
     this._directConnection.off('open', this.onopen)
     this._directConnection.off('error', this.onerror)
   }
 
-  protected addListeners() {
+  private addListeners() {
     this._directConnection.on('close', this.onclose)
     this._directConnection.on('message', this.listener)
     this._directConnection.on('open', this.onopen)

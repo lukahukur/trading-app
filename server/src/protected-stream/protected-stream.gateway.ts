@@ -20,6 +20,7 @@ import { Stream } from '../../types/types'
 import { TransactionObject, MoneyDTO } from 'src/dto/user.dto'
 import { UseFilters, UsePipes } from '@nestjs/common/decorators'
 import { BadRequestExceptionsFilter } from 'src/dto/customValidationPipe/wsExceptionFilter'
+import { WsThrottlerGuard } from './wsThrottler.service'
 
 let validationPipeOptions: ValidationPipeOptions = {
   exceptionFactory(validationErrors: ValidationError[] = []) {
@@ -42,7 +43,7 @@ export class ProtectedStreamGateway implements OnGatewayConnection {
   constructor(private streamService: ProtectedStreamService) {}
 
   @SubscribeMessage(Stream.Data)
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, WsThrottlerGuard)
   @UseFilters(BadRequestExceptionsFilter)
   async handleDataStream(client: any) {
     let resp = await this.streamService.personalData(client.user.id)
@@ -50,7 +51,7 @@ export class ProtectedStreamGateway implements OnGatewayConnection {
   }
 
   @SubscribeMessage(Stream.Transactions)
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, WsThrottlerGuard)
   @UsePipes(new ValidationPipe(validationPipeOptions))
   @UseFilters(BadRequestExceptionsFilter)
   async handleTransactions(
@@ -68,7 +69,7 @@ export class ProtectedStreamGateway implements OnGatewayConnection {
   }
 
   @SubscribeMessage(Stream.AddMoney)
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, WsThrottlerGuard)
   @UsePipes(new ValidationPipe(validationPipeOptions))
   @UseFilters(BadRequestExceptionsFilter)
   async addMoney(
