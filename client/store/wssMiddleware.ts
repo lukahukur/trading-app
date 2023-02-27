@@ -66,7 +66,6 @@ export const wssMiddleware: any = (store: AppStore) => {
         let transactions: Itrancation[] = response[1]
 
         store.dispatch(setOrders(transactions))
-        console.log('success')
       })
 
       socket_personalData.on('disconnect', () =>

@@ -1,33 +1,33 @@
-import React, { useEffect, useRef } from "react"
-import { NextPage } from "next"
-import { typedDispatch, typedUseSelector } from "../store"
-import { Time } from "../types"
-import { changeTime } from "../store/market"
-import styles from "../styles/Market.module.scss"
-import DropSvg from "./svgDropdown"
-import { Settings } from "../components/userIcon"
+import React, { useEffect, useRef } from 'react'
+import { NextPage } from 'next'
+import { typedDispatch, typedUseSelector } from '../store'
+import { Time } from '../types'
+import { changeTime } from '../store/market'
+import styles from '../styles/Market.module.scss'
+import DropSvg from './svg-s/svgDropdown'
+import { Settings } from './svg-s/userIcon'
 
 const ChartIntervals = () => {
   const interval = typedUseSelector((state) => state.market.time)
   const dispatch = typedDispatch()
-  let intervalArraySm: Time[] = ["1m", "5m", "1h", "12h", "1w"]
+  let intervalArraySm: Time[] = ['1m', '5m', '1h', '12h', '1w']
   let intervalArrayFull: Time[] = [
-    "1s",
-    "1m",
-    "3m",
-    "5m",
-    "15m",
-    "30m",
-    "1h",
-    "2h",
-    "4h",
-    "6h",
-    "8h",
-    "12h",
-    "1d",
-    "3d",
-    "1w",
-    "1M",
+    '1s',
+    '1m',
+    '3m',
+    '5m',
+    '15m',
+    '30m',
+    '1h',
+    '2h',
+    '4h',
+    '6h',
+    '8h',
+    '12h',
+    '1d',
+    '3d',
+    '1w',
+    '1M',
   ]
 
   const IRef = useRef<HTMLSpanElement>(null)
@@ -36,17 +36,25 @@ const ChartIntervals = () => {
     dispatch(changeTime(time))
   }
   function clr(e: Time) {
-    return interval === e ? "#26C6DA" : "white"
+    return interval === e ? '#26C6DA' : 'white'
   }
 
   let intervalArraySmHTML = intervalArraySm.map((e, i) => (
-    <button key={i} style={{ color: clr(e) }} onClick={() => clickHandler(e)}>
+    <button
+      key={i}
+      style={{ color: clr(e) }}
+      onClick={() => clickHandler(e)}
+    >
       {e}
     </button>
   ))
 
   let intervalArrayFullHTML = intervalArrayFull.map((e) => (
-    <button key={e} style={{ color: clr(e) }} onClick={() => clickHandler(e)}>
+    <button
+      key={e}
+      style={{ color: clr(e) }}
+      onClick={() => clickHandler(e)}
+    >
       {e}
     </button>
   ))
@@ -56,7 +64,7 @@ const ChartIntervals = () => {
     if (!display) {
       IRef.current!.innerHTML = interval
     } else {
-      IRef.current!.innerHTML = ""
+      IRef.current!.innerHTML = ''
     }
   }, [interval])
   return (
@@ -68,18 +76,18 @@ const ChartIntervals = () => {
           <span className={styles.d_menu}>
             <span
               style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "spaceBetween",
-                width: "45px",
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'spaceBetween',
+                width: '45px',
               }}
             >
               <span
                 ref={IRef}
                 className="text-sm"
-                style={{ color: "#26C6DA" }}
+                style={{ color: '#26C6DA' }}
               />
-              <DropSvg color={"gray"} />
+              <DropSvg color={'gray'} />
             </span>
 
             <span className={styles.dropDown_menu}>

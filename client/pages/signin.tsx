@@ -4,7 +4,7 @@ import { typedDispatch, typedUseSelector } from '../store'
 import { useGetLoggedInMutation } from '../store/_api'
 import { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/router'
-import Loader from '../components/loader'
+import Loader from '../components/svg-s/loader'
 
 String.prototype.containsNumber = function () {
   let arrOfStr: string[] = this.split('')

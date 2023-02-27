@@ -1,6 +1,6 @@
 import react, { FC } from 'react'
 import { Transactions } from '../types'
-import { formatCurrency } from './Form'
+import { formatCurrency } from './form'
 
 const Transaction: FC<{ e: Transactions; time: Date }> = ({
   e,

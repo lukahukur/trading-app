@@ -1,19 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-type responseType =
-  | null
-  | { message: string; status: number }
-  | { error: string; status: number }
-
 type initialStateType = {
   message: null | { message: string }
-  error: null | { error: string; status: number }
+  exception: null | { message: string }
 }
 
 export const popupSlice = createSlice({
   name: 'popupSlice',
   initialState: {
-    error: null,
+    exception: null,
     message: null,
   } as initialStateType,
   reducers: {
@@ -23,15 +18,13 @@ export const popupSlice = createSlice({
     ) {
       state.message = payload
     },
-    setError(
+    setException(
       state,
-      {
-        payload,
-      }: PayloadAction<{ error: string; status: number } | null>,
+      { payload }: PayloadAction<{ message: string } | null>,
     ) {
-      state.error = payload
+      state.exception = payload
     },
   },
 })
 
-export const { setMessage, setError } = popupSlice.actions
+export const { setMessage, setException } = popupSlice.actions

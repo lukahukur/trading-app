@@ -15,11 +15,11 @@ import { startConnToDataWs } from '../../store/dbws'
 import dynamic from 'next/dynamic'
 import styles from '../../styles/Market.module.scss'
 import Ticker from '../../components/ticker'
-import Preloader from '../../components/preloader'
+import Preloader from '../../components/svg-s/preloader'
 import Orders from '../../components/orderbook'
 import Trades from '../../components/trades'
 import Bids from '../../components/bids'
-import Form from '../../components/Form'
+import Form from '../../components/form'
 import Wallet from '../../components/wallet'
 import {
   getDataFromBinanceApiKline,
@@ -29,8 +29,8 @@ import { getKlineRecordCount } from '../../api/constant'
 import Head from 'next/head'
 import axios from 'axios'
 import { decode, JwtPayload } from 'jsonwebtoken'
-import Success from '../../components/popups/success'
-import Failure from '../../components/popups/error'
+import Success from '../../components/svg-s/popups/success'
+import Failure from '../../components/svg-s/popups/error'
 
 let fired = false
 

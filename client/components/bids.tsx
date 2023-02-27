@@ -4,7 +4,7 @@ import { typedUseSelector } from '../store'
 import Transaction from './transaction'
 import styles from '../styles/Market.module.scss'
 import Wallet from './wallet'
-import Form from './Form'
+import Form from './form'
 
 const Bids: FC<{
   authenticated: boolean

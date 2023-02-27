@@ -9,10 +9,68 @@ import React, {
 import { typedUseSelector, typedDispatch } from '../store'
 import { coinsType, Tcoins } from '../types'
 import Link from 'next/link'
-import { fixed } from '../api/index'
 import { makeTransaction } from '../store/dbws'
 import { Itrancation } from '../types/index'
+import { setException, setMessage } from '../store/popup'
 
+export class Throttler {
+  protected timeout: number
+  protected triggered: boolean = false
+
+  constructor(protected _timeout: number) {
+    this.timeout = _timeout
+  }
+
+  validationPipe = (
+    validatorFn: () => { exception?: string; callback?: () => any },
+    errorHandler: (s: string) => any,
+    okHandler: (s: string) => any,
+  ) => {
+    let { callback, exception } = validatorFn()
+
+    if (exception) {
+      errorHandler(exception)
+    }
+
+    if (callback)
+      this.throttle(callback).pipe((e) => {
+        if (e.message) {
+          return okHandler('Success')
+        }
+
+        return errorHandler(e.exception)
+      })
+  }
+
+  protected throttle(callback: () => any) {
+    if (!this.triggered) {
+      this.triggered = true
+      callback()
+
+      setTimeout(() => {
+        this.triggered = false
+      }, this.timeout * 1000)
+
+      return {
+        pipe: (api: (...args: any[]) => any) => {
+          return api({ message: 'Success' })
+        },
+      }
+    }
+
+    return {
+      pipe: (api: (...args: any[]) => any) => {
+        return api({
+          exception: 'Please wait ' + this.timeout + ' seconds',
+        })
+      },
+    }
+  }
+}
+
+export const throttler = new Throttler(10)
+
+// God bless an inventor of Intl
 const formatter = new Intl.NumberFormat('en-US', {
   minimumFractionDigits: 1,
   maximumFractionDigits: 4,
@@ -30,7 +88,6 @@ const Form: FC<{
   draw: boolean
   res: string
 }> = ({ authenticated, draw, res }) => {
-  const [getError, setError] = useState('')
   const [isSelling, isMarketMaker] = useState(false)
   const sellBtn = useRef<HTMLButtonElement>(null)
   const dispatch = typedDispatch()
@@ -56,7 +113,6 @@ const Form: FC<{
     sellBtn.current!.style.color = 'black'
     submit.current!.style.background = 'hsl(0, 100%, 24%)'
   }
-  const wallet = typedUseSelector((e) => e.dbData.wallet)
 
   function colorBuy() {
     sellBtn.current!.style.background = '#374151'
@@ -96,38 +152,39 @@ const Form: FC<{
 
   //side currency price amount date
   function onSubmit() {
-    validateRequest(() =>
-      dispatch(
-        makeTransaction({
-          side: isSelling ? 'SELL' : 'BUY',
-          amount: Number(amountInput.current!.value),
-          price: Number(priceInput.current!.value),
-          coin: coinLowerCase,
-        } as Itrancation),
-      ),
+    throttler.validationPipe(
+      () =>
+        validateRequest(() =>
+          dispatch(
+            makeTransaction({
+              side: isSelling ? 'SELL' : 'BUY',
+              amount: Number(amountInput.current!.value),
+              price: Number(priceInput.current!.value),
+              coin: coinLowerCase,
+            } as Itrancation),
+          ),
+        ),
+      (s) => dispatch(setException({ message: s })),
+      (s) => dispatch(setMessage({ message: s })),
     )
   }
 
   function validateRequest(callback: () => any) {
-    const cleanUp = () => setTimeout(() => setError(''), 3000)
     const amount = +amountInput.current!.value
     const price = +priceInput.current!.value
 
     if (!amountInput.current!.value || !priceInput.current!.value) {
-      setError('Empty field')
-      return cleanUp()
+      return { exception: 'Empty field' }
     }
 
     if (amount > currentCoinAmount && isSelling) {
-      setError('No enough ' + coin)
-      return cleanUp()
+      return { exception: 'No enough ' + coin }
     }
     if (price * amount > usdt && !isSelling) {
-      setError('No enough usdt')
-      return cleanUp()
+      return { exception: 'No enough usdt' }
     }
 
-    return callback()
+    return { callback: callback }
   }
 
   useEffect(() => {
@@ -259,11 +316,6 @@ const Form: FC<{
 
         <button ref={submit} onClick={onSubmit}></button>
       </div>
-      {
-        <span className="mt-4 text-red-600 h-8 flex items-center justify-center">
-          {getError}
-        </span>
-      }
     </div>
   ) : (
     //

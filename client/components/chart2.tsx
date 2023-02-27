@@ -20,6 +20,8 @@ import { wsController } from '../api/api'
 import styles from '../styles/Market.module.scss'
 import { setData } from '../store/klineSlice'
 import { makeTransaction } from '../store/dbws'
+import { setException, setMessage } from '../store/popup'
+import { throttler } from './form'
 
 const Chart: FC<{
   market: BinanceStreams
@@ -58,6 +60,7 @@ const Chart: FC<{
       interval,
     )
 
+    // responsive with JS
     const handleResize = (apply: boolean) => {
       let w = window.innerWidth
 
@@ -269,66 +272,63 @@ const MiniForm: FC<{ market: BinanceStreams; res: string }> = ({
   const usdt = typedUseSelector((store) => store.dbData.wallet.usdt)
   const dispatch = typedDispatch()
   const amount = useRef<HTMLInputElement>(null)
-  const bestPrice = useRef<string | undefined>(undefined)
+  const price = useRef<string | undefined>(undefined)
 
   useEffect(() => {
-    bestPrice.current = currentPrice?.c
+    price.current = currentPrice?.c
   }, [currentPrice])
 
   useEffect(() => {
-    bestPrice.current = undefined
+    price.current = undefined
   }, [market])
 
   useEffect(() => {
     // before stream is loaded, I sat those value to prevent undefinded
-    bestPrice.current = res
+    price.current = res
   }, [res])
 
   function onSubmit() {
     let a = +amount.current!.value
-    validateRequest(() =>
-      dispatch(
-        makeTransaction({
-          side: side,
-          amount: a,
-          price: +bestPrice.current!,
-          coin: coin.toLocaleLowerCase(),
-        } as Itrancation),
-      ),
+
+    throttler.validationPipe(
+      () =>
+        validateRequest(() =>
+          dispatch(
+            makeTransaction({
+              side: side,
+              amount: a,
+              price: +price.current!,
+              coin: coin.toLocaleLowerCase(),
+            } as Itrancation),
+          ),
+        ),
+      (s) => dispatch(setException({ message: s })),
+      (s) => dispatch(setMessage({ message: s })),
     )
   }
   const validateRequest = (c: (...args: any[]) => void) => {
-    const cleanUp = () => setTimeout(() => setError(''), 3000)
-
     if (!amount.current!.value) {
-      setError('Empty field')
-      return cleanUp()
+      return { exception: 'Empty field' }
     }
-    if (
-      !bestPrice.current ||
-      currentPrice?.s.toLowerCase() !== market
-    ) {
-      setError('Wait please')
-      return cleanUp()
+    if (!price.current || currentPrice?.s.toLowerCase() !== market) {
+      return { exception: 'Wait please' }
     }
 
     if (
       +amount.current!.value > +currentCoinAmount &&
       side === 'SELL'
     ) {
-      setError('No enough ' + coin)
-      return cleanUp()
+      return { exception: 'No enough ' + coin }
     }
 
     if (
-      +bestPrice.current * +amount.current!.value > usdt &&
+      +price.current * +amount.current!.value > usdt &&
       side === 'BUY'
     ) {
-      setError('No enough usdt')
-      return cleanUp()
+      return { exception: 'No enough usdt' }
     }
 
-    return c()
+    return { callback: c }
   }
 
   return (

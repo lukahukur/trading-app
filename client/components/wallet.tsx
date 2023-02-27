@@ -3,7 +3,7 @@ import { Tcoins } from '../types'
 import { store, typedDispatch, typedUseSelector } from '../store'
 import styles from '../styles/data.module.scss'
 import { addMoney } from '../store/dbws'
-import { formatCurrency } from './Form'
+import { formatCurrency } from './form'
 
 const Wallet: FC<{
   authenticated: boolean
