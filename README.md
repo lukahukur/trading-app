@@ -1,4 +1,3 @@
-![My LinkedIn](https://www.linkpicture.com/q/logo_437.png)
 # Open source Cryptocurrency market simulator
 
 
